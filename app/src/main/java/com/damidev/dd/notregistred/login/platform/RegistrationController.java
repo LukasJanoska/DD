@@ -19,28 +19,6 @@ public class RegistrationController {
         return restService
                 .registration(username, password)
                 .observeOn(AndroidSchedulers.mainThread());
-
-
-//        return Observable.create(new ObservableOnSubscribe<Boolean>() {
-//            @Override
-//            public void subscribe(ObservableEmitter<Boolean> emmiter) throws Exception {
-//                try {
-//                    Thread.sleep(1_000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                authenticationRestService.doLogin(username, password);
-//
-//                sessionController.create();
-//
-//                emmiter.onNext(true);
-//                emmiter.onComplete();
-//            }
-//        })
-//        .subscribeOn(Schedulers.io())
-//
-//        .toFlowable(BackpressureStrategy.LATEST);
     }
 
 }

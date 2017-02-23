@@ -69,7 +69,6 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
     public void onServerEvent(ServerEvent serverEvent){
         Toast.makeText(this, ""+serverEvent.getServerResponse().getResponseCodeText(), Toast.LENGTH_SHORT).show();
 
-
         /*if(serverEvent.getServerResponse().getUsername() != null){
             information.setText("Username: "+serverEvent.getServerResponse().getUsername() + " || Password: "+serverEvent.getServerResponse().getPassword());
         }*/

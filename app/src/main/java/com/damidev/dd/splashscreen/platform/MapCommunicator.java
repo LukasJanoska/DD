@@ -27,9 +27,11 @@ public class MapCommunicator {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
 
         Retrofit retrofit = new Retrofit.Builder()
+                .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(SERVER_URL)
                 .build();
