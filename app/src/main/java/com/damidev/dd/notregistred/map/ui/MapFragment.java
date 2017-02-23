@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -14,22 +15,23 @@ import com.damidev.dd.databinding.FragmentMapBinding;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
 import com.damidev.dd.notregistred.map.inject.MapModule;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.splashscreen.dataaccess.ServerMapChildResponseDto;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 
-public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, MapFragView {
+public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapFragView {
 
     public static String MapFragmnetTag = "MAP_FRAGMENT_TAG";
 
@@ -102,17 +104,25 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        // Updates the location and zoom of the MapFragView
-        ServerMapResponseDto responseDto = readObjectFromFile(getContext());
-        Double lat = responseDto.getChildResponse().get(0).getLat();
-        Double lng = responseDto.getChildResponse().get(0).getLng();
 
-        addMarker(new LatLng(lat, lng), R.drawable.start, "start");
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
-        map.animateCamera(cameraUpdate);
+        ServerMapResponseDto responseDto = readObjectFromFile(getContext());
+
+        ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
+        points = responseDto.getChildResponse();
+
+        for (ServerMapChildResponseDto point : points) {
+            Double lat = point.getLat();
+            Double lng = point.getLng();
+
+            addMarker(new LatLng(lat, lng), R.drawable.start, "start");
+        }
+
+        /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
+        map.animateCamera(cameraUpdate);*/
     }
 
     public void addMarker(final LatLng point, final @DrawableRes int iconId, final String title) {
+        map.setOnMarkerClickListener(this);
         map.addMarker(new MarkerOptions()
                 .position(point)
                 .title(title)
@@ -120,4 +130,9 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
                 .icon(BitmapDescriptorFactory.fromResource(iconId)));
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(getContext(), "marker", Toast.LENGTH_SHORT).show();
+        return false;
+    }
 }
