@@ -1,6 +1,8 @@
 package com.damidev.dd.notregistred.map.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -20,7 +22,10 @@ import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,6 +42,7 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
 
     MapView mapView;
     GoogleMap map;
+    private GroundOverlay mGroundOverlay;
 
     public MapFragment() {
         // Required empty public constructor
@@ -110,29 +116,53 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
         points = responseDto.getChildResponse();
 
+        LatLng latlng = null;
+
         for (ServerMapChildResponseDto point : points) {
             Double lat = point.getLat();
             Double lng = point.getLng();
 
+            latlng = new LatLng(lat, lng);
             addMarker(new LatLng(lat, lng), R.drawable.start, "start");
         }
+
+        final LatLng NEWARK = new LatLng(40.714086, -74.228697);
+
+
+        BitmapDescriptor img = BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922);
+
+        mGroundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
+                .image(img).anchor(0, 1)
+                .position(NEWARK, 8600f, 6500f));
 
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
     }
 
     public void addMarker(final LatLng point, final @DrawableRes int iconId, final String title) {
+
+        BitmapDescriptor img = BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922);
+
+        int height = 100;
+        int width = 100;
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.newark_nj_1922);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
         map.setOnMarkerClickListener(this);
         map.addMarker(new MarkerOptions()
                 .position(point)
                 .title(title)
                 .snippet("aaaaaaa")
-                .icon(BitmapDescriptorFactory.fromResource(iconId)));
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         Toast.makeText(getContext(), "marker", Toast.LENGTH_SHORT).show();
+
+
+
         return false;
     }
 }
