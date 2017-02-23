@@ -14,7 +14,7 @@ import dagger.multibindings.IntoMap;
 @Module(
         subcomponents = {
                 NotRegistredComponent.class,
-                SplashScreenComponent.class ///
+                SplashScreenComponent.class /// test test
         }
 )
 public abstract class ActivityBindingModule {
