@@ -1,13 +1,12 @@
 package com.damidev.dd.notregistred.map.ui;
 
-import android.annotation.SuppressLint;
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -15,19 +14,36 @@ import com.damidev.dd.databinding.FragmentMapBinding;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
 import com.damidev.dd.notregistred.map.inject.MapModule;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 
-public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, MapView {
+public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, MapFragView {
 
     public static String MapFragmnetTag = "MAP_FRAGMENT_TAG";
-    private GoogleMap mMap;
 
+    MapView mapView;
+    GoogleMap map;
 
     public MapFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 
     @Override
@@ -54,8 +70,28 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        MapsInitializer.initialize(getContext());
+        mapView = (MapView) view.findViewById(R.id.mapview);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        mapView.getMapAsync(this); //when you already implement OnMapReadyCallback in your
+    }
 
+    public ServerMapResponseDto readObjectFromFile(Context context) {
+        try {
+            FileInputStream fis = context.openFileInput("ServerMapResponseDto.srl");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            Object readObject = is.readObject();
+            is.close();
+
+            if(readObject != null && readObject instanceof ServerMapResponseDto) {
+                return (ServerMapResponseDto) readObject;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static MapFragment newInstance(String someTitle) {
@@ -65,30 +101,23 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        /*addMarkers();
-        addPolyobjects();*/
+        map = googleMap;
+        // Updates the location and zoom of the MapFragView
+        ServerMapResponseDto responseDto = readObjectFromFile(getContext());
+        Double lat = responseDto.getChildResponse().get(0).getLat();
+        Double lng = responseDto.getChildResponse().get(0).getLng();
 
-        final View mapView = getActivity().getSupportFragmentManager().findFragmentById(R.id.map).getView();
-        if (mapView.getViewTreeObserver().isAlive()) {
-            mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @SuppressWarnings("deprecation") // We use the new method when supported
-                @SuppressLint("NewApi") // We check which build version we are using.
-                @Override
-                public void onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    } else {
-                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                    //showAustralia(null);
-                }
-            });
-        }
+        addMarker(new LatLng(lat, lng), R.drawable.start, "start");
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
+        map.animateCamera(cameraUpdate);
     }
 
-    /*@Override
-    public void onGroundOverlayClick(GroundOverlay groundOverlay) {
+    public void addMarker(final LatLng point, final @DrawableRes int iconId, final String title) {
+        map.addMarker(new MarkerOptions()
+                .position(point)
+                .title(title)
+                .snippet("aaaaaaa")
+                .icon(BitmapDescriptorFactory.fromResource(iconId)));
+    }
 
-    }*/
 }
