@@ -3,25 +3,26 @@ package com.damidev.dd.splashscreen.dataaccess;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class ServerMapResponseDto implements Serializable{
 
-    public ServerMapResponseDto(String responseCodeText, int responseCode) {
-        this.responseCodeText = responseCodeText;
-        this.responseCode = responseCode;
-  //      this.childResponse = childResponse;
-    }
+    @SerializedName("responseCode")
+    private int responseCode = 1;
 
     @SerializedName("responseCodeText")
     private String responseCodeText;
 
-    @SerializedName("responseCode")
-    private int responseCode = 1;
+    @SerializedName("response")
+    private ArrayList<ServerMapChildResponseDto> childResponse;
 
-    /*@SerializedName("response")
-    private ServerChildResponse childResponse;
-*/
+    public ServerMapResponseDto(String responseCodeText, int responseCode, ArrayList<ServerMapChildResponseDto> childResponse) {
+        this.responseCodeText = responseCodeText;
+        this.responseCode = responseCode;
+        this.childResponse = childResponse;
+    }
+
     public String getResponseCodeText() {
         return responseCodeText;
     }
@@ -38,11 +39,11 @@ public class ServerMapResponseDto implements Serializable{
         this.responseCode = responseCode;
     }
 
-    /*public ServerChildResponse getChildResponse() {
+    public ArrayList<ServerMapChildResponseDto> getChildResponse() {
         return childResponse;
     }
 
-    public void setChildResponse(ServerChildResponse childResponse) {
+    public void setChildResponse(ArrayList<ServerMapChildResponseDto> childResponse) {
         this.childResponse = childResponse;
-    }*/
+    }
 }
