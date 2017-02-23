@@ -1,0 +1,52 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // App dependencies
+    supportLibraryVersion   = '25.1.0'
+    materialDialogVersion   = '0.9.2.3'
+    daggerVersion           = '2.7'
+    retrofitVersion         = '2.0.2'
+    okHttpLoggingVersion    = '3.4.1'
+    butterKnifeVersion      = '8.5.1'
+    timberVersion           = '4.3.1'
+    rxJavaVersion           = '2.0.2'
+    rxAndroidVersion        = '2.0.1'
+    retrofitRxJavaVersion   = '1.0.0'
+    stethoVersion           = '1.4.2'
+
+    // App test dependencies
+    junitVersion            = '4.12'
+    mockitoVersion          = '2.7.4'
+    espressoVersion         = '2.2.2'
+
+    robolectricVersion      = '3.1.4'
+    mockWebServerVersion    = '2.7.5'
+
+    supportTestVersion      = '0.5'
+    espressoVersion         = '2.2.2'
+    cappuccinoVersion       = '0.9.1'
+}

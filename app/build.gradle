@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "com.damidev.dd"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        cacheDynamicVersionsFor 0, "seconds"
+        cacheChangingModulesFor 0, "seconds"
+    }
+}
+
+dependencies {
+    def ext = rootProject.ext
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:design:25.0.1'
+
+    // Butterknife
+    compile("com.jakewharton:butterknife:$ext.butterKnifeVersion") {
+        exclude module: 'support-annotations'
+    }
+    apt "com.jakewharton:butterknife-compiler:$ext.butterKnifeVersion"
+
+    // Dagger 2
+    compile "com.google.dagger:dagger:$ext.daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$ext.daggerVersion"
+
+    // Logging
+    compile "com.jakewharton.timber:timber:$ext.timberVersion"
+
+    // Retrofit 2
+    compile("com.squareup.retrofit2:retrofit:$ext.retrofitVersion") {
+        exclude module: 'okio'
+    }
+    compile "com.squareup.retrofit2:converter-gson:$ext.retrofitVersion"
+    compile ("com.squareup.retrofit2:converter-simplexml:$ext.retrofitVersion")  {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
+    compile "com.squareup.okhttp3:logging-interceptor:$ext.okHttpLoggingVersion"
+    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$ext.retrofitRxJavaVersion"
+
+    // Maps
+    compile ("com.google.android.gms:play-services-maps:9.8.0") {
+        exclude module: 'support-annotations'
+    }
+
+    // RxJava
+    compile "io.reactivex.rxjava2:rxjava:$ext.rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$ext.rxAndroidVersion"
+
+    //Material dialog
+    compile ("com.afollestad.material-dialogs:core:$ext.materialDialogVersion") {
+        exclude module: 'support-annotations'
+    }
+}
