@@ -78,6 +78,8 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$ext.okHttpLoggingVersion"
     compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$ext.retrofitRxJavaVersion"
 
+    compile 'com.squareup:otto:1.3.8'
+
     // Maps
     compile ("com.google.android.gms:play-services-maps:9.8.0") {
         exclude module: 'support-annotations'
