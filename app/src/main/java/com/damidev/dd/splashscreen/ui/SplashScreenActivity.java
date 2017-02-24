@@ -1,8 +1,12 @@
 package com.damidev.dd.splashscreen.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
@@ -33,17 +37,50 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
     Timer RunSplash = new Timer();
     private MapCommunicator communicator;
 
+    boolean permissionCheck = false;
+    private static final int MY_PERMISSIONS_REQUEST = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setAndBindContentView(R.layout.activity_splash_screen, savedInstanceState);
 
-        RunSplash = new Timer();
-        RunSplash.schedule(getShowSplashTimer(), Delay);
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            RunSplash = new Timer();
+            RunSplash.schedule(getShowSplashTimer(), Delay);
 
-        communicator = new MapCommunicator();
-        usePost();
+            communicator = new MapCommunicator();
+            usePost();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST);
+            permissionCheck = true;
+        }
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    RunSplash = new Timer();
+                    RunSplash.schedule(getShowSplashTimer(), Delay);
+
+                    communicator = new MapCommunicator();
+                    usePost();
+                }else{
+                    Toast.makeText(getApplicationContext(), "permission denied", Toast.LENGTH_LONG).show();
+                    //findViewById(R.id.ProgressBar).setVisibility(View.INVISIBLE);
+                    //findViewById(R.id.permissionsDenied).setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
 
     private void usePost(){
         communicator.getMapPoints();
@@ -106,5 +143,8 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
     protected void onPause() {
         super.onPause();
         BusProvider.getInstance().unregister(this);
+        RunSplash.cancel();
+        if(!permissionCheck)
+            finish();
     }
 }

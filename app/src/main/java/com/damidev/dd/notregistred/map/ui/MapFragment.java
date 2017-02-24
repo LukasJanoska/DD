@@ -3,7 +3,10 @@ package com.damidev.dd.notregistred.map.ui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -25,20 +28,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
 public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapFragView {
 
     public static String MapFragmnetTag = "MAP_FRAGMENT_TAG";
+
+    public static String ImageUrl = "http://androidtest.dev.damidev.com/images/2.jpg";
 
     MapView mapView;
     GoogleMap map;
@@ -71,7 +80,46 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_map);
 
+        downloadImage();
+
         return view;
+    }
+
+    public void downloadImage() {
+        Picasso.with(getContext())
+                .load(ImageUrl)
+                //.placeholder(R.drawable.new)
+                .into(new Target() {
+                          @Override
+                          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                              try {
+                                  // Assume block needs to be inside a Try/Catch block.
+                                  String path = Environment.getExternalStorageDirectory().toString();
+                                  OutputStream fOut = null;
+                                  Integer counter = 0;
+                                  File file = new File(path, "FitnessGirl"+counter+".jpg"); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+                                  fOut = new FileOutputStream(file);
+
+                                  bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+                                  fOut.flush(); // Not really required
+                                  fOut.close(); // do not forget to close the stream
+
+                                  MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+                              } catch(Exception e){
+                                  e.getMessage();
+                                  // some action
+                              }
+                          }
+
+                          @Override
+                          public void onBitmapFailed(Drawable errorDrawable) {
+                          }
+
+                          @Override
+                          public void onPrepareLoad(Drawable placeHolderDrawable) {
+                          }
+                      }
+                );
     }
 
     @Override
@@ -116,24 +164,13 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
         points = responseDto.getChildResponse();
 
-        LatLng latlng = null;
-
         for (ServerMapChildResponseDto point : points) {
             Double lat = point.getLat();
             Double lng = point.getLng();
 
-            latlng = new LatLng(lat, lng);
             addMarker(new LatLng(lat, lng), R.drawable.start, "start");
         }
 
-        final LatLng NEWARK = new LatLng(40.714086, -74.228697);
-
-
-        BitmapDescriptor img = BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922);
-
-        mGroundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
-                .image(img).anchor(0, 1)
-                .position(NEWARK, 8600f, 6500f));
 
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
@@ -160,8 +197,6 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     @Override
     public boolean onMarkerClick(Marker marker) {
         Toast.makeText(getContext(), "marker", Toast.LENGTH_SHORT).show();
-
-
 
         return false;
     }
