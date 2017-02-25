@@ -4,7 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
@@ -13,6 +18,7 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivitySplashScreenBinding;
 import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
+import com.damidev.dd.notregistred.map.ui.MapFragment;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
 import com.damidev.dd.splashscreen.Events.ServerEvent;
@@ -20,12 +26,17 @@ import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.damidev.dd.splashscreen.inject.SplashScreenComponent;
 import com.damidev.dd.splashscreen.inject.SplashScreenModule;
 import com.damidev.dd.splashscreen.platform.BusProvider;
+import com.damidev.dd.splashscreen.platform.DownloadImageIntentService;
 import com.damidev.dd.splashscreen.platform.MapCommunicator;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,6 +63,14 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
 
             communicator = new MapCommunicator();
             usePost();
+
+            Intent mServiceIntent = new Intent(this, DownloadImageIntentService.class);
+            mServiceIntent.setData(Uri.parse("download"));
+
+            getApplicationContext().startService(mServiceIntent);
+
+            downloadImage();
+
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -59,6 +78,43 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
             permissionCheck = true;
         }
 
+    }
+
+    public void downloadImage() {
+        Picasso.with(this)
+                .load(MapFragment.ImageUrl)
+                //.placeholder(R.drawable.new)
+                .into(new Target() {
+                          @Override
+                          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                              try {
+                                  // Assume block needs to be inside a Try/Catch block.
+                                  String path = Environment.getExternalStorageDirectory().toString();
+                                  OutputStream fOut = null;
+                                  Integer counter = 0;
+                                  File file = new File(path, "FitnessGirl"+counter+".jpg"); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+                                  fOut = new FileOutputStream(file);
+
+                                  bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+                                  fOut.flush(); // Not really required
+                                  fOut.close(); // do not forget to close the stream
+
+                                  MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+                              } catch(Exception e){
+                                  e.getMessage();
+                                  // some action
+                              }
+                          }
+
+                          @Override
+                          public void onBitmapFailed(Drawable errorDrawable) {
+                          }
+
+                          @Override
+                          public void onPrepareLoad(Drawable placeHolderDrawable) {
+                          }
+                      }
+                );
     }
 
     @Override

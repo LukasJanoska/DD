@@ -35,6 +35,11 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".splashscreen.platform.DownloadImageIntentService"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>
