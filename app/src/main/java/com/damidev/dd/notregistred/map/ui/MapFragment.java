@@ -2,12 +2,8 @@ package com.damidev.dd.notregistred.map.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,19 +30,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapFragView {
 
     public static String MapFragmnetTag = "MAP_FRAGMENT_TAG";
 
+    public static String ImageUrlName = "imagedd.jpg";
     public static String ImageUrl = "http://androidtest.dev.damidev.com/images/2.jpg";
 
     MapView mapView;
@@ -80,46 +76,7 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_map);
 
-        downloadImage();
-
         return view;
-    }
-
-    public void downloadImage() {
-        Picasso.with(getContext())
-                .load(ImageUrl)
-                //.placeholder(R.drawable.new)
-                .into(new Target() {
-                          @Override
-                          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                              try {
-                                  // Assume block needs to be inside a Try/Catch block.
-                                  String path = Environment.getExternalStorageDirectory().toString();
-                                  OutputStream fOut = null;
-                                  Integer counter = 0;
-                                  File file = new File(path, "FitnessGirl"+counter+".jpg"); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
-                                  fOut = new FileOutputStream(file);
-
-                                  bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
-                                  fOut.flush(); // Not really required
-                                  fOut.close(); // do not forget to close the stream
-
-                                  MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-                              } catch(Exception e){
-                                  e.getMessage();
-                                  // some action
-                              }
-                          }
-
-                          @Override
-                          public void onBitmapFailed(Drawable errorDrawable) {
-                          }
-
-                          @Override
-                          public void onPrepareLoad(Drawable placeHolderDrawable) {
-                          }
-                      }
-                );
     }
 
     @Override
@@ -167,31 +124,14 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         for (ServerMapChildResponseDto point : points) {
             Double lat = point.getLat();
             Double lng = point.getLng();
+            String imgurl = point.getPhotos().get(2);
 
-            addMarker(new LatLng(lat, lng), R.drawable.start, "start");
+            addMarker(new LatLng(lat, lng), imgurl, "start");
         }
 
 
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
-    }
-
-    public void addMarker(final LatLng point, final @DrawableRes int iconId, final String title) {
-
-        BitmapDescriptor img = BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922);
-
-        int height = 100;
-        int width = 100;
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.newark_nj_1922);
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
-        map.setOnMarkerClickListener(this);
-        map.addMarker(new MarkerOptions()
-                .position(point)
-                .title(title)
-                .snippet("aaaaaaa")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
     }
 
     @Override
@@ -200,4 +140,45 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
 
         return false;
     }
+
+    public void addMarker(final LatLng point, final String imgurl, final String title) {
+
+        BitmapDescriptor img = BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922);
+
+        map.setOnMarkerClickListener(this);
+        m = map.addMarker(new MarkerOptions()
+                .position(point)
+                .title(title)
+                .snippet("aaaaaaa"));
+
+        PoiTarget pt = new PoiTarget(m);
+        poiTargets.add(pt);
+        Picasso.with(getContext())
+                .load(imgurl)
+                .resize(90, 90)
+                .into(pt);
+    }
+
+    private Marker m;
+    private Set<PoiTarget> poiTargets = new HashSet<PoiTarget>();
+
+    class PoiTarget implements Target {
+        private Marker m;
+
+        public PoiTarget(Marker m) { this.m = m; }
+
+        @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            m.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
+            poiTargets.remove(this);
+        }
+
+        @Override public void onBitmapFailed(Drawable errorDrawable) {
+            poiTargets.remove(this);
+        }
+
+        @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    }
+
 }

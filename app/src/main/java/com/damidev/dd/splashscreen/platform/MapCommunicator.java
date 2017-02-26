@@ -1,5 +1,6 @@
 package com.damidev.dd.splashscreen.platform;
 
+import android.content.Context;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
@@ -23,7 +24,7 @@ public class MapCommunicator {
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
     @WorkerThread
-    public void getMapPoints(){
+    public void getMapPoints(final Context context){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -51,6 +52,7 @@ public class MapCommunicator {
                     BusProvider.getInstance().post(new ServerEvent(data));
                     Log.e(TAG,"Success");
                 }
+
                 /*BusProvider.getInstance().post(new ErrorEvent(-2, "server not responding"));
                 Log.e(TAG,"Failure");*/
             }
