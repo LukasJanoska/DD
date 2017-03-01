@@ -8,18 +8,62 @@
         <variable name="vm" type="com.damidev.dd.main.base.ui.MainViewModel" />
     </data>
 
-    <RelativeLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-
-        <FrameLayout
-            android:id="@+id/fragment_main_container"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
+        <RelativeLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="?android:windowContentOverlay"
-            android:layout_above="@+id/buttonPanel"
-            />
+            >
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    </RelativeLayout>
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar"
+                    android:id="@+id/icons"
+                    android:layout_marginLeft="15dp">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/wallBtn"
+                        android:src="@drawable/common_google_signin_btn_icon_dark_disabled"
+                        />
+                </LinearLayout>-->
+
+            </android.support.v7.widget.Toolbar>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <FrameLayout
+                    android:id="@+id/fragment_main_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:foreground="?android:windowContentOverlay"
+                    android:layout_above="@+id/buttonPanel"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:itemTextColor="@android:color/white"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/activity_main_drawer" />
+    </android.support.v4.widget.DrawerLayout>
+
 </layout>
