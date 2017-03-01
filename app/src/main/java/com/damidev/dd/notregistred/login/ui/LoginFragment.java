@@ -100,6 +100,7 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
 
     @Override
     public void startMainActivity() {
+        getActivity().finish();
         Intent myIntent = new Intent(getActivity(), MainActivity.class);
         startActivity(myIntent);
     }

@@ -39,4 +39,10 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
