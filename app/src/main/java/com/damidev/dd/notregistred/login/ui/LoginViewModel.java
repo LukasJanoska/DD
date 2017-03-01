@@ -155,7 +155,18 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
             ServerRegResultDto data;
             data = response.body();
 
-            getView().startMainActivity();
+            if(data!=null) {
+                if(data.getResponseCode()==1) {
+                    getView().startMainActivity();
+                } else if (data.getResponseCode()==7) {
+                    getView().showErrorDialog("incorrect username or password");
+                } else {
+                    getView().showErrorDialog("error");
+                }
+            } else {
+                getView().showErrorDialog(response.errorBody().toString());
+            }
+
             //navigatorController.startActivity(MainActivity.class);
             //navigatorController.finishActivity();
         }
