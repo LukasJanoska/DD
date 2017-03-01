@@ -6,6 +6,8 @@ import com.damidev.dd.notregistred.login.inject.LoginComponent;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
 import com.damidev.dd.notregistred.map.ui.MapFragment;
+import com.damidev.dd.notregistred.picture.inject.PictureComponent;
+import com.damidev.dd.notregistred.picture.ui.PictureFragment;
 import com.damidev.dd.notregistred.register.inject.RegComponent;
 import com.damidev.dd.notregistred.register.ui.RegFragment;
 
@@ -18,7 +20,8 @@ import dagger.multibindings.IntoMap;
         subcomponents = {
                 LoginComponent.class,
                 MapComponent.class,
-                RegComponent.class
+                RegComponent.class,
+                PictureComponent.class
         }
 )
 public abstract class FragmentBindingModule {
@@ -37,5 +40,10 @@ public abstract class FragmentBindingModule {
     @IntoMap
     @InjectKey(RegFragment.class)
     public abstract ComponentBuilder regFragmentComponentBuilder(RegComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @InjectKey(PictureFragment.class)
+    public abstract ComponentBuilder pictureFragmentComponentBuilder(PictureComponent.Builder builder);
 
 }

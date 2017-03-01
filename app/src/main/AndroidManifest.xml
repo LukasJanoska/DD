@@ -21,6 +21,7 @@
             android:name=".notregistred.base.ui.NotRegistredActivity"
             android:label="reg"
             android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="portrait"
             >
         </activity>
 
@@ -38,7 +39,6 @@
         <service
             android:name=".splashscreen.platform.DownloadImageIntentService"
             android:exported="false"/>
-
 
     </application>
 

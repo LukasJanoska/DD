@@ -101,7 +101,6 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
             @Override
             public void run() {
                 finish();
-
                 Intent myIntent = new Intent(SplashScreenActivity.this, NotRegistredActivity.class);
                 startActivity(myIntent);
             }
@@ -147,7 +146,8 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
         super.onPause();
         BusProvider.getInstance().unregister(this);
         RunSplash.cancel();
-        if(!permissionCheck)
+        if(!permissionCheck) {
             finish();
+        }
     }
 }

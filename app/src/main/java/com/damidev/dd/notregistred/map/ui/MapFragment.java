@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentMapBinding;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
 import com.damidev.dd.notregistred.map.inject.MapModule;
+import com.damidev.dd.notregistred.picture.ui.PictureFragment;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapChildResponseDto;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
@@ -44,6 +47,9 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
 
     public static String ImageUrlName = "imagedd.jpg";
     public static String ImageUrl = "http://androidtest.dev.damidev.com/images/2.jpg";
+
+    private static ServerMapResponseDto responseDto;
+    private FileInputStream fis;
 
     MapView mapView;
     GoogleMap map;
@@ -86,12 +92,12 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         mapView = (MapView) view.findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
-        mapView.getMapAsync(this); //when you already implement OnMapReadyCallback in your
+        mapView.getMapAsync(this);
     }
 
     public ServerMapResponseDto readObjectFromFile(Context context) {
         try {
-            FileInputStream fis = context.openFileInput("ServerMapResponseDto.srl");
+            fis = getActivity().openFileInput("ServerMapResponseDto.srl");
             ObjectInputStream is = new ObjectInputStream(fis);
             Object readObject = is.readObject();
             is.close();
@@ -113,10 +119,15 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        ServerMapResponseDto responseDto = readObjectFromFile(getContext());
+        responseDto = readObjectFromFile(getContext());
 
         ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
         points = responseDto.getChildResponse();
@@ -128,14 +139,27 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
 
             addMarker(new LatLng(lat, lng), imgurl, "start");
         }
-
-
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+
+        marker.getTitle();
+
+        ServerMapChildResponseDto finRes = null;
+
+        for (ServerMapChildResponseDto res: responseDto.getChildResponse()) {
+            for(int i = 0; i < res.getPhotos().size(); i ++) {
+                if(marker.getTitle().equals(res.getPhotos().get(i))) {
+                    finRes = res;
+                }
+            }
+        }
+
+        replaceWithPictureFragment(finRes);
+
         Toast.makeText(getContext(), "marker", Toast.LENGTH_SHORT).show();
 
         return false;
@@ -148,7 +172,7 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         map.setOnMarkerClickListener(this);
         m = map.addMarker(new MarkerOptions()
                 .position(point)
-                .title(title)
+                .title(imgurl)
                 .snippet("aaaaaaa"));
 
         PoiTarget pt = new PoiTarget(m);
@@ -179,6 +203,14 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
 
         }
+    }
+
+    @MainThread
+    public void replaceWithPictureFragment(ServerMapChildResponseDto finRes) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        PictureFragment pictureFragment = PictureFragment.newInstance(PictureFragment.PictureFragmnetTag, finRes);
+        ft.replace(R.id.fragment_container, pictureFragment);
+        ft.commit();
     }
 
 }

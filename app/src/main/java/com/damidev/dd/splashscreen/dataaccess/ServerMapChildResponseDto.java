@@ -17,16 +17,20 @@ public class ServerMapChildResponseDto implements Serializable{
     @SerializedName("lng")
     private double lng;
 
+    @SerializedName("title")
+    private String title;
+
     @SerializedName("desc")
     private String desc;
 
     @SerializedName("photo")
     private ArrayList<String> photos;
 
-    public ServerMapChildResponseDto(int id, double lat, double lng, String desc, ArrayList<String> photos) {
+    public ServerMapChildResponseDto(int id, double lat, double lng, String title, String desc, ArrayList<String> photos) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;
+        this.title = title;
         this.desc = desc;
         this.photos = photos;
     }
@@ -53,6 +57,14 @@ public class ServerMapChildResponseDto implements Serializable{
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDesc() {
