@@ -64,7 +64,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
 //            return;
 //        }
 
-        getView().showProgressDialog();
+        getView().showProgressDialog();//
 
         this.registrationProcessor = AsyncProcessor.create();
         this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
@@ -154,6 +154,8 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
 
             ServerRegResultDto data;
             data = response.body();
+
+            getView().startMainActivity();
             //navigatorController.startActivity(MainActivity.class);
             //navigatorController.finishActivity();
         }

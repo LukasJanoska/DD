@@ -1,5 +1,6 @@
 package com.damidev.dd.notregistred.login.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentLoginBinding;
+import com.damidev.dd.main.base.ui.MainActivity;
 import com.damidev.dd.notregistred.login.inject.LoginComponent;
 import com.damidev.dd.notregistred.login.inject.LoginModule;
 import com.damidev.dd.notregistred.register.ui.RegFragment;
@@ -96,4 +98,9 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
         ft.commit();
     }
 
+    @Override
+    public void startMainActivity() {
+        Intent myIntent = new Intent(getActivity(), MainActivity.class);
+        startActivity(myIntent);
+    }
 }

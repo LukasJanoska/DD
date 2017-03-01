@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -159,8 +158,6 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         }
 
         replaceWithPictureFragment(finRes);
-
-        Toast.makeText(getContext(), "marker", Toast.LENGTH_SHORT).show();
 
         return false;
     }
