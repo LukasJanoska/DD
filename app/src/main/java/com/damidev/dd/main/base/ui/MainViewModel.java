@@ -1,4 +1,4 @@
-package com.damidev.dd.notregistred.base.ui;
+package com.damidev.dd.main.base.ui;
 
 import android.content.Context;
 
@@ -9,12 +9,12 @@ import javax.inject.Inject;
 
 
 @ActivityScope
-public class NotRegistredViewModel extends RxRetainBaseViewModel<NotRegistredView> {
+public class MainViewModel extends RxRetainBaseViewModel<MainView> {
 
     Context context;
 
     @Inject
-    public NotRegistredViewModel(Context context) {
+    public MainViewModel(Context context) {
         this.context = context;
 
     }
