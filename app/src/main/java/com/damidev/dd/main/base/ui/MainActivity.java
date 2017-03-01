@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivityMainBinding;
+import com.damidev.dd.main.account.ui.AccountFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
-import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
 
@@ -21,7 +21,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         super.onCreate(savedInstanceState);
         setAndBindContentView(R.layout.activity_main, savedInstanceState);
 
-        //replaceWithLoginFragment();
+        replaceWithAccountFragment();
     }
 
     @Override
@@ -33,10 +33,10 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
                 .injectMembers(this);
     }
 
-    private void replaceWithLoginFragment() {
+    private void replaceWithAccountFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        LoginFragment loginFragment = LoginFragment.newInstance(LoginFragment.LoginFragmnetTag);
-        ft.replace(R.id.fragment_container, loginFragment);
+        AccountFragment accountFragment = AccountFragment.newInstance(AccountFragment.AccountFragmnetTag);
+        ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
     }
 }

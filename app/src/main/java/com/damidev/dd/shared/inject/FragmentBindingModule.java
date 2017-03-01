@@ -2,6 +2,8 @@ package com.damidev.dd.shared.inject;
 
 import com.damidev.core.inject.ComponentBuilder;
 import com.damidev.core.inject.InjectKey;
+import com.damidev.dd.main.account.inject.AccountComponent;
+import com.damidev.dd.main.account.ui.AccountFragment;
 import com.damidev.dd.notregistred.login.inject.LoginComponent;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
@@ -21,7 +23,8 @@ import dagger.multibindings.IntoMap;
                 LoginComponent.class,
                 MapComponent.class,
                 RegComponent.class,
-                PictureComponent.class
+                PictureComponent.class,
+                AccountComponent.class
         }
 )
 public abstract class FragmentBindingModule {
@@ -45,5 +48,10 @@ public abstract class FragmentBindingModule {
     @IntoMap
     @InjectKey(PictureFragment.class)
     public abstract ComponentBuilder pictureFragmentComponentBuilder(PictureComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @InjectKey(AccountFragment.class)
+    public abstract ComponentBuilder accountFragmentComponentBuilder(AccountComponent.Builder builder);
 
 }
