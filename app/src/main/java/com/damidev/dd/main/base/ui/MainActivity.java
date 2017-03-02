@@ -1,5 +1,6 @@
 package com.damidev.dd.main.base.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import com.damidev.dd.databinding.ActivityMainBinding;
 import com.damidev.dd.main.account.ui.AccountFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
+import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
 
@@ -32,10 +34,15 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    private int userProfileId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setAndBindContentView(R.layout.activity_main, savedInstanceState);
+
+        Intent mIntent = getIntent();
+        userProfileId = mIntent.getIntExtra(LoginFragment.user_profile_id_tag, 0);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
@@ -56,7 +63,6 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         replaceWithAccountFragment();
     }
 
@@ -71,7 +77,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
     private void replaceWithAccountFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        AccountFragment accountFragment = AccountFragment.newInstance(AccountFragment.AccountFragmnetTag);
+        AccountFragment accountFragment = AccountFragment.newInstance(AccountFragment.AccountFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
     }

@@ -24,7 +24,7 @@
             android:layout_height="40dp"
             android:gravity="center_horizontal">
             <TextView
-                android:id="@+id/accountNameTv"
+                android:id="@+id/profileNameTv"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,18 +33,33 @@
                 android:layout_marginRight="30dp"
                 />
             <TextView
-                android:id="@+id/accountSurNameTv"
+                android:id="@+id/profileSurNameTv"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="asdad"
                 />
-
         </LinearLayout>
 
         <TextView
-            android:id="@+id/pictureAboutTextView"
+            android:id="@+id/profileEmail"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@={vm.email}"
+            android:layout_marginRight="15dp" />
+        <TextView
+            android:id="@+id/profilePhone"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="asdad" />
+        <TextView
+            android:id="@+id/profileDescription"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

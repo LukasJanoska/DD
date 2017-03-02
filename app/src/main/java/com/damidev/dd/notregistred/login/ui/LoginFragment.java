@@ -27,6 +27,7 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
 
     private ProgressDialog progressDialog;
 
+    public static String user_profile_id_tag = "user_profile_id";
     public static String LoginFragmnetTag = "LOGIN_FRAGMENT_TAG";
 
     public LoginFragment() {
@@ -99,9 +100,10 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     }
 
     @Override
-    public void startMainActivity() {
+    public void startMainActivity(int userProfileId) {
         getActivity().finish();
         Intent myIntent = new Intent(getActivity(), MainActivity.class);
+        myIntent.putExtra(user_profile_id_tag, userProfileId);
         startActivity(myIntent);
     }
 }

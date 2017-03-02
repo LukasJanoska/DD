@@ -182,7 +182,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                 /*response.code()
                 response.errorBody().string()*/
                 if(data.getResponseCode()==1) {
-                    getView().startMainActivity();
+                    getView().startMainActivity(profil.get_id());
                 } else if (data.getResponseCode()==7) {
                     getView().showErrorDialog("incorrect username or password");
                 } else {
