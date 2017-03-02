@@ -44,6 +44,9 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         Intent mIntent = getIntent();
         userProfileId = mIntent.getIntExtra(LoginFragment.user_profile_id_tag, 0);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {

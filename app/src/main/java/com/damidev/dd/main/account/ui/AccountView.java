@@ -6,4 +6,5 @@ import com.damidev.dd.notregistred.login.dataaccess.Profile;
 
 public interface AccountView extends MvvmView {
     void setAttrsToView(Profile pr);
+    void replaceWithProfileEditFragmnet();
 }

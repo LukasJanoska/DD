@@ -1,9 +1,8 @@
-package com.damidev.dd.main.account.ui;
+package com.damidev.dd.main.account.profileedit.ui;
 
 
 import android.content.Context;
 import android.databinding.ObservableField;
-import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.notregistred.login.dataaccess.Profile;
@@ -12,7 +11,7 @@ import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import javax.inject.Inject;
 
 
-public class AccountViewModel extends BaseViewModel<AccountView> {
+public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
 
     private Context context;
     private DatabaseProfileHandler profiledb;
@@ -44,7 +43,7 @@ public class AccountViewModel extends BaseViewModel<AccountView> {
     }
 
     @Inject
-    public AccountViewModel(Context context, DatabaseProfileHandler profiledb) {
+    public ProfileEditViewModel(Context context, DatabaseProfileHandler profiledb) {
         this.context = context;
         this.profiledb = profiledb;
     }
@@ -56,10 +55,6 @@ public class AccountViewModel extends BaseViewModel<AccountView> {
             return pr;
         }
         return null;
-    }
-
-    public void onEditProfile(final View view) {
-        getView().replaceWithProfileEditFragmnet();
     }
 
 }
