@@ -166,6 +166,8 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
             profil.set_name(data.getChildResponse().getName());
             profil.set_rights(data.getChildResponse().getRights());
 
+
+
                 db.addProfile(profil);
 
             Log.d("Insert: ", "Inserting ..");
