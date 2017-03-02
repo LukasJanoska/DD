@@ -1,9 +1,12 @@
 package com.damidev.dd.notregistred.login.inject;
 
+import android.content.Context;
+
 import com.damidev.core.inject.D2Module;
 import com.damidev.core.inject.scope.FragmentScope;
 import com.damidev.dd.notregistred.login.dataaccess.RegistrationRestApi;
 import com.damidev.dd.notregistred.login.dataaccess.RegistrationRestService;
+import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 
 import dagger.Module;
@@ -17,6 +20,12 @@ public class LoginModule implements D2Module {
     @FragmentScope
     public RegistrationController provideController(RegistrationRestService restService) {
         return new RegistrationController(restService);
+    }
+
+    @Provides
+    @FragmentScope
+    public DatabaseProfileHandler provideProfileHandler(Context context) {
+        return new DatabaseProfileHandler(context);
     }
 
     @Provides

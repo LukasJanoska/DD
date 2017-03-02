@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
+import com.damidev.dd.notregistred.login.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.dataaccess.ServerRegResultDto;
+import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 
 import javax.inject.Inject;
@@ -35,6 +38,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     private RegistrationController registrationController;
     private Context context;
     private FragmentManager fragmentManager;
+    private DatabaseProfileHandler db;
 
     private AsyncProcessor<Response<ServerRegResultDto>> registrationProcessor;
     private Disposable registrationDisposable;
@@ -42,10 +46,11 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     private boolean restored;
 
     @Inject
-    public LoginViewModel(Context context, final FragmentManager fragmentManager, final RegistrationController registrationController ) {
+    public LoginViewModel(Context context, final FragmentManager fragmentManager, final RegistrationController registrationController, DatabaseProfileHandler db ) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.registrationController = registrationController;
+        this.db = db;
     }
 
     public void onClickReg(final View view) {
@@ -155,7 +160,27 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
             ServerRegResultDto data;
             data = response.body();
 
+            Profile profil = new Profile();
+            profil.set_id(data.getChildResponse().getId());
+            profil.set_email(data.getChildResponse().getEmail());
+            profil.set_name(data.getChildResponse().getName());
+            profil.set_rights(data.getChildResponse().getRights());
+
+                db.addProfile(profil);
+
+            Log.d("Insert: ", "Inserting ..");
+            Log.d("Reading: ", "Reading profile..");
+
+                Profile pr = db.getProfile(profil.get_id());
+
+            Log.d("email: ", pr.get_email());
+            Log.d("email: ", pr.get_rights());
+            Log.d("email: ", "" + pr.get_id());
+            Log.d("email: ", pr.get_email());
+
             if(data!=null) {
+                /*response.code()
+                response.errorBody().string()*/
                 if(data.getResponseCode()==1) {
                     getView().startMainActivity();
                 } else if (data.getResponseCode()==7) {

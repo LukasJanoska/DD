@@ -9,6 +9,9 @@ import java.util.List;
 
 public class ServerRegChildResponseDto implements Serializable{
 
+    @SerializedName("id")
+    int id;
+
     @SerializedName("rights")
     private String rights;
 
@@ -38,7 +41,8 @@ public class ServerRegChildResponseDto implements Serializable{
 
     //photo
 
-    public ServerRegChildResponseDto(String rights, String email, String name, String lastname, String password, String phone, String description, String token, ArrayList<Favorites> favorites) {
+    public ServerRegChildResponseDto(int id, String rights, String email, String name, String lastname, String password, String phone, String description, String token, ArrayList<Favorites> favorites) {
+        this.id = id;
         this.rights = rights;
         this.email = email;
         this.name = name;
@@ -48,6 +52,14 @@ public class ServerRegChildResponseDto implements Serializable{
         this.description = description;
         this.token = token;
         this.favorites = favorites;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRights() {
