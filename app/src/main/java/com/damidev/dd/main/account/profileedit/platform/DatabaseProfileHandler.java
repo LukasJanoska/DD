@@ -1,4 +1,4 @@
-package com.damidev.dd.main.account.contacts.platform;
+package com.damidev.dd.main.account.profileedit.platform;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -10,16 +10,22 @@ import android.view.ViewGroup;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentContactsBinding;
+import com.damidev.dd.main.account.contacts.Events.ServerEvent;
 import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.inject.ContactsModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.shared.rest.platform.BusProvider;
+import com.squareup.otto.Subscribe;
 
 
 public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, ContactsViewModel>
         implements ContactsView {
 
     public static String ContactsFragmnetTag = "CONTACTS_FRAGMENT_TAG";
+    private ServerContactsResultDto serverContactsResultDto;
+    private String token;
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -33,10 +39,13 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String token = bundle.getString(LoginFragment.user_token);
+            token = bundle.getString(LoginFragment.user_token);
             Log.i("token", token);
             //getToken
         }
+
+        getViewModel().getAllContacts(token);
+
     }
 
     @Override
@@ -66,5 +75,24 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
         contactsFragment.setArguments(bundle);
         return contactsFragment;
     }
+
+    @Subscribe
+    public void onServerEvent(ServerEvent serverEvent){
+        serverContactsResultDto = serverEvent.getServerResponse();
+        //getViewModel().updateDbUserProfile(serverRegResultDto);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
+    }
+
 
 }

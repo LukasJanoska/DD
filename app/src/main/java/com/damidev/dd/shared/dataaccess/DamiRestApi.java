@@ -23,6 +23,10 @@ public interface DamiRestApi {
 
     @FormUrlEncoded
     @POST("updateAccount")
-    Call<ServerRegResultDto> updateUserProfile(@Field("token") String token, @FieldMap Map<String, String> fields  );
+    Call<ServerRegResultDto> updateUserProfile(@Field("token") String token, @FieldMap Map<String, String> fields );
+
+    @FormUrlEncoded
+    @POST("getContacts")
+    Call<ServerContactsResultDto> getContacts(@Field("token") String token );
 
 }

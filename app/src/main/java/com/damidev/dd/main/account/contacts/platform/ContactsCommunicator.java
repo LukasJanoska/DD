@@ -3,14 +3,12 @@ package com.damidev.dd.main.account.contacts.platform;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import com.damidev.dd.main.account.profileedit.Events.ErrorEvent;
-import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
+import com.damidev.dd.main.account.contacts.Events.ErrorEvent;
+import com.damidev.dd.main.account.contacts.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
-import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
+import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Produce;
-
-import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,7 +24,7 @@ public class ContactsCommunicator {
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
     @WorkerThread
-    public void updateUserProfile(HashMap hashMap){
+    public void getAllContacts(String token){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -41,13 +39,13 @@ public class ContactsCommunicator {
 
         DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerRegResultDto> call = service.updateUserProfile("WDjY0296a83bef7ddbcca453e5d627df0dce5", hashMap);
+        Call<ServerContactsResultDto> call = service.getContacts(token);
 
-        call.enqueue(new Callback<ServerRegResultDto>() {
+        call.enqueue(new Callback<ServerContactsResultDto>() {
             @Override
-            public void onResponse(Call<ServerRegResultDto> call, Response<ServerRegResultDto> response) {
+            public void onResponse(Call<ServerContactsResultDto> call, Response<ServerContactsResultDto> response) {
                 // response.isSuccessful() is true if the response code is 2xx
-                ServerRegResultDto data;
+                ServerContactsResultDto data;
                 data = response.body();
 
                 if(data != null && data.getResponseCode() == 1) {
@@ -60,7 +58,7 @@ public class ContactsCommunicator {
             }
 
             @Override
-            public void onFailure(Call<ServerRegResultDto> call, Throwable t) {
+            public void onFailure(Call<ServerContactsResultDto> call, Throwable t) {
                 // handle execution failures like no internet connectivity
 
                 BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
@@ -69,7 +67,7 @@ public class ContactsCommunicator {
     }
 
     @Produce
-    public ServerEvent produceServerEvent(ServerRegResultDto serverMapResponseDto) {
+    public ServerEvent produceServerEvent(ServerContactsResultDto serverMapResponseDto) {
         return new ServerEvent(serverMapResponseDto);
     }
 

@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.damidev.core.inject.D2Module;
 import com.damidev.core.inject.scope.FragmentScope;
-import com.damidev.dd.main.account.contacts.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
+import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,5 +17,11 @@ public class ContactsModule implements D2Module {
     @FragmentScope
     public DatabaseProfileHandler provideProfileHandler(Context context) {
         return new DatabaseProfileHandler(context);
+    }
+
+    @Provides
+    @FragmentScope
+    public ContactsCommunicator provideProfileComunicator() {
+        return new ContactsCommunicator();
     }
 }
