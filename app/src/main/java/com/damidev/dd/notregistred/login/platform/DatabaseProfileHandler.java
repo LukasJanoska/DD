@@ -105,25 +105,30 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 		return profile;
 	}
 
-/*	// Updating single profile
+	// Updating single profile
 	public int updateProfile(Profile profile) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_NAME, profile.getName());
-		values.put(KEY_PH_NO, profile.getPhoneNumber());
+		values.put(KEY_EMAIL, profile.get_email());
+		values.put(KEY_PHONE, profile.get_phone());
+		values.put(KEY_NAME, profile.get_name());
+		values.put(KEY_LAST_NAME, profile.get_last_name());
+		values.put(KEY_DESCRIPTION, profile.get_description());
 
 		// updating row
 		return db.update(TABLE_PROFILES, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(profile.getID()) });
+				new String[] { String.valueOf(profile.get_id()) });
 	}
 
+/*
 	// Deleting single profile
 	public void deleteProfile(Profile profile) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_PROFILES, KEY_ID + " = ?",
 				new String[] { String.valueOf(profile.getID()) });
 		db.close();
-	}*/
+	}
+*/
 
 }

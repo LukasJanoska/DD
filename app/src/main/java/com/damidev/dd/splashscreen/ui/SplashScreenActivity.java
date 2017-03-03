@@ -121,7 +121,6 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
         //extraInformation.setText("" + serverEvent.getServerResponse().getMessage());
     }
 
-
     public boolean writeObjectToFile(Context context, ServerMapResponseDto serverMapResponseDto) {
         try {
             FileOutputStream fos = context.openFileOutput("ServerMapResponseDto.srl", MODE_PRIVATE);

@@ -130,7 +130,9 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorPrimary"
-                android:text="SAVE CHANGES"/>
+                android:text="SAVE CHANGES"
+                android:onClick="@{(view) -> vm.onSaveChanges(view)}"
+                />
 
         </LinearLayout>
 

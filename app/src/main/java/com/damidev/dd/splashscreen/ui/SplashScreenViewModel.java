@@ -15,6 +15,5 @@ public class SplashScreenViewModel extends BaseViewModel<NoMvvmView> {
     @Inject
     public SplashScreenViewModel(Context context) {
         this.context = context;
-
     }
 }

@@ -3,10 +3,13 @@ package com.damidev.dd.main.account.profileedit.ui;
 
 import android.content.Context;
 import android.databinding.ObservableField;
+import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
-import com.damidev.dd.shared.dataaccess.Profile;
+import com.damidev.dd.main.account.profileedit.platform.ProfileCommunicator;
 import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
+import com.damidev.dd.shared.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 
 import javax.inject.Inject;
 
@@ -15,6 +18,8 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
 
     private Context context;
     private DatabaseProfileHandler profiledb;
+    private ProfileCommunicator communicator;
+
 
     private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> surName = new ObservableField<CharSequence>();
@@ -43,18 +48,26 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
     }
 
     @Inject
-    public ProfileEditViewModel(Context context, DatabaseProfileHandler profiledb) {
+    public ProfileEditViewModel(Context context, DatabaseProfileHandler profiledb, ProfileCommunicator communicator) {
         this.context = context;
         this.profiledb = profiledb;
+        this.communicator = communicator;
     }
 
-    public Profile getUserProfile(int userProfileId) {
-        Profile pr = profiledb.getProfile(userProfileId);
+    public void onSaveChanges(View view) {
+        communicator.updateUserProfile(context);
+    }
 
-        if(pr!=null) {
-            return pr;
-        }
-        return null;
+    public void updateDbUserProfile(ServerRegResultDto response) {
+        Profile profile = new Profile();
+
+        profile.set_id(response.getChildResponse().getId());
+        profile.set_email(response.getChildResponse().getEmail());
+        profile.set_name(response.getChildResponse().getName());
+        profile.set_last_name(response.getChildResponse().getLastname());
+        profile.set_description(response.getChildResponse().getDescription());
+
+        profiledb.updateProfile(profile);
     }
 
 }

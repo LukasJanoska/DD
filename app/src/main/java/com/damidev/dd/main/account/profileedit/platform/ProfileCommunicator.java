@@ -40,7 +40,7 @@ public class ProfileCommunicator {
 
         DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerRegResultDto> call = service.updateUserProfile("0ImLO3e9767bbbb3850af6a88d3528d4d62d4", "necoocen");
+        Call<ServerRegResultDto> call = service.updateUserProfile("0ImLO3e9767bbbb3850af6a88d3528d4d62d4", "necoocen000");
 
         call.enqueue(new Callback<ServerRegResultDto>() {
             @Override

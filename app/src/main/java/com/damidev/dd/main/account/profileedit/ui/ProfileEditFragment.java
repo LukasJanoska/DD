@@ -10,12 +10,15 @@ import android.widget.EditText;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentProfileEditBinding;
-import com.damidev.dd.main.account.profileedit.platform.ProfileCommunicator;
+import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.shared.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.shared.rest.platform.BusProvider;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 
@@ -37,9 +40,9 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
     @BindView(R.id.profileDescription)
     EditText profleDescription;
 
-    private ProfileCommunicator communicator;
-
     private Profile profile;
+    private ServerRegResultDto serverRegResultDto;
+
 
     public ProfileEditFragment() {
         // Required empty public constructor
@@ -59,12 +62,6 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
             getViewModel().getPhone().set(profile.get_phone());
             getViewModel().getDescr().set(profile.get_description());*/
         }
-        communicator = new ProfileCommunicator();
-        usePost();
-    }
-
-    private void usePost(){
-        communicator.updateUserProfile(getActivity().getApplicationContext());
     }
 
     @Override
@@ -93,6 +90,25 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
         bundle.putInt(LoginFragment.user_profile_id_tag, userProfileId);
         loginFragment.setArguments(bundle);
         return loginFragment;
+    }
+
+    @Subscribe
+    public void onServerEvent(ServerEvent serverEvent){
+
+        serverRegResultDto = serverEvent.getServerResponse();
+        getViewModel().updateDbUserProfile(serverRegResultDto);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
     }
 
 }
