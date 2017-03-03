@@ -84,7 +84,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         ProfileFragment accountFragment = ProfileFragment.newInstance(ProfileFragment.AccountFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
-        toolbar.setTitle("PROFILE");
+        toolbar.setTitle("YOUR PROFILE");
     }
 
     private void replaceWithContactsFragment() {

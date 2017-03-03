@@ -14,18 +14,18 @@ import android.widget.TextView;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
-import com.damidev.dd.databinding.FragmentAccountBinding;
+import com.damidev.dd.databinding.FragmentProfileBinding;
 import com.damidev.dd.main.account.profile.inject.ProfileComponent;
 import com.damidev.dd.main.account.profile.inject.ProfileModule;
 import com.damidev.dd.main.account.profileedit.ui.ProfileEditFragment;
-import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 
 import butterknife.BindView;
 
 
-public class ProfileFragment extends D2MvvmFragment<FragmentAccountBinding, ProfileViewModel>
+public class ProfileFragment extends D2MvvmFragment<FragmentProfileBinding, ProfileViewModel>
         implements ProfileView {
 
     public static String AccountFragmnetTag = "ACCOUNT_FRAGMENT_TAG";
@@ -76,7 +76,7 @@ public class ProfileFragment extends D2MvvmFragment<FragmentAccountBinding, Prof
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = setAndBindContentView(inflater, container, R.layout.fragment_account);
+        final View view = setAndBindContentView(inflater, container, R.layout.fragment_profile);
         return view;
     }
 

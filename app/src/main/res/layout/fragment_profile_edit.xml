@@ -21,10 +21,11 @@
             android:orientation="vertical"
             >
             <TextView
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textSize="20sp"
                 android:text="Edit your profile "
                 android:textStyle="bold"/>
 
@@ -123,12 +124,19 @@
                     />
             </RelativeLayout>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_library_add_white_24dp"
+                android:layout_margin="10dp"
+                />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
                 android:text="SAVE CHANGES"
                 android:onClick="@{(view) -> vm.onSaveChanges(view)}"

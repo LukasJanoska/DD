@@ -2,6 +2,7 @@ package com.damidev.dd.main.account.profileedit.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentProfileEditBinding;
+import com.damidev.dd.main.account.profile.ui.ProfileFragment;
 import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditModule;
@@ -109,7 +111,6 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
 
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
-
         serverRegResultDto = serverEvent.getServerResponse();
         getViewModel().updateDbUserProfile(serverRegResultDto);
     }
@@ -126,4 +127,11 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
         BusProvider.getInstance().unregister(this);
     }
 
+    @Override
+    public void replaceWithProfileFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ProfileFragment accountFragment = ProfileFragment.newInstance(ProfileFragment.AccountFragmnetTag, userProfileId);
+        ft.replace(R.id.fragment_main_container, accountFragment);
+        ft.commit();
+    }
 }

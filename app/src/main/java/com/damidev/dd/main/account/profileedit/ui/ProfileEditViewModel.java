@@ -87,6 +87,9 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
         profile.set_description(response.getChildResponse().getDescription());
 
         profiledb.updateProfile(profile);
+
+        getView().replaceWithProfileFragment();
+
     }
 
 }
