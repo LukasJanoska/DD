@@ -1,9 +1,9 @@
-package com.damidev.dd.main.account.inject;
+package com.damidev.dd.main.account.profile.inject;
 
 import com.damidev.core.inject.ComponentBuilder;
 import com.damidev.core.inject.D2Component;
 import com.damidev.core.inject.scope.FragmentScope;
-import com.damidev.dd.main.account.ui.AccountFragment;
+import com.damidev.dd.main.account.profile.ui.AccountFragment;
 
 import dagger.Subcomponent;
 

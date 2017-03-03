@@ -15,7 +15,7 @@ import android.view.View;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivityMainBinding;
-import com.damidev.dd.main.account.ui.AccountFragment;
+import com.damidev.dd.main.account.profile.ui.AccountFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;

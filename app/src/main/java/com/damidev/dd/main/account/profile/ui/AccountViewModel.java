@@ -1,4 +1,4 @@
-package com.damidev.dd.main.account.ui;
+package com.damidev.dd.main.account.profile.ui;
 
 
 import android.content.Context;

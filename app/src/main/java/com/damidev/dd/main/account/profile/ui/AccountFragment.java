@@ -1,4 +1,4 @@
-package com.damidev.dd.main.account.ui;
+package com.damidev.dd.main.account.profile.ui;
 
 import android.os.Bundle;
 import android.support.annotation.MainThread;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentAccountBinding;
-import com.damidev.dd.main.account.inject.AccountComponent;
-import com.damidev.dd.main.account.inject.AccountModule;
+import com.damidev.dd.main.account.profile.inject.AccountComponent;
+import com.damidev.dd.main.account.profile.inject.AccountModule;
 import com.damidev.dd.main.account.profileedit.ui.ProfileEditFragment;
 import com.damidev.dd.notregistred.login.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;

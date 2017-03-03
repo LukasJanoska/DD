@@ -1,4 +1,4 @@
-package com.damidev.dd.main.account.inject;
+package com.damidev.dd.main.account.profile.inject;
 
 import android.content.Context;
 

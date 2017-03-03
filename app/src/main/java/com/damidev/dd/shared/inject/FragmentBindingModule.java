@@ -2,10 +2,10 @@ package com.damidev.dd.shared.inject;
 
 import com.damidev.core.inject.ComponentBuilder;
 import com.damidev.core.inject.InjectKey;
-import com.damidev.dd.main.account.inject.AccountComponent;
+import com.damidev.dd.main.account.profile.inject.AccountComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.ui.ProfileEditFragment;
-import com.damidev.dd.main.account.ui.AccountFragment;
+import com.damidev.dd.main.account.profile.ui.AccountFragment;
 import com.damidev.dd.notregistred.login.inject.LoginComponent;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.notregistred.map.inject.MapComponent;
