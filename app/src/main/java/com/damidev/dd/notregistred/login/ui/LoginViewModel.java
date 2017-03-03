@@ -178,11 +178,9 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                         Log.d("email: ", pr.get_email());
 
                         getView().startMainActivity(profil.get_id());
-                    } /*else if (data.getResponseCode()==7) { // takto to ale nefunguje
+                    } /*else if (data.getResponseCode()==7) { // takto to malo fungovat podla zadania, ale nefunguje, pri responsecode inom ako 1 navracia server 200, takze mi nevyplni body
                         getView().showErrorDialog("incorrect username or password");
-                    } else {
-                        getView().showErrorDialog("error");
-                    }*/
+                    } */
                 } else {
                     getView().showErrorDialog("error");
                 }
@@ -193,9 +191,6 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                     e.printStackTrace();
                 }
             }
-
-            //navigatorController.startActivity(MainActivity.class);
-            //navigatorController.finishActivity();
         }
 
         @Override
@@ -204,9 +199,6 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                 getView().hideProgressDialog();
                 getView().showErrorDialog(t.getMessage());
             }
-
-            //navigatorController.startActivity(MainActivity.class);
-            //navigatorController.finishActivity();
         }
 
         @Override
