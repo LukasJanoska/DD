@@ -3,7 +3,6 @@ package com.damidev.dd.main.account.profile.ui;
 
 import android.content.Context;
 import android.databinding.ObservableField;
-import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.notregistred.login.dataaccess.Profile;
@@ -58,7 +57,7 @@ public class AccountViewModel extends BaseViewModel<AccountView> {
         return null;
     }
 
-    public void onEditProfile(final View view) {
+    public void onEditProfile() {
         getView().replaceWithProfileEditFragmnet();
     }
 

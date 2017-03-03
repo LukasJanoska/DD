@@ -5,6 +5,9 @@ import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -49,6 +52,8 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userProfileId = bundle.getInt(LoginFragment.user_profile_id_tag, 0);
@@ -80,6 +85,25 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_profile_fragment, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.edit_profile:
+                getViewModel().onEditProfile();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
     public static AccountFragment newInstance(String someTitle, int userProfileId) {
         AccountFragment loginFragment = new AccountFragment();
         Bundle bundle = new Bundle();
@@ -102,4 +126,5 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
         ft.replace(R.id.fragment_main_container, fragment); //.addToBackStack(null);
         ft.commit();
     }
+
 }

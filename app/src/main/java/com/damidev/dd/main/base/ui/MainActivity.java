@@ -15,6 +15,7 @@ import android.view.View;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivityMainBinding;
+import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
 import com.damidev.dd.main.account.profile.ui.AccountFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
@@ -83,6 +84,15 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         AccountFragment accountFragment = AccountFragment.newInstance(AccountFragment.AccountFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
+        toolbar.setTitle("PROFILE");
+    }
+
+    private void replaceWithContactsFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ContactsFragment contactsFragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag);
+        ft.replace(R.id.fragment_main_container, contactsFragment);
+        ft.commit();
+        toolbar.setTitle("CONTACTS");
     }
 
     @Override
@@ -96,11 +106,9 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-
-            /*fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AlertsFragment.newInstance(AlertsFragment.AlertsFragmentTag))
-                    .commit();
-            *///Toast.makeText(this, "camera", Toast.LENGTH_LONG).show();
+            replaceWithAccountFragment();
+        } else if (id == R.id.contacts) {
+            replaceWithContactsFragment();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

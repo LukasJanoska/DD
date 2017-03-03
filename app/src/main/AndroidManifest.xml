@@ -27,7 +27,7 @@
 
         <activity
             android:name=".main.base.ui.MainActivity"
-            android:label="main"
+            android:label="PROFILE"
             android:theme="@style/Theme.Design.NoActionBar"
             android:screenOrientation="portrait"
             >
