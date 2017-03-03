@@ -43,9 +43,7 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
             Log.i("token", token);
             //getToken
         }
-
         getViewModel().getAllContacts(token);
-
     }
 
     @Override
@@ -79,7 +77,7 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
         serverContactsResultDto = serverEvent.getServerResponse();
-        //getViewModel().updateDbUserProfile(serverRegResultDto);
+        getViewModel().saveContactsToDB(serverContactsResultDto);
     }
 
     @Override
