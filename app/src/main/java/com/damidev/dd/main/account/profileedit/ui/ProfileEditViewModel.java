@@ -83,6 +83,7 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
         profile.set_email(response.getChildResponse().getEmail());
         profile.set_name(response.getChildResponse().getName());
         profile.set_last_name(response.getChildResponse().getLastname());
+        profile.set_phone(response.getChildResponse().getPhone());
         profile.set_description(response.getChildResponse().getDescription());
 
         profiledb.updateProfile(profile);

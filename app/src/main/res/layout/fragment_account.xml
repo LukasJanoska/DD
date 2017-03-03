@@ -61,6 +61,7 @@
             <TextView
                 android:id="@+id/profileEmail"
                 style="@style/profile_attrs"
+                android:background="@color/colorAccent"
                 android:text="@={vm.email}"
                  />
         </RelativeLayout>
@@ -79,6 +80,7 @@
             <TextView
                 android:id="@+id/profilePhone"
                 style="@style/profile_attrs"
+                android:background="@color/colorAccent"
                 android:text="@={vm.phone}" />
         </RelativeLayout>
 
@@ -96,6 +98,7 @@
             <TextView
                 android:id="@+id/profileDescription"
                 style="@style/profile_attrs"
+                android:background="@color/colorAccent"
                 android:text="@={vm.descr}"
                 />
         </RelativeLayout>

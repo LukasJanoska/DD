@@ -100,7 +100,6 @@ public class ProfileFragment extends D2MvvmFragment<FragmentAccountBinding, Prof
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
