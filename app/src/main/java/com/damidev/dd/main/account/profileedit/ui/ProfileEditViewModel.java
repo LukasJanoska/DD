@@ -11,6 +11,8 @@ import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 
 
@@ -19,7 +21,6 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
     private Context context;
     private DatabaseProfileHandler profiledb;
     private ProfileCommunicator communicator;
-
 
     private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> surName = new ObservableField<CharSequence>();
@@ -54,8 +55,25 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
         this.communicator = communicator;
     }
 
+    public Profile getUserProfile(int userProfileId) {
+        Profile pr = profiledb.getProfile(userProfileId);
+
+        if(pr!=null) {
+            return pr;
+        }
+        return null;
+    }
+
     public void onSaveChanges(View view) {
-        communicator.updateUserProfile(context);
+        HashMap hashMap = new HashMap();
+
+        hashMap.put("name", getName().get().toString());
+        hashMap.put("lastname", getSurName().get().toString());
+        hashMap.put("email", getEmail().get().toString());
+        hashMap.put("phone", getPhone().get().toString());
+        hashMap.put("description", getDescr().get().toString());
+
+        communicator.updateUserProfile(hashMap);
     }
 
     public void updateDbUserProfile(ServerRegResultDto response) {

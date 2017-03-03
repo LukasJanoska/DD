@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
-import com.damidev.dd.shared.dataaccess.Profile;
-import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
+import com.damidev.dd.shared.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 
 import java.io.IOException;
 
@@ -140,15 +139,12 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     public ObservableField<CharSequence> getEmail() {
         return email;
     }
-
     public ObservableField<CharSequence> getPassword() {
         return password;
     }
-
     public ObservableField<CharSequence> getUsernameError() {
         return usernameError;
     }
-
     public ObservableField<CharSequence> getPasswordError() {
         return passwordError;
     }
@@ -167,15 +163,11 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                         profil.set_id(data.getChildResponse().getId());
                         profil.set_email(data.getChildResponse().getEmail());
                         profil.set_name(data.getChildResponse().getName());
+                        profil.set_last_name(data.getChildResponse().getLastname());
                         profil.set_rights(data.getChildResponse().getRights());
+                        profil.set_phone(data.getChildResponse().getPhone());
+                        profil.set_description(data.getChildResponse().getDescription());
                         db.addProfile(profil);
-                        Log.d("Insert: ", "Inserting ..");
-                        Log.d("Reading: ", "Reading profile..");
-                        Profile pr = db.getProfile(profil.get_id());
-                        Log.d("email: ", pr.get_email());
-                        Log.d("email: ", pr.get_rights());
-                        Log.d("email: ", "" + pr.get_id());
-                        Log.d("email: ", pr.get_email());
 
                         getView().startMainActivity(profil.get_id());
                     } /*else if (data.getResponseCode()==7) { // takto to malo fungovat podla zadania, ale nefunguje, pri responsecode inom ako 1 navracia server 200, takze mi nevyplni body

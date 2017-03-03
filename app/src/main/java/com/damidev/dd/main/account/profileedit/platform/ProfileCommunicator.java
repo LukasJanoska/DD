@@ -1,6 +1,5 @@
 package com.damidev.dd.main.account.profileedit.platform;
 
-import android.content.Context;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
@@ -10,6 +9,8 @@ import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Produce;
+
+import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,7 +26,7 @@ public class ProfileCommunicator {
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
     @WorkerThread
-    public void updateUserProfile(final Context context){
+    public void updateUserProfile(HashMap hashMap){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -40,7 +41,7 @@ public class ProfileCommunicator {
 
         DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerRegResultDto> call = service.updateUserProfile("0ImLO3e9767bbbb3850af6a88d3528d4d62d4", "necoocen000");
+        Call<ServerRegResultDto> call = service.updateUserProfile("0ImLO3e9767bbbb3850af6a88d3528d4d62d4", hashMap);
 
         call.enqueue(new Callback<ServerRegResultDto>() {
             @Override

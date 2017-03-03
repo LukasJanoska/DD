@@ -55,12 +55,22 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userProfileId = bundle.getInt(LoginFragment.user_profile_id_tag, 0);
-            /*profile = getViewModel().getUserProfile(userProfileId);
+            profile = getViewModel().getUserProfile(userProfileId);
             getViewModel().getName().set(profile.get_name());
-            getViewModel().getSurName().set(profile.get_last_name());
+            if(profile.get_last_name() == null) {
+                profile.set_last_name("");
+                getViewModel().getSurName().set(profile.get_last_name());
+            } else {
+                getViewModel().getSurName().set(profile.get_last_name());
+            }
             getViewModel().getEmail().set(profile.get_email());
-            getViewModel().getPhone().set(profile.get_phone());
-            getViewModel().getDescr().set(profile.get_description());*/
+            if(profile.get_phone() == null) {
+                profile.set_phone("");
+                getViewModel().getPhone().set(profile.get_phone());
+            } else {
+                getViewModel().getPhone().set(profile.get_phone());
+            }
+            getViewModel().getDescr().set(profile.get_description());
         }
     }
 

@@ -38,8 +38,8 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getViewModel().getEmail().set("abc@ab.ab");
-        getViewModel().getPassword().set("abc");
+        getViewModel().getEmail().set("mmmm@mm.mm");
+        getViewModel().getPassword().set("mmm");
     }
 
     @Override
