@@ -10,10 +10,11 @@ import android.widget.EditText;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentProfileEditBinding;
+import com.damidev.dd.main.account.profileedit.platform.ProfileCommunicator;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditModule;
-import com.damidev.dd.notregistred.login.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 
 import butterknife.BindView;
@@ -36,6 +37,8 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
     @BindView(R.id.profileDescription)
     EditText profleDescription;
 
+    private ProfileCommunicator communicator;
+
     private Profile profile;
 
     public ProfileEditFragment() {
@@ -56,6 +59,12 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
             getViewModel().getPhone().set(profile.get_phone());
             getViewModel().getDescr().set(profile.get_description());*/
         }
+        communicator = new ProfileCommunicator();
+        usePost();
+    }
+
+    private void usePost(){
+        communicator.updateUserProfile(getActivity().getApplicationContext());
     }
 
     @Override

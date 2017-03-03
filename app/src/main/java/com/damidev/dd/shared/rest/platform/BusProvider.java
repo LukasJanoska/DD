@@ -1,4 +1,4 @@
-package com.damidev.dd.splashscreen.platform;
+package com.damidev.dd.shared.rest.platform;
 
 
 import com.squareup.otto.Bus;

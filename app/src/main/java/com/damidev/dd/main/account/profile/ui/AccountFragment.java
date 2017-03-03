@@ -18,7 +18,7 @@ import com.damidev.dd.databinding.FragmentAccountBinding;
 import com.damidev.dd.main.account.profile.inject.AccountComponent;
 import com.damidev.dd.main.account.profile.inject.AccountModule;
 import com.damidev.dd.main.account.profileedit.ui.ProfileEditFragment;
-import com.damidev.dd.notregistred.login.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 

@@ -1,7 +1,7 @@
 package com.damidev.dd.notregistred.login.platform;
 
-import com.damidev.dd.notregistred.login.dataaccess.RegistrationRestService;
-import com.damidev.dd.notregistred.login.dataaccess.ServerRegResultDto;
+import com.damidev.dd.shared.dataaccess.RegistrationRestService;
+import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

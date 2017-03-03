@@ -1,4 +1,4 @@
-package com.damidev.dd.notregistred.login.dataaccess;
+package com.damidev.dd.shared.dataaccess;
 
 import android.support.annotation.WorkerThread;
 
@@ -13,10 +13,10 @@ import retrofit2.Response;
 @FragmentScope
 public class RegistrationRestService {
 
-    RegistrationRestApi restApi;
+    DamiRestApi restApi;
 
     @Inject
-    public RegistrationRestService(final RegistrationRestApi restApi) {
+    public RegistrationRestService(final DamiRestApi restApi) {
         this.restApi = restApi;
     }
 

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.damidev.dd.notregistred.login.dataaccess.Contact;
+import com.damidev.dd.shared.dataaccess.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

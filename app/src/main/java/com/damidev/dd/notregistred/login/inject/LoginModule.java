@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.damidev.core.inject.D2Module;
 import com.damidev.core.inject.scope.FragmentScope;
-import com.damidev.dd.notregistred.login.dataaccess.RegistrationRestApi;
-import com.damidev.dd.notregistred.login.dataaccess.RegistrationRestService;
+import com.damidev.dd.shared.dataaccess.DamiRestApi;
+import com.damidev.dd.shared.dataaccess.RegistrationRestService;
 import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 
@@ -30,7 +30,7 @@ public class LoginModule implements D2Module {
 
     @Provides
     @FragmentScope
-    public RegistrationRestApi provideRestApi(final Retrofit retrofit) {
-        return retrofit.create(RegistrationRestApi.class);
+    public DamiRestApi provideRestApi(final Retrofit retrofit) {
+        return retrofit.create(DamiRestApi.class);
     }
 }

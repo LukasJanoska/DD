@@ -19,7 +19,7 @@ import com.damidev.dd.splashscreen.Events.ServerEvent;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.damidev.dd.splashscreen.inject.SplashScreenComponent;
 import com.damidev.dd.splashscreen.inject.SplashScreenModule;
-import com.damidev.dd.splashscreen.platform.BusProvider;
+import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.damidev.dd.splashscreen.platform.MapCommunicator;
 import com.squareup.otto.Subscribe;
 

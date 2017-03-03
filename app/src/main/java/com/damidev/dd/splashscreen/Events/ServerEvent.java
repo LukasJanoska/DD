@@ -5,7 +5,7 @@ import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 public class ServerEvent {
     private ServerMapResponseDto serverResponse;
 
-    public ServerEvent(com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto serverResponse) {
+    public ServerEvent(ServerMapResponseDto serverResponse) {
         this.serverResponse = serverResponse;
     }
 

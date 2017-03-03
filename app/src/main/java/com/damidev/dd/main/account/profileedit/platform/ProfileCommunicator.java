@@ -1,14 +1,14 @@
-package com.damidev.dd.splashscreen.platform;
+package com.damidev.dd.main.account.profileedit.platform;
 
 import android.content.Context;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.damidev.dd.main.account.profileedit.Events.ErrorEvent;
+import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
+import com.damidev.dd.shared.dataaccess.DamiRestApi;
+import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;
-import com.damidev.dd.splashscreen.Events.ErrorEvent;
-import com.damidev.dd.splashscreen.Events.ServerEvent;
-import com.damidev.dd.splashscreen.dataaccess.MapApi;
-import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.squareup.otto.Produce;
 
 import okhttp3.OkHttpClient;
@@ -20,12 +20,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MapCommunicator {
+public class ProfileCommunicator {
     private static  final String TAG = "Communicator";
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
     @WorkerThread
-    public void getMapPoints(final Context context){
+    public void updateUserProfile(final Context context){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -38,15 +38,15 @@ public class MapCommunicator {
                 .baseUrl(SERVER_URL)
                 .build();
 
-        MapApi service = retrofit.create(MapApi.class);
+        DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerMapResponseDto> call = service.getPointsOnMap();
+        Call<ServerRegResultDto> call = service.updateUserProfile("0ImLO3e9767bbbb3850af6a88d3528d4d62d4", "necoocen");
 
-        call.enqueue(new Callback<ServerMapResponseDto>() {
+        call.enqueue(new Callback<ServerRegResultDto>() {
             @Override
-            public void onResponse(Call<ServerMapResponseDto> call, Response<ServerMapResponseDto> response) {
+            public void onResponse(Call<ServerRegResultDto> call, Response<ServerRegResultDto> response) {
                 // response.isSuccessful() is true if the response code is 2xx
-                ServerMapResponseDto data;
+                ServerRegResultDto data;
                 data = response.body();
 
                 if(data != null && data.getResponseCode() == 1) {
@@ -59,7 +59,7 @@ public class MapCommunicator {
             }
 
             @Override
-            public void onFailure(Call<ServerMapResponseDto> call, Throwable t) {
+            public void onFailure(Call<ServerRegResultDto> call, Throwable t) {
                 // handle execution failures like no internet connectivity
 
                 BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
@@ -68,7 +68,7 @@ public class MapCommunicator {
     }
 
     @Produce
-    public ServerEvent produceServerEvent(ServerMapResponseDto serverMapResponseDto) {
+    public ServerEvent produceServerEvent(ServerRegResultDto serverMapResponseDto) {
         return new ServerEvent(serverMapResponseDto);
     }
 

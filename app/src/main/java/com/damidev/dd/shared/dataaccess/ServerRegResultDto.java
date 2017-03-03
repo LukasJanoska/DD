@@ -1,4 +1,4 @@
-package com.damidev.dd.notregistred.login.dataaccess;
+package com.damidev.dd.shared.dataaccess;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.damidev.dd.notregistred.login.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.Profile;
 
 
 public class DatabaseProfileHandler extends SQLiteOpenHelper {
