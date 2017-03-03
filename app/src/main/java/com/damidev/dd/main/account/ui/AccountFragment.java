@@ -72,7 +72,6 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_account);
-
         return view;
     }
 
@@ -100,7 +99,7 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
     public void replaceWithProfileEditFragmnet() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ProfileEditFragment fragment = ProfileEditFragment.newInstance(ProfileEditFragment.ProfileEditFragmnetTag, userProfileId);
-        ft.replace(R.id.fragment_main_container, fragment);
+        ft.replace(R.id.fragment_main_container, fragment); //.addToBackStack(null);
         ft.commit();
     }
 }

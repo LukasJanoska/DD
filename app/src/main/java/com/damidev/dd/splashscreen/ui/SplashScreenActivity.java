@@ -100,9 +100,9 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
         return new TimerTask() {
             @Override
             public void run() {
-                finish();
                 Intent myIntent = new Intent(SplashScreenActivity.this, NotRegistredActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         };
     }

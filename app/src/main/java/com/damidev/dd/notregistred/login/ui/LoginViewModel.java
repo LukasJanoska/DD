@@ -17,6 +17,8 @@ import com.damidev.dd.notregistred.login.dataaccess.ServerRegResultDto;
 import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -157,41 +159,39 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
         public void onNext(Response<ServerRegResultDto> response) {
             String s = "";
 
-            ServerRegResultDto data;
-            data = response.body();
+            ServerRegResultDto data = response.body();
+            if(response.code()==200) {
+                if(data!=null) {
+                    if(data.getResponseCode()==1) {
+                        Profile profil = new Profile();
+                        profil.set_id(data.getChildResponse().getId());
+                        profil.set_email(data.getChildResponse().getEmail());
+                        profil.set_name(data.getChildResponse().getName());
+                        profil.set_rights(data.getChildResponse().getRights());
+                        db.addProfile(profil);
+                        Log.d("Insert: ", "Inserting ..");
+                        Log.d("Reading: ", "Reading profile..");
+                        Profile pr = db.getProfile(profil.get_id());
+                        Log.d("email: ", pr.get_email());
+                        Log.d("email: ", pr.get_rights());
+                        Log.d("email: ", "" + pr.get_id());
+                        Log.d("email: ", pr.get_email());
 
-            Profile profil = new Profile();
-            profil.set_id(data.getChildResponse().getId());
-            profil.set_email(data.getChildResponse().getEmail());
-            profil.set_name(data.getChildResponse().getName());
-            profil.set_rights(data.getChildResponse().getRights());
-
-
-
-                db.addProfile(profil);
-
-            Log.d("Insert: ", "Inserting ..");
-            Log.d("Reading: ", "Reading profile..");
-
-                Profile pr = db.getProfile(profil.get_id());
-
-            Log.d("email: ", pr.get_email());
-            Log.d("email: ", pr.get_rights());
-            Log.d("email: ", "" + pr.get_id());
-            Log.d("email: ", pr.get_email());
-
-            if(data!=null) {
-                /*response.code()
-                response.errorBody().string()*/
-                if(data.getResponseCode()==1) {
-                    getView().startMainActivity(profil.get_id());
-                } else if (data.getResponseCode()==7) {
-                    getView().showErrorDialog("incorrect username or password");
+                        getView().startMainActivity(profil.get_id());
+                    } /*else if (data.getResponseCode()==7) { // takto to ale nefunguje
+                        getView().showErrorDialog("incorrect username or password");
+                    } else {
+                        getView().showErrorDialog("error");
+                    }*/
                 } else {
                     getView().showErrorDialog("error");
                 }
             } else {
-                getView().showErrorDialog(response.errorBody().toString());
+                try {
+                    getView().showErrorDialog(response.errorBody().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             //navigatorController.startActivity(MainActivity.class);

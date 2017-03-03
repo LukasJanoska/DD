@@ -95,7 +95,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_alerts) {
+        if (id == R.id.profile) {
 
             /*fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, AlertsFragment.newInstance(AlertsFragment.AlertsFragmentTag))
