@@ -2,10 +2,14 @@ package com.damidev.dd.main.account.contacts.platform;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.damidev.dd.shared.dataaccess.Contact;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseContactsHandler extends SQLiteOpenHelper {
@@ -79,6 +83,34 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		db.close(); // Closing database connection
 	}
 
+	// Getting All Contacts
+	public List<Contact> getAllContacts() {
+		List<Contact> contactList = new ArrayList<Contact>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Contact contact = new Contact();
+				contact.setId(Integer.parseInt(cursor.getString(0)));
+				contact.setEmail(cursor.getString(1));
+				contact.setPhone(cursor.getString(2));
+				contact.setName(cursor.getString(3));
+				contact.setLastname(cursor.getString(4));
+				contact.setFid(cursor.getString(5));
+				contact.setDescription(cursor.getString(6));
+				// Adding contact to list
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		// return contact list
+		return contactList;
+	}
+
 	/*// Getting single contact
 	public Profile getProfile(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -93,9 +125,9 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
                 cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
 		// return contact
 		return contact;
-	}
+	}*/
 
-	// Updating single contact
+	/*// Updating single contact
 	public int updateProfile(Profile contact) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -110,7 +142,8 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
 				new String[] { String.valueOf(contact.get_id()) });
 	}
-*/
+	*/
+
 /*
 	// Deleting single contact
 	public void deleteProfile(Profile contact) {
