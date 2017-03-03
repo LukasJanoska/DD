@@ -16,7 +16,7 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivityMainBinding;
 import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
-import com.damidev.dd.main.account.profile.ui.AccountFragment;
+import com.damidev.dd.main.account.profile.ui.ProfileFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
@@ -81,7 +81,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
     private void replaceWithAccountFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        AccountFragment accountFragment = AccountFragment.newInstance(AccountFragment.AccountFragmnetTag, userProfileId);
+        ProfileFragment accountFragment = ProfileFragment.newInstance(ProfileFragment.AccountFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
         toolbar.setTitle("PROFILE");

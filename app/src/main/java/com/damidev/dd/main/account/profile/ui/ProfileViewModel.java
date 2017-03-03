@@ -11,7 +11,7 @@ import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
 import javax.inject.Inject;
 
 
-public class AccountViewModel extends BaseViewModel<AccountView> {
+public class ProfileViewModel extends BaseViewModel<ProfileView> {
 
     private Context context;
     private DatabaseProfileHandler profiledb;
@@ -43,7 +43,7 @@ public class AccountViewModel extends BaseViewModel<AccountView> {
     }
 
     @Inject
-    public AccountViewModel(Context context, DatabaseProfileHandler profiledb) {
+    public ProfileViewModel(Context context, DatabaseProfileHandler profiledb) {
         this.context = context;
         this.profiledb = profiledb;
     }

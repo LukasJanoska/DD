@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentAccountBinding;
-import com.damidev.dd.main.account.profile.inject.AccountComponent;
-import com.damidev.dd.main.account.profile.inject.AccountModule;
+import com.damidev.dd.main.account.profile.inject.ProfileComponent;
+import com.damidev.dd.main.account.profile.inject.ProfileModule;
 import com.damidev.dd.main.account.profileedit.ui.ProfileEditFragment;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
@@ -25,8 +25,8 @@ import com.damidev.dd.shared.inject.D2MvvmFragment;
 import butterknife.BindView;
 
 
-public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, AccountViewModel>
-        implements AccountView {
+public class ProfileFragment extends D2MvvmFragment<FragmentAccountBinding, ProfileViewModel>
+        implements ProfileView {
 
     public static String AccountFragmnetTag = "ACCOUNT_FRAGMENT_TAG";
     private int userProfileId;
@@ -44,7 +44,7 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
 
     private Profile profile;
 
-    public AccountFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -68,8 +68,8 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
 
     @Override
     protected void setupComponent(ComponentBuilderContainer componentBuilder) {
-        ((AccountComponent.Builder) componentBuilder.getComponentBuilder(this.getClass()))
-                .module(new AccountModule())
+        ((ProfileComponent.Builder) componentBuilder.getComponentBuilder(this.getClass()))
+                .module(new ProfileModule())
                 .build()
                 .injectMembers(this);
     }
@@ -104,8 +104,8 @@ public class AccountFragment extends D2MvvmFragment<FragmentAccountBinding, Acco
         }
     }
 
-    public static AccountFragment newInstance(String someTitle, int userProfileId) {
-        AccountFragment loginFragment = new AccountFragment();
+    public static ProfileFragment newInstance(String someTitle, int userProfileId) {
+        ProfileFragment loginFragment = new ProfileFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(LoginFragment.user_profile_id_tag, userProfileId);
         loginFragment.setArguments(bundle);

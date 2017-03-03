@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class AccountModule implements D2Module {
+public class ProfileModule implements D2Module {
 
     @Provides
     @FragmentScope

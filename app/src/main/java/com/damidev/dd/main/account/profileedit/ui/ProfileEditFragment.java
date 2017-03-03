@@ -70,7 +70,12 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
             } else {
                 getViewModel().getPhone().set(profile.get_phone());
             }
-            getViewModel().getDescr().set(profile.get_description());
+            if(profile.get_description() == null) {
+                profile.set_description("");
+                getViewModel().getDescr().set(profile.get_description());
+            } else {
+                getViewModel().getDescr().set(profile.get_description());
+            }
         }
     }
 

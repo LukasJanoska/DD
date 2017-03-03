@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.account.profile.ui.AccountFragment">
+    tools:context=".main.account.profile.ui.ProfileFragment">
 
     <data>
-        <variable name="vm" type="com.damidev.dd.main.account.profile.ui.AccountViewModel" />
+        <variable name="vm" type="com.damidev.dd.main.account.profile.ui.ProfileViewModel" />
     </data>
 
     <LinearLayout
