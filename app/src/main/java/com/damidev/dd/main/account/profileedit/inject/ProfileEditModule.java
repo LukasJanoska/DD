@@ -24,4 +24,5 @@ public class ProfileEditModule implements D2Module {
     public ProfileCommunicator provideProfileComunicator() {
         return new ProfileCommunicator();
     }
+
 }

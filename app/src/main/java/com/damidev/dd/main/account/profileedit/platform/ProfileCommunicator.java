@@ -26,7 +26,7 @@ public class ProfileCommunicator {
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
     @WorkerThread
-    public void updateUserProfile(HashMap hashMap){
+    public void updateUserProfile(String token, HashMap hashMap){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -41,7 +41,7 @@ public class ProfileCommunicator {
 
         DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerRegResultDto> call = service.updateUserProfile("WDjY0296a83bef7ddbcca453e5d627df0dce5", hashMap);
+        Call<ServerRegResultDto> call = service.updateUserProfile(token, hashMap);
 
         call.enqueue(new Callback<ServerRegResultDto>() {
             @Override

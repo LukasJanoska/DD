@@ -1,6 +1,7 @@
 package com.damidev.dd.main.base.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -87,6 +88,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
         toolbar.setTitle("YOUR PROFILE");
+        saveStringPreferences("token", token);
     }
 
     private void replaceWithContactsFragment() {
@@ -95,6 +97,13 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         ft.replace(R.id.fragment_main_container, contactsFragment);
         ft.commit();
         toolbar.setTitle("CONTACTS");
+    }
+
+    public void saveStringPreferences(String key, String value) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        prefs.edit()
+                .putString(key, value)
+                .apply();
     }
 
     @Override

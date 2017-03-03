@@ -2,6 +2,7 @@ package com.damidev.dd.main.account.profileedit.ui;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.ObservableField;
 import android.view.View;
 
@@ -15,12 +16,16 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
 
     private Context context;
     private DatabaseProfileHandler profiledb;
     private ProfileCommunicator communicator;
+
+    private String token;
 
     private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> surName = new ObservableField<CharSequence>();
@@ -31,19 +36,15 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
     public ObservableField<CharSequence> getName() {
         return name;
     }
-
     public ObservableField<CharSequence> getSurName() {
         return surName;
     }
-
     public ObservableField<CharSequence> getEmail() {
         return email;
     }
-
     public ObservableField<CharSequence> getPhone() {
         return phone;
     }
-
     public ObservableField<CharSequence> getDescr() {
         return descr;
     }
@@ -57,6 +58,7 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
 
     public Profile getUserProfile(int userProfileId) {
         Profile pr = profiledb.getProfile(userProfileId);
+        token = pr.get_token();
 
         if(pr!=null) {
             return pr;
@@ -73,7 +75,14 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
         hashMap.put("phone", getPhone().get().toString());
         hashMap.put("description", getDescr().get().toString());
 
-        communicator.updateUserProfile(hashMap);
+        //token get from prefs
+        token = loadToken();
+        communicator.updateUserProfile(token, hashMap);
+    }
+
+    public String loadToken() {
+        SharedPreferences prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
+        return prefs.getString("token", "");
     }
 
     public void updateDbUserProfile(ServerRegResultDto response) {
@@ -87,9 +96,7 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
         profile.set_description(response.getChildResponse().getDescription());
 
         profiledb.updateProfile(profile);
-
         getView().replaceWithProfileFragment();
-
     }
 
 }
