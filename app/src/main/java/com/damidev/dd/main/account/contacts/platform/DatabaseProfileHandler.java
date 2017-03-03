@@ -1,4 +1,4 @@
-package com.damidev.dd.notregistred.login.platform;
+package com.damidev.dd.main.account.contacts.platform;
 
 import android.content.ContentValues;
 import android.content.Context;

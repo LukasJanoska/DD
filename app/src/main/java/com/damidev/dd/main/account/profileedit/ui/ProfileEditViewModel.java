@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.profileedit.platform.ProfileCommunicator;
-import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseProfileHandler;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 

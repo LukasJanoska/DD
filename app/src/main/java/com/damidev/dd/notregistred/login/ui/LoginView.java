@@ -10,5 +10,5 @@ public interface LoginView extends MvvmView {
     void showErrorDialog(final String errMsg);
     void showErrorToast(final String errMsg);
     void replaceWithRegFragment();
-    void startMainActivity(int userProfileId);
+    void startMainActivity(int userProfileId, String token);
 }

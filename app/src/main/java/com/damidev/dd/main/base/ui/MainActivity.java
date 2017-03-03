@@ -36,6 +36,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
     Toolbar toolbar;
 
     private int userProfileId;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
         Intent mIntent = getIntent();
         userProfileId = mIntent.getIntExtra(LoginFragment.user_profile_id_tag, 0);
+        token = mIntent.getStringExtra(LoginFragment.user_token);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +91,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
     private void replaceWithContactsFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ContactsFragment contactsFragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag);
+        ContactsFragment contactsFragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag, token);
         ft.replace(R.id.fragment_main_container, contactsFragment);
         ft.commit();
         toolbar.setTitle("CONTACTS");

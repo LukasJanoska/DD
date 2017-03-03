@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
-import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
@@ -167,9 +167,10 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                         profil.set_rights(data.getChildResponse().getRights());
                         profil.set_phone(data.getChildResponse().getPhone());
                         profil.set_description(data.getChildResponse().getDescription());
+                        profil.set_token(data.getChildResponse().getToken());
                         db.addProfile(profil);
 
-                        getView().startMainActivity(profil.get_id());
+                        getView().startMainActivity(profil.get_id(), profil.get_token());
                     } /*else if (data.getResponseCode()==7) { // takto to malo fungovat podla zadania, ale nefunguje, pri responsecode inom ako 1 navracia server 200, takze mi nevyplni body
                         getView().showErrorDialog("incorrect username or password");
                     } */

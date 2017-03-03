@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.damidev.core.inject.D2Module;
 import com.damidev.core.inject.scope.FragmentScope;
-import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseProfileHandler;
 
 import dagger.Module;
 import dagger.Provides;

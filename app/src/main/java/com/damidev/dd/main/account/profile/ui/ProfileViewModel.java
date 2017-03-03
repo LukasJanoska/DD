@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.shared.dataaccess.Profile;
-import com.damidev.dd.notregistred.login.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseProfileHandler;
 
 import javax.inject.Inject;
 

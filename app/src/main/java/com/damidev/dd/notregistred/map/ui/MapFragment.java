@@ -127,17 +127,19 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
         map = googleMap;
 
         responseDto = readObjectFromFile(getContext());
+        if(responseDto!=null) {
+            ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
+            points = responseDto.getChildResponse();
 
-        ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
-        points = responseDto.getChildResponse();
+            for (ServerMapChildResponseDto point : points) {
+                Double lat = point.getLat();
+                Double lng = point.getLng();
+                String imgurl = point.getPhotos().get(2);
 
-        for (ServerMapChildResponseDto point : points) {
-            Double lat = point.getLat();
-            Double lng = point.getLng();
-            String imgurl = point.getPhotos().get(2);
-
-            addMarker(new LatLng(lat, lng), imgurl, "start");
+                addMarker(new LatLng(lat, lng), imgurl, "start");
+            }
         }
+
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
     }
