@@ -12,10 +12,10 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentProfileEditBinding;
 import com.damidev.dd.main.account.profile.ui.ProfileFragment;
-import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
@@ -120,7 +120,7 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
 
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
-        serverRegResultDto = serverEvent.getServerResponse();
+        serverRegResultDto = serverEvent.getServerRegResultDto();
         getViewModel().updateDbUserProfile(serverRegResultDto);
     }
 

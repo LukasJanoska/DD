@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentContactsBinding;
-import com.damidev.dd.main.account.contacts.Events.ServerEvent;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.inject.ContactsModule;
 import com.damidev.dd.main.account.newcontact.ui.NewContactFragment;
@@ -122,7 +122,7 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
-        serverContactsResultDto = serverEvent.getServerResponse();
+        serverContactsResultDto = serverEvent.getServerContactsResultDto();
 
         List<Contact> contactList = getViewModel().saveContactsToDB(serverContactsResultDto);
         ArrayList<Contact> contacts = new ArrayList<>();

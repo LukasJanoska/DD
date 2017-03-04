@@ -3,8 +3,8 @@ package com.damidev.dd.main.account.contacts.platform;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import com.damidev.dd.main.account.contacts.Events.ErrorEvent;
-import com.damidev.dd.main.account.contacts.Events.ServerEvent;
+import com.damidev.dd.shared.Events.ErrorEvent;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.BaseResponseDto;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
@@ -76,7 +76,7 @@ public class ContactsCommunicator {
                 data = response.body();
 
                 if(data != null && data.getResponseCode() == 1) {
-                    BusProvider.getInstance().post(new com.damidev.dd.main.account.newcontact.Events.ServerEvent(data));
+                    BusProvider.getInstance().post(new ServerEvent(data));
                     Log.e(TAG,"Success");
                 }
             }
@@ -85,7 +85,7 @@ public class ContactsCommunicator {
             public void onFailure(Call<ServerNewContactResultDto> call, Throwable t) {
                 // handle execution failures like no internet connectivity
 
-                BusProvider.getInstance().post(new com.damidev.dd.main.account.profileedit.Events.ErrorEvent(-2,t.getMessage()));
+                BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
             }
         });
     }
@@ -113,7 +113,7 @@ public class ContactsCommunicator {
             public void onFailure(Call<BaseResponseDto> call, Throwable t) {
                 // handle execution failures like no internet connectivity
 
-                BusProvider.getInstance().post(new com.damidev.dd.main.account.profileedit.Events.ErrorEvent(-2,t.getMessage()));
+                BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
             }
         });
     }

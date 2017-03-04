@@ -13,13 +13,13 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivitySplashScreenBinding;
 import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
-import com.damidev.dd.splashscreen.Events.ServerEvent;
+import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.damidev.dd.splashscreen.inject.SplashScreenComponent;
 import com.damidev.dd.splashscreen.inject.SplashScreenModule;
-import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.damidev.dd.splashscreen.platform.MapCommunicator;
 import com.squareup.otto.Subscribe;
 
@@ -109,16 +109,15 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
 
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
-        Toast.makeText(this, ""+serverEvent.getServerResponse().getResponseCodeText(), Toast.LENGTH_SHORT).show();
 
-        mapResponseDto = serverEvent.getServerResponse();
+        mapResponseDto = serverEvent.getServerMapResponseDto();
 
-        writeObjectToFile(getApplicationContext(), serverEvent.getServerResponse());
+        writeObjectToFile(getApplicationContext(), serverEvent.getServerMapResponseDto());
 
-        /*if(serverEvent.getServerResponse().getUsername() != null){
-            information.setText("Username: "+serverEvent.getServerResponse().getUsername() + " || Password: "+serverEvent.getServerResponse().getPassword());
+        /*if(serverEvent.getServerContactsResultDto().getUsername() != null){
+            information.setText("Username: "+serverEvent.getServerContactsResultDto().getUsername() + " || Password: "+serverEvent.getServerContactsResultDto().getPassword());
         }*/
-        //extraInformation.setText("" + serverEvent.getServerResponse().getMessage());
+        //extraInformation.setText("" + serverEvent.getServerContactsResultDto().getMessage());
     }
 
     public boolean writeObjectToFile(Context context, ServerMapResponseDto serverMapResponseDto) {

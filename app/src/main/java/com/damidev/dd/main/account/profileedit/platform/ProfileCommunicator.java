@@ -3,8 +3,8 @@ package com.damidev.dd.main.account.profileedit.platform;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import com.damidev.dd.main.account.profileedit.Events.ErrorEvent;
-import com.damidev.dd.main.account.profileedit.Events.ServerEvent;
+import com.damidev.dd.shared.Events.ErrorEvent;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;

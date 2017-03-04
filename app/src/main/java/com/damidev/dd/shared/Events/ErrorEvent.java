@@ -1,4 +1,4 @@
-package com.damidev.dd.splashscreen.Events;
+package com.damidev.dd.shared.Events;
 
 
 public class ErrorEvent {

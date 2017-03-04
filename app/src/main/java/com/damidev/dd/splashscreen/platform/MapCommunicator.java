@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.damidev.dd.shared.Events.ErrorEvent;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.rest.platform.BusProvider;
-import com.damidev.dd.splashscreen.Events.ErrorEvent;
-import com.damidev.dd.splashscreen.Events.ServerEvent;
 import com.damidev.dd.splashscreen.dataaccess.MapApi;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.squareup.otto.Produce;

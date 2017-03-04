@@ -14,9 +14,9 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentNewContactBinding;
 import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
-import com.damidev.dd.main.account.newcontact.Events.ServerEvent;
 import com.damidev.dd.main.account.newcontact.inject.NewContactComponent;
 import com.damidev.dd.main.account.newcontact.inject.NewContactModule;
+import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.shared.rest.platform.BusProvider;
@@ -91,7 +91,7 @@ public class NewContactFragment extends D2MvvmFragment<FragmentNewContactBinding
 
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
-        resultDto = serverEvent.getServerResponse();
+        resultDto = serverEvent.getServerNewContactResponse();
         getViewModel().addContactToDB(resultDto);
     }
 
