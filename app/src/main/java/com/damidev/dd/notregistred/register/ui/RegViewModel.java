@@ -55,7 +55,7 @@ public class RegViewModel extends BaseViewModel<RegView> {
         this.db = db;
     }
 
-    public void onClickLogin(final View view) {
+    public void onClickRegister(final View view) {
         // validation missing
 
         if(!validateInputs()) {
