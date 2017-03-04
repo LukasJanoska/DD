@@ -15,6 +15,7 @@ import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
 import com.damidev.dd.notregistred.login.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
+import com.damidev.dd.shared.utils.Utils;
 
 import java.io.IOException;
 
@@ -25,7 +26,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.processors.AsyncProcessor;
 import io.reactivex.subscribers.DisposableSubscriber;
 import retrofit2.Response;
-
 
 public class LoginViewModel extends BaseViewModel<LoginView> {
 
@@ -82,9 +82,14 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
 
     public boolean validateInputs() {
         boolean valid = true;
+        usernameError.set(null);
+        passwordError.set(null);
 
         if(TextUtils.isEmpty(email.get())) {
-            usernameError.set("zadejte email");
+            usernameError.set("email required");
+            valid = false;
+        } else if(!(Utils.isEmailValid(email.get().toString()))) {
+            usernameError.set("email not valid");
             valid = false;
         } else {
             usernameError.set(null);

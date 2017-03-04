@@ -11,10 +11,9 @@ import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
 import com.damidev.dd.main.account.contacts.platform.DatabaseContactsHandler;
 import com.damidev.dd.shared.dataaccess.Contact;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
+import com.damidev.dd.shared.utils.Utils;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -83,7 +82,7 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
         if(TextUtils.isEmpty(email.get())) {
             emailError.set("email required");
             valid = false;
-        } else if(!(isEmailValid(email.get().toString()))) {
+        } else if(!(Utils.isEmailValid(email.get().toString()))) {
             emailError.set("email not valid");
             valid = false;
         } else {
@@ -97,20 +96,6 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
         }
 
         return valid;
-    }
-
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
-
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
     }
 
     public void onSaveClick() {
