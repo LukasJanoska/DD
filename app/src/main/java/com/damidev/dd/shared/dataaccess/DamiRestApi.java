@@ -23,7 +23,8 @@ public interface DamiRestApi {
 
     @FormUrlEncoded
     @POST("updateAccount")
-    Call<ServerRegResultDto> updateUserProfile(@Field("token") String token, @FieldMap Map<String, String> fields );
+    Call<ServerRegResultDto> updateUserProfile(@Field("token") String token,
+                                               @FieldMap Map<String, String> fields );
 
     @FormUrlEncoded
     @POST("getContacts")
@@ -31,10 +32,17 @@ public interface DamiRestApi {
 
     @FormUrlEncoded
     @POST("addContact")
-    Call<ServerNewContactResultDto> addContact(@Field("token") String token, @FieldMap Map<String, String> fields );
+    Call<ServerNewContactResultDto> addContact(@Field("token") String token,
+                                               @FieldMap Map<String, String> fields );
+
+    @FormUrlEncoded
+    @POST("updateContact")
+    Call<ServerNewContactResultDto> updateContact(@Field("token") String token,
+                                                  @FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
     @POST("deleteContact")
-    Call<BaseResponseDto> deleteContact(@Field("token") String token, @Field("id") int id );
+    Call<BaseResponseDto> deleteContact(@Field("token") String token,
+                                        @Field("id") int id );
 
 }

@@ -34,7 +34,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(, "Element " + getPosition() + " clicked.");
-                    replaceWithEditContactFragment(v.getContext());
+                    replaceWithEditContactFragment(v.getContext(), getAdapterPosition());
                     Toast.makeText(v.getContext(), getAdapterPosition() + " Clicked", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -50,9 +50,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             return lastNameTextView;
         }
 
-        public void replaceWithEditContactFragment(Context context) {
+        public void replaceWithEditContactFragment(Context context, int contact_id) {
             FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-            EditContactFragment fragment = EditContactFragment.newInstance(EditContactFragment.EditContactFragmnetTag);
+            EditContactFragment fragment = EditContactFragment.newInstance(EditContactFragment.EditContactFragmnetTag, contact_id);
             ft.replace(R.id.fragment_main_container, fragment);
             ft.commit();
         }

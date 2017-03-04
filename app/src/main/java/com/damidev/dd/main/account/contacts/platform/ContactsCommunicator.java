@@ -91,6 +91,37 @@ public class ContactsCommunicator {
     }
 
     @WorkerThread
+    public void updateContact(String token, HashMap hashMap){
+
+        Retrofit retrofit = setServerComunication();
+        DamiRestApi service = retrofit.create(DamiRestApi.class);
+
+        Call<ServerNewContactResultDto> call = service.updateContact(token, hashMap);
+
+        call.enqueue(new Callback<ServerNewContactResultDto>() {
+            @Override
+            public void onResponse(Call<ServerNewContactResultDto> call, Response<ServerNewContactResultDto> response) {
+                // response.isSuccessful() is true if the response code is 2xx
+                ServerNewContactResultDto data;
+                data = response.body();
+
+                if(data != null && data.getResponseCode() == 1) {
+                    BusProvider.getInstance().post(new ServerEvent(data));
+                    Log.e(TAG,"Success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerNewContactResultDto> call, Throwable t) {
+                // handle execution failures like no internet connectivity
+
+                BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
+            }
+        });
+    }
+
+
+    @WorkerThread
     public void deleteContact(String token, int id){
 
         Retrofit retrofit = setServerComunication();

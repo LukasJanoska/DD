@@ -131,6 +131,21 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+	public int updateContact(Contact contact) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+        values.put(KEY_NAME, contact.getName());
+        values.put(KEY_LAST_NAME, contact.getLastname());
+        values.put(KEY_PHONE, contact.getPhone());
+		values.put(KEY_EMAIL, contact.getEmail());
+		values.put(KEY_DESCRIPTION, contact.getDescription());
+
+		// updating row
+		return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+				new String[] { String.valueOf(contact.getId()) });
+	}
+
 	/*// Getting single contact
 	public Profile getProfile(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
