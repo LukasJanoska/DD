@@ -2,7 +2,7 @@ package com.damidev.dd.main.account.newcontact.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,26 +13,21 @@ import android.view.ViewGroup;
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentNewContactBinding;
-import com.damidev.dd.main.account.contacts.ui.ContactAdapter;
+import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
+import com.damidev.dd.main.account.newcontact.Events.ServerEvent;
 import com.damidev.dd.main.account.newcontact.inject.NewContactComponent;
 import com.damidev.dd.main.account.newcontact.inject.NewContactModule;
-import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
+import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.shared.rest.platform.BusProvider;
+import com.squareup.otto.Subscribe;
 
 
 public class NewContactFragment extends D2MvvmFragment<FragmentNewContactBinding, NewContactViewModel>
         implements NewContactView {
 
     public static String NewContactFragmnetTag = "NEW_CONTACTS_FRAGMENT_TAG";
-    private ServerContactsResultDto serverContactsResultDto;
-    private String token;
-    protected RecyclerView mRecyclerView;
-    protected ContactAdapter mAdapter;
-    protected RecyclerView.LayoutManager mLayoutManager;
-    protected String[] mDataset;
-
-    private static int DATASET_COUNT = 15;
-
+    private ServerNewContactResultDto resultDto;
 
     public NewContactFragment() {
         // Required empty public constructor
@@ -41,6 +36,11 @@ public class NewContactFragment extends D2MvvmFragment<FragmentNewContactBinding
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getViewModel().getName().set("");
+        getViewModel().getSurName().set("");
+        getViewModel().getPhone().set("");
+        getViewModel().getEmail().set("");
 
         setHasOptionsMenu(true);
     }
@@ -87,6 +87,31 @@ public class NewContactFragment extends D2MvvmFragment<FragmentNewContactBinding
         NewContactFragment contactsFragment = new NewContactFragment();
 
         return contactsFragment;
+    }
+
+    @Subscribe
+    public void onServerEvent(ServerEvent serverEvent){
+        resultDto = serverEvent.getServerResponse();
+        getViewModel().addContactToDB(resultDto);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
+    }
+
+    public void replaceWithContactsFragment(String token) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ContactsFragment accountFragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag, token);
+        ft.replace(R.id.fragment_main_container, accountFragment);
+        ft.commit();
     }
 
 }

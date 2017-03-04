@@ -29,6 +29,7 @@
             android:id="@+id/usernameInput"
             android:hint="Name"
             android:text="@={vm.name}"
+            app:error="@{vm.nameError}"
             />
         <EditText
             android:layout_width="match_parent"
@@ -45,6 +46,7 @@
             android:hint="Phone"
             style="@style/edit_text_new_contact"
             android:text="@={vm.phone}"
+            app:error="@{vm.phoneError}"
             />
         <EditText
             android:layout_width="match_parent"
@@ -53,6 +55,8 @@
             style="@style/edit_text_new_contact"
             android:hint="Email"
             android:text="@={vm.email}"
+            app:error="@{vm.emailError}"
+
             />
     </LinearLayout>
 </layout>

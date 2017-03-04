@@ -7,8 +7,11 @@ import com.damidev.dd.main.account.contacts.Events.ErrorEvent;
 import com.damidev.dd.main.account.contacts.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
+import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Produce;
+
+import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -52,6 +55,39 @@ public class ContactsCommunicator {
                 // handle execution failures like no internet connectivity
 
                 BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
+            }
+        });
+    }
+
+    @WorkerThread
+    public void addContact(String token, HashMap hashMap){
+
+        Retrofit retrofit = setServerComunication();
+        DamiRestApi service = retrofit.create(DamiRestApi.class);
+
+        Call<ServerNewContactResultDto> call = service.addContact(token, hashMap);
+
+        call.enqueue(new Callback<ServerNewContactResultDto>() {
+            @Override
+            public void onResponse(Call<ServerNewContactResultDto> call, Response<ServerNewContactResultDto> response) {
+                // response.isSuccessful() is true if the response code is 2xx
+                ServerNewContactResultDto data;
+                data = response.body();
+
+                if(data != null && data.getResponseCode() == 1) {
+                    BusProvider.getInstance().post(new com.damidev.dd.main.account.newcontact.Events.ServerEvent(data));
+                    Log.e(TAG,"Success");
+                }
+
+                /*BusProvider.getInstance().post(new ErrorEvent(-2, "server not responding"));
+                Log.e(TAG,"Failure");*/
+            }
+
+            @Override
+            public void onFailure(Call<ServerNewContactResultDto> call, Throwable t) {
+                // handle execution failures like no internet connectivity
+
+                BusProvider.getInstance().post(new com.damidev.dd.main.account.profileedit.Events.ErrorEvent(-2,t.getMessage()));
             }
         });
     }

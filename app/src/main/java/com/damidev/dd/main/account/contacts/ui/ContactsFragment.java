@@ -43,7 +43,6 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
     private static int DATASET_COUNT = 15;
 
-
     public ContactsFragment() {
         // Required empty public constructor
     }
