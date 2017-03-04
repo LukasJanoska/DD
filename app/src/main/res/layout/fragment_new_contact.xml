@@ -74,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/emailInput"
+            android:inputType="textEmailAddress"
             style="@style/edit_text_new_contact"
             android:hint="Email"
             android:text="@={vm.email}"

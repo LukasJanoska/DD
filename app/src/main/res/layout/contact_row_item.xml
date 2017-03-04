@@ -24,6 +24,7 @@
             android:id="@+id/nameTV"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/contactImgView"
+            android:textSize="17sp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Name"
@@ -33,6 +34,7 @@
         <TextView
             android:id="@+id/lastNameTV"
             android:layout_width="wrap_content"
+            android:textSize="17sp"
             android:layout_toRightOf="@id/nameTV"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
