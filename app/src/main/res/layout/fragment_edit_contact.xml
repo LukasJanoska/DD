@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.account.editcontact.ui.EditContactFragment">
+
+    <data>
+        <variable name="vm" type="com.damidev.dd.main.account.editcontact.ui.EditContactViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit contact"
+            android:textSize="22sp"
+            android:layout_marginBottom="25dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            style="@style/edit_text_new_contact"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameInput"
+            android:hint="Name"
+            android:text="@={vm.name}"
+
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/edit_text_new_contact"
+            android:id="@+id/lastnameInput"
+            android:hint="Lastname"
+            android:text="@={vm.surName}"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phoneInput"
+            android:hint="Phone"
+            style="@style/edit_text_new_contact"
+            android:text="@={vm.phone}"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailInput"
+            android:inputType="textEmailAddress"
+            style="@style/edit_text_new_contact"
+            android:hint="Email"
+            android:text="@={vm.email}"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+</layout>
+

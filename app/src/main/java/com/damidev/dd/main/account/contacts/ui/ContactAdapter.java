@@ -1,5 +1,8 @@
 package com.damidev.dd.main.account.contacts.ui;
 
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.damidev.dd.R;
+import com.damidev.dd.main.account.editcontact.ui.EditContactFragment;
 import com.damidev.dd.shared.dataaccess.Contact;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(, "Element " + getPosition() + " clicked.");
+                    replaceWithEditContactFragment(v.getContext());
                     Toast.makeText(v.getContext(), getAdapterPosition() + " Clicked", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -43,6 +48,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         public TextView getLastNameTextView() {
             return lastNameTextView;
+        }
+
+        public void replaceWithEditContactFragment(Context context) {
+            FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+            EditContactFragment fragment = EditContactFragment.newInstance(EditContactFragment.EditContactFragmnetTag);
+            ft.replace(R.id.fragment_main_container, fragment);
+            ft.commit();
         }
     }
 
@@ -68,4 +80,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public int getItemCount() {
         return mDataSet.size();
     }
+
+
 }
