@@ -136,7 +136,7 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     public void onServerEvent(String result){
         if(result.equals("success")) {
             getViewModel().getAllContacts(token);
-            mAdapter.notifyDataSetChanged();
+            //mAdapter.notifyDataSetChanged();
         }
     }
 
