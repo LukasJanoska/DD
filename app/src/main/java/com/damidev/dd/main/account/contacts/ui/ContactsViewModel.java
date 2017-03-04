@@ -33,7 +33,7 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
         communicator.getAllContacts(token);
     }
 
-    public void saveContactsToDB(ServerContactsResultDto resultDto) {
+    public List<Contact> saveContactsToDB(ServerContactsResultDto resultDto) {
         ArrayList<ContactsResponse> result = resultDto.getContacts();
 
         for (ContactsResponse cRes : result) {
@@ -47,7 +47,8 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
             contact.setDescription(cRes.getDescription());
             handler.addContact(contact);
         }
-        List<Contact> contacts = handler.getAllContacts();
+
+        return handler.getAllContacts();
     }
 
 }

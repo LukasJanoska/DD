@@ -16,10 +16,14 @@ import com.damidev.dd.main.account.contacts.Events.ServerEvent;
 import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.inject.ContactsModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.dataaccess.Contact;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, ContactsViewModel>
@@ -49,12 +53,8 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             token = bundle.getString(LoginFragment.user_token);
-            Log.i("token", token);
-            //getToken
         }
         getViewModel().getAllContacts(token);
-
-        initDataset();
     }
 
     @Override
@@ -72,9 +72,6 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
         mRecyclerView = (RecyclerView) view.findViewById(R.id.contactsRecView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecyclerViewLayoutManager();
-
-        mAdapter = new ContactAdapter(mDataset);
-        mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -108,20 +105,13 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
         serverContactsResultDto = serverEvent.getServerResponse();
-        getViewModel().saveContactsToDB(serverContactsResultDto);
-    }
 
-    private void initDataset() {
+        List<Contact> contactList = getViewModel().saveContactsToDB(serverContactsResultDto);
+        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.addAll(contactList);
 
-        if(DATASET_COUNT > 5) {
-            DATASET_COUNT = 5;
-        }
-        mDataset = new String[DATASET_COUNT];
-        mDataset[0] = "Cottage";
-        mDataset[1] = "Home";
-        mDataset[2] = "Garage";
-        mDataset[3] = "Hotel";
-        mDataset[4] = "Garden";
+        mAdapter = new ContactAdapter(contacts);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

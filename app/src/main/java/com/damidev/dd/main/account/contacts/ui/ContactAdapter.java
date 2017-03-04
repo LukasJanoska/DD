@@ -8,13 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.damidev.dd.R;
+import com.damidev.dd.shared.dataaccess.Contact;
+
+import java.util.ArrayList;
 
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder>{
 
     private static final String TAG = "WallAdapter";
 
-    private String[] mDataSet;
+    private ArrayList<Contact> mDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,7 +40,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         }
     }
 
-    public ContactAdapter(String[] dataSet) {
+    public ContactAdapter(ArrayList<Contact> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -51,11 +54,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTextView().setText(mDataSet[position]);
+        viewHolder.getTextView().setText(mDataSet.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mDataSet.size();
     }
 }
