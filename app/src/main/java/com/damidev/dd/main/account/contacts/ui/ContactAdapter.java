@@ -35,7 +35,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                 public void onClick(View v) {
                     //Toast.makeText(, "Element " + getPosition() + " clicked.");
                     replaceWithEditContactFragment(v.getContext(), getAdapterPosition());
-                    Toast.makeText(v.getContext(), getAdapterPosition() + " Clicked", Toast.LENGTH_SHORT).show();
                 }
             });
             nameTextView = (TextView) v.findViewById(R.id.nameTV);

@@ -19,6 +19,7 @@ import com.damidev.dd.main.account.editcontact.inject.EditContactComponent;
 import com.damidev.dd.main.account.editcontact.inject.EditContactModule;
 import com.damidev.dd.shared.Events.ErrorEvent;
 import com.damidev.dd.shared.Events.ServerEvent;
+import com.damidev.dd.shared.dataaccess.Contact;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.shared.rest.platform.BusProvider;
@@ -31,6 +32,7 @@ public class EditContactFragment extends D2MvvmFragment<FragmentEditContactBindi
     public static String EditContactFragmnetTag = "EDIT_CONTACTS_FRAGMENT_TAG";
     private ServerNewContactResultDto resultDto;
     private int contactId;
+    private Contact contact;
 
     public EditContactFragment() {
         // Required empty public constructor
@@ -43,44 +45,39 @@ public class EditContactFragment extends D2MvvmFragment<FragmentEditContactBindi
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             contactId = bundle.getInt("contact_id");
+            setEditTexts(contactId);
         }
-
-        getViewModel().getName().set("");
-        getViewModel().getSurName().set("");
-        getViewModel().getPhone().set("");
-        getViewModel().getEmail().set("");
-
         setHasOptionsMenu(true);
     }
 
-    /*private void setEditTexts(int userProfileId) {
-        profile = getViewModel().getUserProfile(userProfileId);
-        if(profile.get_name() == null) {
-            profile.set_name("");
-            getViewModel().getName().set(profile.get_name());
+    private void setEditTexts(int contactId) {
+        contact = getViewModel().getContact(contactId);
+        if(contact.getName() == null) {
+            contact.setName("");
+            getViewModel().getName().set(contact.getName());
         } else {
-            getViewModel().getName().set(profile.get_name());
+            getViewModel().getName().set(contact.getName());
         }
-        if(profile.get_last_name() == null) {
-            profile.set_last_name("");
-            getViewModel().getSurName().set(profile.get_last_name());
+        if(contact.getLastname() == null) {
+            contact.setLastname("");
+            getViewModel().getSurName().set(contact.getLastname());
         } else {
-            getViewModel().getSurName().set(profile.get_last_name());
+            getViewModel().getSurName().set(contact.getLastname());
         }
-        getViewModel().getEmail().set(profile.get_email());
-        if(profile.get_phone() == null) {
-            profile.set_phone("");
-            getViewModel().getPhone().set(profile.get_phone());
+        getViewModel().getEmail().set(contact.getEmail());
+        if(contact.getPhone() == null) {
+            contact.setPhone("");
+            getViewModel().getPhone().set(contact.getPhone());
         } else {
-            getViewModel().getPhone().set(profile.get_phone());
+            getViewModel().getPhone().set(contact.getPhone());
         }
-        if(profile.get_description() == null) {
-            profile.set_description("");
-            getViewModel().getDescr().set(profile.get_description());
+        /*if(contact.getDescription() == null) {
+            contact.setDescription("");
+            getViewModel().get().set(contact.get_description());
         } else {
-            getViewModel().getDescr().set(profile.get_description());
-        }
-    }*/
+            getViewModel().getDescr().set(contact.get_description());
+        }*/
+    }
 
     @Override
     protected void setupComponent(ComponentBuilderContainer componentBuilder) {

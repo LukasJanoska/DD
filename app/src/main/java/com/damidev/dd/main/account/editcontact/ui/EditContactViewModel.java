@@ -49,6 +49,17 @@ public class EditContactViewModel extends BaseViewModel<EditContactView> {
         this.handler = handler;
     }
 
+    public Contact getContact(int id) {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.addAll(handler.getAllContacts());
+        Contact contact = contacts.get(id);
+
+        if(contact!=null) {
+            return contact;
+        }
+        return null;
+    }
+
     public void onSaveClick(int contact_id) {
 
         ArrayList<Contact> contacts = new ArrayList<>();
