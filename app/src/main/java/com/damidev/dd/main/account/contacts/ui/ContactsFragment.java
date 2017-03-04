@@ -2,6 +2,7 @@ package com.damidev.dd.main.account.contacts.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.damidev.dd.databinding.FragmentContactsBinding;
 import com.damidev.dd.main.account.contacts.Events.ServerEvent;
 import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.inject.ContactsModule;
+import com.damidev.dd.main.account.newcontact.ui.NewContactFragment;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.shared.dataaccess.Contact;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
@@ -126,8 +128,8 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.edit_profile:
-                //getViewModel().onEditProfile();
+            case R.id.add_contact:
+                getViewModel().onNewContactClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -146,5 +148,11 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
         BusProvider.getInstance().unregister(this);
     }
 
-
+    @Override
+    public void replaceWithNewContactFragmnet() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        NewContactFragment fragment = NewContactFragment.newInstance(NewContactFragment.NewContactFragmnetTag);
+        ft.replace(R.id.fragment_main_container, fragment); //.addToBackStack(null);
+        ft.commit();
+    }
 }

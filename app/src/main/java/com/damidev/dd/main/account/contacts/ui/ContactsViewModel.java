@@ -52,4 +52,9 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
         return handler.getAllContacts();
     }
 
+    public void onNewContactClick() {
+        getView().replaceWithNewContactFragmnet();
+
+    }
+
 }

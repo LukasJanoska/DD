@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.account.newcontact.ui.NewContactFragment">
+
+    <data>
+        <variable name="vm" type="com.damidev.dd.main.account.newcontact.ui.NewContactViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create new contact"
+            android:textSize="22sp"
+            android:layout_marginBottom="25dp"/>
+
+        <!--<EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameInput"
+            android:hint="Name"
+            android:text="@={vm.name}"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lastnameInput"
+            android:hint="Lastname"
+            android:text="@={vm.surName}"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phoneInput"
+            android:hint="Phone"
+            android:text="@={vm.phone}"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailInput"
+            android:hint="Email"
+            android:text="@={vm.email}"
+            />-->
+    </LinearLayout>
+</layout>
+

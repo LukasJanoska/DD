@@ -1,14 +1,16 @@
-package com.damidev.dd.main.account.contacts.platform;
+package com.damidev.dd.main.account.newcontact.platform;
 
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import com.damidev.dd.main.account.contacts.Events.ErrorEvent;
-import com.damidev.dd.main.account.contacts.Events.ServerEvent;
+import com.damidev.dd.main.account.newcontact.Events.ErrorEvent;
+import com.damidev.dd.main.account.newcontact.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
-import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
+import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Produce;
+
+import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,23 +21,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class ContactsCommunicator {
+public class NewContactCommunicator {
+
     private static  final String TAG = "Communicator";
     private static final String SERVER_URL = "http://androidtest.dev.damidev.com/api/";
 
+
     @WorkerThread
-    public void getAllContacts(String token){
+    public void addContact(String token, HashMap hashMap){
 
         Retrofit retrofit = setServerComunication();
         DamiRestApi service = retrofit.create(DamiRestApi.class);
 
-        Call<ServerContactsResultDto> call = service.getContacts(token);
+        Call<ServerNewContactResultDto> call = service.addContact(token, hashMap);
 
-        call.enqueue(new Callback<ServerContactsResultDto>() {
+        call.enqueue(new Callback<ServerNewContactResultDto>() {
             @Override
-            public void onResponse(Call<ServerContactsResultDto> call, Response<ServerContactsResultDto> response) {
+            public void onResponse(Call<ServerNewContactResultDto> call, Response<ServerNewContactResultDto> response) {
                 // response.isSuccessful() is true if the response code is 2xx
-                ServerContactsResultDto data;
+                ServerNewContactResultDto data;
                 data = response.body();
 
                 if(data != null && data.getResponseCode() == 1) {
@@ -48,14 +52,13 @@ public class ContactsCommunicator {
             }
 
             @Override
-            public void onFailure(Call<ServerContactsResultDto> call, Throwable t) {
+            public void onFailure(Call<ServerNewContactResultDto> call, Throwable t) {
                 // handle execution failures like no internet connectivity
 
-                BusProvider.getInstance().post(new ErrorEvent(-2,t.getMessage()));
+                BusProvider.getInstance().post(new com.damidev.dd.main.account.profileedit.Events.ErrorEvent(-2,t.getMessage()));
             }
         });
     }
-
 
     private Retrofit setServerComunication() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -72,8 +75,8 @@ public class ContactsCommunicator {
     }
 
     @Produce
-    public ServerEvent produceServerEvent(ServerContactsResultDto serverMapResponseDto) {
-        return new ServerEvent(serverMapResponseDto);
+    public ServerEvent produceServerEvent(ServerNewContactResultDto resultDto) {
+        return new ServerEvent(resultDto);
     }
 
     @Produce

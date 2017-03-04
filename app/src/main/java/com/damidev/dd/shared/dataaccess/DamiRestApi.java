@@ -29,4 +29,9 @@ public interface DamiRestApi {
     @POST("getContacts")
     Call<ServerContactsResultDto> getContacts(@Field("token") String token );
 
+    @FormUrlEncoded
+    @POST("addContact")
+    Call<ServerNewContactResultDto> addContact(@Field("token") String token, @FieldMap Map<String, String> fields );
+
+
 }

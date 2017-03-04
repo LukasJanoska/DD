@@ -1,4 +1,5 @@
-package com.damidev.dd.main.account.contacts.platform;
+/*
+package com.damidev.dd.main.account.newcontact.platform;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -61,9 +62,11 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	/**
+	*/
+/**
 	 * All CRUD(Create, Read, Update, Delete) Operations
-	 */
+	 *//*
+
 
 	// Adding new contact
 	public void addContact(Contact contact) {
@@ -131,7 +134,9 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-	/*// Getting single contact
+	*/
+/*//*
+/ Getting single contact
 	public Profile getProfile(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
@@ -145,9 +150,12 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
                 cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
 		// return contact
 		return contact;
-	}*/
+	}*//*
 
-	/*// Updating single contact
+
+	*/
+/*//*
+/ Updating single contact
 	public int updateProfile(Profile contact) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -162,8 +170,10 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
 				new String[] { String.valueOf(contact.get_id()) });
 	}
-	*/
+	*//*
 
+
+*/
 /*
 	// Deleting single contact
 	public void deleteProfile(Profile contact) {
@@ -172,6 +182,8 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 				new String[] { String.valueOf(contact.getID()) });
 		db.close();
 	}
-*/
+*//*
+
 
 }
+*/

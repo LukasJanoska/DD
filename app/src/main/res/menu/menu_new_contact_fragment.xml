@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/add_contact"
+        android:id="@+id/save"
         app:showAsAction="always"
-        android:title="Add contact"
-        android:icon="@drawable/ic_playlist_add_white_24dp">
+        android:title="Save"
+        android:icon="@drawable/ic_playlist_add_check_white_24dp">
     </item>
 </menu>
