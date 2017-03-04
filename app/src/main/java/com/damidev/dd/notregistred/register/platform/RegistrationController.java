@@ -21,4 +21,10 @@ public class RegistrationController {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Flowable<Response<ServerRegResultDto>> login(final String username, final String password) {
+        return restService
+                .login(username, password)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

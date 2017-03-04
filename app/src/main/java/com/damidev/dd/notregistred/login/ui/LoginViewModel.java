@@ -235,7 +235,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
         this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
 
         final Flowable<Response<ServerRegResultDto>> flowable = this.registrationController
-                .registration(username, password)
+                .login(username, password)
                 .cache();
 
         RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);

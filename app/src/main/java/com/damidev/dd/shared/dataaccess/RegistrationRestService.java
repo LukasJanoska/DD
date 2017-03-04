@@ -26,4 +26,11 @@ public class RegistrationRestService {
         return restApi.registration(username, password)
                 .subscribeOn(Schedulers.io());
     }
+
+    @WorkerThread
+    public Flowable<Response<ServerRegResultDto>> login(final String username, final String password) {
+
+        return restApi.login(username, password)
+                .subscribeOn(Schedulers.io());
+    }
 }
