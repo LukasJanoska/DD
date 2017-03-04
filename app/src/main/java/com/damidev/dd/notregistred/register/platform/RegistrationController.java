@@ -1,4 +1,4 @@
-package com.damidev.dd.notregistred.login.platform;
+package com.damidev.dd.notregistred.register.platform;
 
 import com.damidev.dd.shared.dataaccess.RegistrationRestService;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;

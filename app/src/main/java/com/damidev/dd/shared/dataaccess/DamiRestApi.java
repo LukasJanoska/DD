@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 public interface DamiRestApi {
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("register")
     Flowable<Response<ServerRegResultDto>> registration(@Field("email") String email,
                                                         @Field("password") String password);
     @FormUrlEncoded

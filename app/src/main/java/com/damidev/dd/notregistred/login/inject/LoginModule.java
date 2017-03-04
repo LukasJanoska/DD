@@ -7,7 +7,7 @@ import com.damidev.core.inject.scope.FragmentScope;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.RegistrationRestService;
 import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
-import com.damidev.dd.notregistred.login.platform.RegistrationController;
+import com.damidev.dd.notregistred.register.platform.RegistrationController;
 
 import dagger.Module;
 import dagger.Provides;

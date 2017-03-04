@@ -12,7 +12,7 @@ import android.view.View;
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
 import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
-import com.damidev.dd.notregistred.login.platform.RegistrationController;
+import com.damidev.dd.notregistred.register.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.utils.Utils;

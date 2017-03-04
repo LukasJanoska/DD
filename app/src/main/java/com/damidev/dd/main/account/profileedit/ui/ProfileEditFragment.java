@@ -57,27 +57,36 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userProfileId = bundle.getInt(LoginFragment.user_profile_id_tag, 0);
-            profile = getViewModel().getUserProfile(userProfileId);
+            setEditTexts(userProfileId);
+        }
+    }
+
+    private void setEditTexts(int userProfileId) {
+        profile = getViewModel().getUserProfile(userProfileId);
+        if(profile.get_name() == null) {
+            profile.set_name("");
             getViewModel().getName().set(profile.get_name());
-            if(profile.get_last_name() == null) {
-                profile.set_last_name("");
-                getViewModel().getSurName().set(profile.get_last_name());
-            } else {
-                getViewModel().getSurName().set(profile.get_last_name());
-            }
-            getViewModel().getEmail().set(profile.get_email());
-            if(profile.get_phone() == null) {
-                profile.set_phone("");
-                getViewModel().getPhone().set(profile.get_phone());
-            } else {
-                getViewModel().getPhone().set(profile.get_phone());
-            }
-            if(profile.get_description() == null) {
-                profile.set_description("");
-                getViewModel().getDescr().set(profile.get_description());
-            } else {
-                getViewModel().getDescr().set(profile.get_description());
-            }
+        } else {
+            getViewModel().getName().set(profile.get_name());
+        }
+        if(profile.get_last_name() == null) {
+            profile.set_last_name("");
+            getViewModel().getSurName().set(profile.get_last_name());
+        } else {
+            getViewModel().getSurName().set(profile.get_last_name());
+        }
+        getViewModel().getEmail().set(profile.get_email());
+        if(profile.get_phone() == null) {
+            profile.set_phone("");
+            getViewModel().getPhone().set(profile.get_phone());
+        } else {
+            getViewModel().getPhone().set(profile.get_phone());
+        }
+        if(profile.get_description() == null) {
+            profile.set_description("");
+            getViewModel().getDescr().set(profile.get_description());
+        } else {
+            getViewModel().getDescr().set(profile.get_description());
         }
     }
 

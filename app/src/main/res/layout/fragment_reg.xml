@@ -23,6 +23,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -42,7 +43,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/passwordInput2"
+                    android:id="@+id/passwordInput"
                     android:inputType="textPassword"
                     android:hint="Heslo"
                     android:text="@={vm.password}"
@@ -50,20 +51,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/passwordInput"
-                    android:inputType="textPassword"
-                    android:hint="Heslo"
-                    android:text="@={vm.password}"
-                    app:error="@{vm.passwordErrorr}" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +60,9 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register"
+                    android:id="@+id/loginButton"
+                    android:text="Login"
+                    android:onClick="@{(view) -> vm.onClickLogin(view)}"
                     />
 
             </LinearLayout>

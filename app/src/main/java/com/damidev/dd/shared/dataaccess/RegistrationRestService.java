@@ -23,25 +23,7 @@ public class RegistrationRestService {
     @WorkerThread
     public Flowable<Response<ServerRegResultDto>> registration(final String username, final String password) {
 
-//        try {
         return restApi.registration(username, password)
                 .subscribeOn(Schedulers.io());
-
-//            if (response.isSuccessful() && response.body() != null) {
-//                if(response.body().isStatus()) {
-//                    Timber.d("Ok");
-//                    return true;
-//                } else {
-//                    Timber.d("Login failed: %s", response.body().getMsg());
-//                    return false;
-//                }
-//            } else {
-//                Timber.d("Login failed: %s", response.errorBody().toString());
-//                return false;
-//            }
-//        } catch (Throwable e) {
-//            Timber.d(e, "Login failed");
-//            return false;
-//        }
     }
 }
