@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -16,6 +17,7 @@ import com.damidev.dd.databinding.FragmentNewContactBinding;
 import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
 import com.damidev.dd.main.account.newcontact.inject.NewContactComponent;
 import com.damidev.dd.main.account.newcontact.inject.NewContactModule;
+import com.damidev.dd.shared.Events.ErrorEvent;
 import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
@@ -93,6 +95,11 @@ public class NewContactFragment extends D2MvvmFragment<FragmentNewContactBinding
     public void onServerEvent(ServerEvent serverEvent){
         resultDto = serverEvent.getServerNewContactResponse();
         getViewModel().addContactToDB(resultDto);
+    }
+
+    @Subscribe
+    public void onErrorEvent(ErrorEvent errorEvent){
+        Toast.makeText(getContext(),"Please, connect to the internet",Toast.LENGTH_SHORT).show();
     }
 
     @Override

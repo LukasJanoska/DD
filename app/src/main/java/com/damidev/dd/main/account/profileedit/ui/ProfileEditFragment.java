@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -15,6 +16,7 @@ import com.damidev.dd.main.account.profile.ui.ProfileFragment;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditComponent;
 import com.damidev.dd.main.account.profileedit.inject.ProfileEditModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.shared.Events.ErrorEvent;
 import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
@@ -122,6 +124,11 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
     public void onServerEvent(ServerEvent serverEvent){
         serverRegResultDto = serverEvent.getServerRegResultDto();
         getViewModel().updateDbUserProfile(serverRegResultDto);
+    }
+
+    @Subscribe
+    public void onErrorEvent(ErrorEvent errorEvent){
+        Toast.makeText(getContext(),"Please, connect to the internet",Toast.LENGTH_SHORT).show();
     }
 
     @Override

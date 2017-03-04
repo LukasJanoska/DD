@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentContactsBinding;
+import com.damidev.dd.shared.Events.ErrorEvent;
 import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.inject.ContactsModule;
@@ -138,6 +140,11 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
             getViewModel().getAllContacts(token);
             //mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Subscribe
+    public void onErrorEvent(ErrorEvent errorEvent){
+        Toast.makeText(getContext(),"Please, connect to the internet",Toast.LENGTH_SHORT).show();
     }
 
     @Override

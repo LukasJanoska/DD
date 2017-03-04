@@ -13,6 +13,7 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivitySplashScreenBinding;
 import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
+import com.damidev.dd.shared.Events.ErrorEvent;
 import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
@@ -118,6 +119,11 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
             information.setText("Username: "+serverEvent.getServerContactsResultDto().getUsername() + " || Password: "+serverEvent.getServerContactsResultDto().getPassword());
         }*/
         //extraInformation.setText("" + serverEvent.getServerContactsResultDto().getMessage());
+    }
+
+    @Subscribe
+    public void onErrorEvent(ErrorEvent errorEvent){
+        Toast.makeText(this,"Please, connect to the internet",Toast.LENGTH_SHORT).show();
     }
 
     public boolean writeObjectToFile(Context context, ServerMapResponseDto serverMapResponseDto) {
