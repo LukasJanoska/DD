@@ -2,6 +2,8 @@ package com.damidev.dd.main.account.contacts.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,13 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     public static String ContactsFragmnetTag = "CONTACTS_FRAGMENT_TAG";
     private ServerContactsResultDto serverContactsResultDto;
     private String token;
+    protected RecyclerView mRecyclerView;
+    protected ContactAdapter mAdapter;
+    protected RecyclerView.LayoutManager mLayoutManager;
+    protected String[] mDataset;
+
+    private static int DATASET_COUNT = 15;
+
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -44,6 +53,8 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
             //getToken
         }
         getViewModel().getAllContacts(token);
+
+        initDataset();
     }
 
     @Override
@@ -58,8 +69,28 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_contacts);
 
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.contactsRecView);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        setRecyclerViewLayoutManager();
+
+        mAdapter = new ContactAdapter(mDataset);
+        mRecyclerView.setAdapter(mAdapter);
+
         return view;
     }
+
+    public void setRecyclerViewLayoutManager() {
+        int scrollPosition = 0;
+
+        if (mRecyclerView.getLayoutManager() != null) {
+            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
+                    .findFirstCompletelyVisibleItemPosition();
+        }
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.scrollToPosition(scrollPosition);
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -78,6 +109,19 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     public void onServerEvent(ServerEvent serverEvent){
         serverContactsResultDto = serverEvent.getServerResponse();
         getViewModel().saveContactsToDB(serverContactsResultDto);
+    }
+
+    private void initDataset() {
+
+        if(DATASET_COUNT > 5) {
+            DATASET_COUNT = 5;
+        }
+        mDataset = new String[DATASET_COUNT];
+        mDataset[0] = "Cottage";
+        mDataset[1] = "Home";
+        mDataset[2] = "Garage";
+        mDataset[3] = "Hotel";
+        mDataset[4] = "Garden";
     }
 
     @Override

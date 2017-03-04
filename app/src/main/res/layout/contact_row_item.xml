@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        >
+        <ImageView
+            android:id="@+id/contactImgView"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/contact"/>
+
+        <TextView
+            android:id="@+id/nameTV"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/contactImgView"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Name"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:id="@+id/lastNameTV"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/nameTV"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Last name"
+            android:layout_marginLeft="20dp"
+            />
+
+    </RelativeLayout>
+</FrameLayout>
