@@ -21,7 +21,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView textView;
+        private final TextView nameTextView;
+        private final TextView lastNameTextView;
 
         public ViewHolder(View v) {
             super(v);
@@ -32,11 +33,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                     Toast.makeText(v.getContext(), getAdapterPosition() + " Clicked", Toast.LENGTH_SHORT).show();
                 }
             });
-            textView = (TextView) v.findViewById(R.id.nameTV);
+            nameTextView = (TextView) v.findViewById(R.id.nameTV);
+            lastNameTextView = (TextView) v.findViewById(R.id.lastNameTV);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getNameTextView() {
+            return nameTextView;
+        }
+
+        public TextView getLastNameTextView() {
+            return lastNameTextView;
         }
     }
 
@@ -54,7 +60,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTextView().setText(mDataSet.get(position).getName());
+        viewHolder.getNameTextView().setText(mDataSet.get(position).getName());
+        viewHolder.getLastNameTextView().setText(mDataSet.get(position).getLastname());
     }
 
     @Override
