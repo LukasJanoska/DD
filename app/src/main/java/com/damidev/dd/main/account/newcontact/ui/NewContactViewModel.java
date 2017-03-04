@@ -55,6 +55,7 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
         //token get from prefs
         token = loadToken();
         communicator.addContact(token, hashMap);
+
     }
 
     public String loadToken() {
