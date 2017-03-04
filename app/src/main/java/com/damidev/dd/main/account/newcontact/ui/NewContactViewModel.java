@@ -3,6 +3,7 @@ package com.damidev.dd.main.account.newcontact.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.databinding.ObservableField;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.newcontact.platform.NewContactCommunicator;
@@ -20,7 +21,7 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
     private NewContactCommunicator communicator;
     private String token;
 
-   /* private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> surName = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> email = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> phone = new ObservableField<CharSequence>();
@@ -36,7 +37,7 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
     }
     public ObservableField<CharSequence> getPhone() {
         return phone;
-    }*/
+    }
 
     @Inject
     public NewContactViewModel(Context context, NewContactCommunicator comunicator) {
@@ -47,11 +48,10 @@ public class NewContactViewModel extends BaseViewModel<NewContactView> {
     public void onSaveClick() {
         HashMap hashMap = new HashMap();
 
-        /*hashMap.put("name", getName().get().toString());
+        hashMap.put("name", getName().get().toString());
         hashMap.put("lastname", getSurName().get().toString());
-        hashMap.put("email", getEmail().get().toString());
         hashMap.put("phone", getPhone().get().toString());
-*/
+        hashMap.put("email", getEmail().get().toString());
         //token get from prefs
         token = loadToken();
         communicator.addContact(token, hashMap);

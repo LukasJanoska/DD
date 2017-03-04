@@ -22,7 +22,7 @@
             android:textSize="22sp"
             android:layout_marginBottom="25dp"/>
 
-        <!--<EditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/usernameInput"
@@ -49,7 +49,7 @@
             android:id="@+id/emailInput"
             android:hint="Email"
             android:text="@={vm.email}"
-            />-->
+            />
     </LinearLayout>
 </layout>
 
