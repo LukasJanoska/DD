@@ -31,8 +31,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/usernameInput"
                     android:hint="Email"
+                    android:inputType="textEmailAddress"
                     android:text="@={vm.email}"
-                    app:error="@{vm.usernameError}"/>
+                    app:error="@{vm.emailError}"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -43,14 +44,28 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/passwordInput"
+                    android:id="@+id/passwordInput1"
                     android:inputType="textPassword"
-                    android:hint="Heslo"
-                    android:text="@={vm.password}"
-                    app:error="@{vm.passwordError}" />
+                    android:hint="Password"
+                    android:text="@={vm.password1}"
+                    app:error="@{vm.passwordError1}" />
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/passwordInput2"
+                    android:inputType="textPassword"
+                    android:hint="Password"
+                    android:text="@={vm.password2}"
+                    app:error="@{vm.passwordError2}" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -31,9 +31,35 @@ public class RegViewModel extends BaseViewModel<RegView> {
     private static final String TAG_RETAIN_FRAGMENT = "retainFragment";
 
     private final ObservableField<CharSequence> email = new ObservableField<CharSequence>();
-    private final ObservableField<CharSequence> password = new ObservableField<CharSequence>();
-    private final ObservableField<CharSequence> usernameError = new ObservableField<CharSequence>();
-    private final ObservableField<CharSequence> passwordError = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> password1 = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> password2 = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> emailError = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> passwordError1 = new ObservableField<CharSequence>();
+    private final ObservableField<CharSequence> passwordError2 = new ObservableField<CharSequence>();
+
+    public ObservableField<CharSequence> getEmail() {
+        return email;
+    }
+
+    public ObservableField<CharSequence> getPassword1() {
+        return password1;
+    }
+
+    public ObservableField<CharSequence> getPassword2() {
+        return password2;
+    }
+
+    public ObservableField<CharSequence> getEmailError() {
+        return emailError;
+    }
+
+    public ObservableField<CharSequence> getPasswordError1() {
+        return passwordError1;
+    }
+
+    public ObservableField<CharSequence> getPasswordError2() {
+        return passwordError2;
+    }
 
     private RegistrationController registrationController;
     private Context context;
@@ -60,41 +86,47 @@ public class RegViewModel extends BaseViewModel<RegView> {
             return;
         }
 
-//        if(!networkController.isNetworkConnectionAvailable()) {
-//            getView().showErrorToast(context.getString(R.string.error_no_internet_connection));
-//            return;
-//        }
-
         getView().showProgressDialog();//
 
         this.registrationProcessor = AsyncProcessor.create();
         this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
 
-        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email.get().toString(), password.get().toString()); //email.get().toString(), password.get().toString());
+        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email.get().toString(), password2.get().toString());
 
         flowable.subscribe(registrationProcessor);
     }
 
     public boolean validateInputs() {
         boolean valid = true;
-        usernameError.set(null);
-        passwordError.set(null);
+        emailError.set(null);
+        passwordError1.set(null);
+        passwordError2.set(null);
 
         if(TextUtils.isEmpty(email.get())) {
-            usernameError.set("email required");
+            emailError.set("email required");
             valid = false;
         } else if(!(Utils.isEmailValid(email.get().toString()))) {
-            usernameError.set("email not valid");
+            emailError.set("email not valid");
             valid = false;
         } else {
-            usernameError.set(null);
+            emailError.set(null);
         }
 
-        if(TextUtils.isEmpty(password.get())) {
-            passwordError.set("zadejte heslo");
+        if(TextUtils.isEmpty(password1.get())) {
+            passwordError1.set("enter password");
             valid = false;
         } else {
-            passwordError.set(null);
+            passwordError1.set(null);
+        }
+
+        if(TextUtils.isEmpty(password2.get())) {
+            passwordError2.set("enter password");
+            valid = false;
+        } else if(!((password1.get()).equals(password2.get()))) {
+            passwordError2.set("no password match");
+            valid = false;
+        } else {
+            passwordError2.set(null);
         }
 
         return valid;
@@ -134,19 +166,6 @@ public class RegViewModel extends BaseViewModel<RegView> {
         if (registrationDisposable != null) {
             registrationDisposable.dispose();
         }
-    }
-
-    public ObservableField<CharSequence> getEmail() {
-        return email;
-    }
-    public ObservableField<CharSequence> getPassword() {
-        return password;
-    }
-    public ObservableField<CharSequence> getUsernameError() {
-        return usernameError;
-    }
-    public ObservableField<CharSequence> getPasswordError() {
-        return passwordError;
     }
 
     private class RegistrationSubscriber extends DisposableSubscriber<Response<ServerRegResultDto>> {
