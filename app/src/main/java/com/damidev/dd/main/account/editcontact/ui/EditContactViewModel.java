@@ -9,7 +9,6 @@ import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
 import com.damidev.dd.main.account.contacts.platform.DatabaseContactsHandler;
 import com.damidev.dd.shared.dataaccess.Contact;
-import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,16 +67,8 @@ public class EditContactViewModel extends BaseViewModel<EditContactView> {
         communicator.updateContact(token, hashMap);
     }
 
-    public void updateContactInDB(ServerNewContactResultDto resultDto) {
-        Contact contact = new Contact();
-        contact.setId(resultDto.getContact().getId());
-        contact.setName(resultDto.getContact().getName());
-        contact.setLastname(resultDto.getContact().getLastname());
-        contact.setEmail(resultDto.getContact().getEmail());
-        contact.setPhone(resultDto.getContact().getPhone());
-        contact.setFid(resultDto.getContact().getFid());
-        contact.setDescription(resultDto.getContact().getDescription());
-        handler.updateContact(contact);
+    public void replaceWithContactFragment() {
+        getView().replaceWithContactsFragment(loadToken());
     }
 
     public String loadToken() {

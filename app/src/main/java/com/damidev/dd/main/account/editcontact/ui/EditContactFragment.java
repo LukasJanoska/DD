@@ -22,7 +22,7 @@ import com.damidev.dd.shared.Events.ServerEvent;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.shared.rest.platform.BusProvider;
-import com.google.common.eventbus.Subscribe;
+import com.squareup.otto.Subscribe;
 
 
 public class EditContactFragment extends D2MvvmFragment<FragmentEditContactBinding, EditContactViewModel>
@@ -123,7 +123,7 @@ public class EditContactFragment extends D2MvvmFragment<FragmentEditContactBindi
     @Subscribe
     public void onServerEvent(ServerEvent serverEvent){
         resultDto = serverEvent.getServerNewContactResponse();
-        getViewModel().updateContactInDB(resultDto);
+        getViewModel().replaceWithContactFragment();
     }
 
     @Subscribe
@@ -153,8 +153,8 @@ public class EditContactFragment extends D2MvvmFragment<FragmentEditContactBindi
 
     public void replaceWithContactsFragment(String token) {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ContactsFragment accountFragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag, token);
-        ft.replace(R.id.fragment_main_container, accountFragment);
+        ContactsFragment fragment = ContactsFragment.newInstance(ContactsFragment.ContactsFragmnetTag, token);
+        ft.replace(R.id.fragment_main_container, fragment);
         ft.commit();
     }
 
