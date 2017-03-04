@@ -1,15 +1,19 @@
 package com.damidev.dd.main.account.contacts.Events;
 
 
+import com.damidev.dd.shared.dataaccess.BaseResponseDto;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
-import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
 
 public class ServerEvent {
     private ServerContactsResultDto serverResponse;
-    private ServerNewContactResultDto serverNewContactResponse;
+    private BaseResponseDto baseResponse;
 
     public ServerEvent(ServerContactsResultDto serverResponse) {
         this.serverResponse = serverResponse;
+    }
+
+    public ServerEvent(BaseResponseDto baseResponse) {
+        this.baseResponse = baseResponse;
     }
 
     public ServerContactsResultDto getServerResponse() {
@@ -20,4 +24,11 @@ public class ServerEvent {
         this.serverResponse = serverResponse;
     }
 
+    public BaseResponseDto getBaseResponse() {
+        return baseResponse;
+    }
+
+    public void setBaseResponse(BaseResponseDto baseResponse) {
+        this.baseResponse = baseResponse;
+    }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -87,6 +88,20 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
                     .findFirstCompletelyVisibleItemPosition();
         }
 
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, final int swipeDir) {
+                getViewModel().deleteContact(viewHolder.getAdapterPosition());
+
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }
@@ -115,6 +130,14 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
         mAdapter = new ContactAdapter(contacts);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Subscribe
+    public void onServerEvent(String result){
+        if(result.equals("success")) {
+            getViewModel().getAllContacts(token);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

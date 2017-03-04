@@ -2,6 +2,7 @@ package com.damidev.dd.main.account.contacts.ui;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
@@ -15,12 +16,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class ContactsViewModel extends BaseViewModel<ContactsView> {
 
     private Context context;
     private ContactsCommunicator communicator;
     private DatabaseContactsHandler handler;
+    private String token;
 
     @Inject
     public ContactsViewModel(Context context, ContactsCommunicator communicator, DatabaseContactsHandler handler) {
@@ -55,6 +59,19 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
     public void onNewContactClick() {
         getView().replaceWithNewContactFragmnet();
 
+    }
+
+    public void deleteContact(int id) {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.addAll(handler.getAllContacts());
+
+        token = loadToken();
+        communicator.deleteContact(token, contacts.get(id).getId());
+    }
+
+    public String loadToken() {
+        SharedPreferences prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
+        return prefs.getString("token", "");
     }
 
 }

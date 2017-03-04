@@ -33,5 +33,8 @@ public interface DamiRestApi {
     @POST("addContact")
     Call<ServerNewContactResultDto> addContact(@Field("token") String token, @FieldMap Map<String, String> fields );
 
+    @FormUrlEncoded
+    @POST("deleteContact")
+    Call<BaseResponseDto> deleteContact(@Field("token") String token, @Field("id") int id );
 
 }

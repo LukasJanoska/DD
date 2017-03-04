@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.damidev.dd.main.account.contacts.Events.ErrorEvent;
 import com.damidev.dd.main.account.contacts.Events.ServerEvent;
+import com.damidev.dd.shared.dataaccess.BaseResponseDto;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
 import com.damidev.dd.shared.dataaccess.ServerNewContactResultDto;
@@ -78,9 +79,6 @@ public class ContactsCommunicator {
                     BusProvider.getInstance().post(new com.damidev.dd.main.account.newcontact.Events.ServerEvent(data));
                     Log.e(TAG,"Success");
                 }
-
-                /*BusProvider.getInstance().post(new ErrorEvent(-2, "server not responding"));
-                Log.e(TAG,"Failure");*/
             }
 
             @Override
@@ -92,6 +90,33 @@ public class ContactsCommunicator {
         });
     }
 
+    @WorkerThread
+    public void deleteContact(String token, int id){
+
+        Retrofit retrofit = setServerComunication();
+        DamiRestApi service = retrofit.create(DamiRestApi.class);
+
+        Call<BaseResponseDto> call = service.deleteContact(token, id);
+
+        call.enqueue(new Callback<BaseResponseDto>() {
+            @Override
+            public void onResponse(Call<BaseResponseDto> call, Response<BaseResponseDto> response) {
+                // response.isSuccessful() is true if the response code is 2xx
+
+                if(response != null && response.code() == 200) {
+                    BusProvider.getInstance().post("success");
+                    Log.e(TAG,"Success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponseDto> call, Throwable t) {
+                // handle execution failures like no internet connectivity
+
+                BusProvider.getInstance().post(new com.damidev.dd.main.account.profileedit.Events.ErrorEvent(-2,t.getMessage()));
+            }
+        });
+    }
 
     private Retrofit setServerComunication() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
