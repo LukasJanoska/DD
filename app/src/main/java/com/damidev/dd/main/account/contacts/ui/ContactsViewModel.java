@@ -30,6 +30,7 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
     }
 
     public void getAllContacts(String token) {
+        handler.deleteAllContacts();
         communicator.getAllContacts(token);
     }
 

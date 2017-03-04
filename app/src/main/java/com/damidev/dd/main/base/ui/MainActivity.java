@@ -97,6 +97,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         ft.replace(R.id.fragment_main_container, contactsFragment);
         ft.commit();
         toolbar.setTitle("CONTACTS");
+        saveStringPreferences("token", token);
     }
 
     public void saveStringPreferences(String key, String value) {

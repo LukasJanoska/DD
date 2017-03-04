@@ -111,6 +111,27 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		return contactList;
 	}
 
+    // Deleting single contact
+    public void deleteContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(contact.getId()) });
+        db.close();
+    }
+
+    // Deleting single contact
+    public void deleteAllContacts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<Contact> contactList = new ArrayList<Contact>();
+        contactList = getAllContacts();
+        for (Contact c : contactList) {
+            deleteContact(c);
+        }
+
+        db.close();
+    }
+
 	/*// Getting single contact
 	public Profile getProfile(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
