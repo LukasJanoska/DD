@@ -199,7 +199,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
             for (ServerRegChildResponseDto.Favorites point : fav) {
                 Double lat = point.getLat();
                 Double lng = point.getLng();
-                String imgurl = point.getPhoto().get(3);
+                String imgurl = point.getPhoto().get(2);
 
                 addMarker(new LatLng(lat, lng), imgurl, "start");
             }
