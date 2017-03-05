@@ -80,6 +80,45 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_reg);
 
         regButton = (LoginButton) view.findViewById(R.id.reg_button_fb);
+        facebookInit();
+
+        return view;
+    }
+
+    public static RegFragment newInstance(String someTitle) {
+        RegFragment loginFragment = new RegFragment();
+        return loginFragment;
+    }
+
+    @MainThread
+    @Override
+    public void showProgressDialog() {
+        progressDialog = ProgressDialog.newInstance("loading");
+        progressDialog.show(getActivity().getSupportFragmentManager(), "progress");
+    }
+
+    @MainThread
+    @Override
+    public void hideProgressDialog() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @MainThread
+    @Override
+    public void showErrorDialog(final String errMsg) {
+        ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
+        Toast.makeText(getContext(), "email already registred, please do login", Toast.LENGTH_LONG).show();
+    }
+
+    @MainThread
+    @Override
+    public void showErrorToast(final String errMsg) {
+        Toast.makeText(getContext(), errMsg, Toast.LENGTH_LONG).show();
+    }
+
+    private void facebookInit() {
         regButton.setReadPermissions(Collections.singletonList("public_profile, email, user_birthday, user_friends"));
 
         regButton.setFragment(this);
@@ -129,41 +168,6 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
                 // App code
             }
         });
-
-        return view;
-    }
-
-    public static RegFragment newInstance(String someTitle) {
-        RegFragment loginFragment = new RegFragment();
-        return loginFragment;
-    }
-
-    @MainThread
-    @Override
-    public void showProgressDialog() {
-        progressDialog = ProgressDialog.newInstance("loading");
-        progressDialog.show(getActivity().getSupportFragmentManager(), "progress");
-    }
-
-    @MainThread
-    @Override
-    public void hideProgressDialog() {
-        if(progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
-    @MainThread
-    @Override
-    public void showErrorDialog(final String errMsg) {
-        ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
-        Toast.makeText(getContext(), "email already registred, please do login", Toast.LENGTH_LONG).show();
-    }
-
-    @MainThread
-    @Override
-    public void showErrorToast(final String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_LONG).show();
     }
 
     @Override

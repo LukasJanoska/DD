@@ -56,7 +56,6 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         getViewModel().getEmail().set("mmmm@mm.mm");
         getViewModel().getPassword().set("mmm");
 
@@ -85,8 +84,33 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_login);
 
         loginButton = (LoginButton) view.findViewById(R.id.login_button_fb);
-        loginButton.setReadPermissions(Collections.singletonList("public_profile, email, user_birthday, user_friends"));
+        facebookInit();
 
+        return view;
+    }
+
+    public static LoginFragment newInstance(String someTitle) {
+        LoginFragment loginFragment = new LoginFragment();
+        return loginFragment;
+    }
+
+    @MainThread
+    @Override
+    public void showProgressDialog() {
+        progressDialog = ProgressDialog.newInstance("loading");
+        progressDialog.show(getActivity().getSupportFragmentManager(), "progress");
+    }
+
+    @MainThread
+    @Override
+    public void hideProgressDialog() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void facebookInit() {
+        loginButton.setReadPermissions(Collections.singletonList("public_profile, email, user_birthday, user_friends"));
         loginButton.setFragment(this);
         // Other app specific specialization
 
@@ -134,28 +158,6 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
                 // App code
             }
         });
-
-        return view;
-    }
-
-    public static LoginFragment newInstance(String someTitle) {
-        LoginFragment loginFragment = new LoginFragment();
-        return loginFragment;
-    }
-
-    @MainThread
-    @Override
-    public void showProgressDialog() {
-        progressDialog = ProgressDialog.newInstance("loading");
-        progressDialog.show(getActivity().getSupportFragmentManager(), "progress");
-    }
-
-    @MainThread
-    @Override
-    public void hideProgressDialog() {
-        if(progressDialog != null) {
-            progressDialog.dismiss();
-        }
     }
 
     @MainThread
