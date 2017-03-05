@@ -16,7 +16,10 @@ import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentMapBinding;
 import com.damidev.dd.main.account.map.inject.LoggedMapComponent;
 import com.damidev.dd.main.account.map.inject.LoggedMapModule;
+import com.damidev.dd.notregistred.login.ui.LoginFragment;
 import com.damidev.dd.notregistred.picture.ui.PictureFragment;
+import com.damidev.dd.shared.dataaccess.Profile;
+import com.damidev.dd.shared.dataaccess.ServerRegChildResponseDto;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapChildResponseDto;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
@@ -29,14 +32,18 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -52,7 +59,9 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
 
     MapView mapView;
     GoogleMap map;
+    private int userProfileId;
     private GroundOverlay mGroundOverlay;
+    private Profile profile;
 
     public LoggedMapFragment() {
         // Required empty public constructor
@@ -67,6 +76,17 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            userProfileId = bundle.getInt(LoginFragment.user_profile_id_tag, 0);
+            profile = getViewModel().getUserProfile(userProfileId);
+
+            Gson gson = new Gson();
+
+            Type type = new TypeToken<List<ServerRegChildResponseDto.Favorites>>() {}.getType();
+            List<ServerRegChildResponseDto.Favorites> favoritesList = gson.fromJson(profile.get_map(), type);
+        }
     }
 
     @Override
@@ -112,8 +132,11 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
         return null;
     }
 
-    public static LoggedMapFragment newInstance(String someTitle) {
+    public static LoggedMapFragment newInstance(String someTitle, int userProfileId) {
         LoggedMapFragment loginFragment = new LoggedMapFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(LoginFragment.user_profile_id_tag, userProfileId);
+        loginFragment.setArguments(bundle);
         return loginFragment;
     }
 

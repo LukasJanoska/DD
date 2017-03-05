@@ -104,7 +104,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
     private void replaceWithMapFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        LoggedMapFragment mapFragment = LoggedMapFragment.newInstance(LoggedMapFragment.LoggedMapFragmnetTag);
+        LoggedMapFragment mapFragment = LoggedMapFragment.newInstance(LoggedMapFragment.LoggedMapFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, mapFragment);
         toolbar.setTitle("MAP");
         ft.commit();
