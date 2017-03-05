@@ -16,6 +16,7 @@ import com.damidev.dd.notregistred.register.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.utils.Utils;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -165,6 +166,10 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                 if(data!=null) {
                     if(data.getResponseCode()==1) {
                         Profile profil = new Profile();
+
+                        Gson gson = new Gson();
+                        String jsonFavourites = gson.toJson(data.getChildResponse().getFavorites());
+
                         profil.set_id(data.getChildResponse().getId());
                         profil.set_email(data.getChildResponse().getEmail());
                         profil.set_name(data.getChildResponse().getName());
@@ -173,6 +178,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                         profil.set_phone(data.getChildResponse().getPhone());
                         profil.set_description(data.getChildResponse().getDescription());
                         profil.set_token(data.getChildResponse().getToken());
+                        profil.set_map(jsonFavourites);
                         db.addProfile(profil);
 
                         getView().startMainActivity(profil.get_id(), profil.get_token());

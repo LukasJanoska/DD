@@ -13,13 +13,14 @@ public class Profile {
 	String _fID;
 	String _description;
 	String _token;
+	String _map;
 
 	// Empty constructor
 	public Profile(){
 
 	}
 
-    public Profile(int _id, String _email, String _phone, String _name, String _last_name, String _rights, String _photo, String _fID, String _description, String _token) {
+    public Profile(int _id, String _email, String _phone, String _name, String _last_name, String _rights, String _photo, String _fID, String _description, String _token, String _map) {
         this._id = _id;
         this._email = _email;
         this._phone = _phone;
@@ -30,6 +31,7 @@ public class Profile {
         this._fID = _fID;
         this._description = _description;
         this._token = _token;
+        this._map = _map;
     }
 
     public int get_id() {
@@ -110,5 +112,13 @@ public class Profile {
 
     public void set_token(String _token) {
         this._token = _token;
+    }
+
+    public String get_map() {
+        return _map;
+    }
+
+    public void set_map(String _map) {
+        this._map = _map;
     }
 }

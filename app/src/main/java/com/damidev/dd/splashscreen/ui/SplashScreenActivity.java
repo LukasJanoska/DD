@@ -61,7 +61,6 @@ public class SplashScreenActivity extends D2MvvmActivity<ActivitySplashScreenBin
                     MY_PERMISSIONS_REQUEST);
             permissionCheck = true;
         }
-
     }
 
     @Override

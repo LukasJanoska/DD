@@ -13,7 +13,7 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Database Name
 	private static final String DATABASE_NAME = "profilesManager";
@@ -32,6 +32,7 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 	private static final String KEY_FID = "fID";
 	private static final String KEY_DESCRIPTION = "description";
 	private static final String KEY_TOKEN = "token";
+	private static final String KEY_MAP = "map";
 
 	public DatabaseProfileHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,7 +51,8 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 				+ KEY_PHOTO + " TEXT,"
 				+ KEY_FID + " TEXT,"
 				+ KEY_DESCRIPTION + " TEXT,"
-				+ KEY_TOKEN + " TEXT" + ")";
+				+ KEY_TOKEN + " TEXT,"
+				+ KEY_MAP + " TEXT" + ")";
 		db.execSQL(CREATE_PROFILES_TABLE);
 	}
 
@@ -83,6 +85,7 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 		values.put(KEY_FID, profile.get_fID());
 		values.put(KEY_DESCRIPTION, profile.get_description());
 		values.put(KEY_TOKEN, profile.get_token());
+		values.put(KEY_MAP, profile.get_map());
 
 		// Inserting Row
 		db.insert(TABLE_PROFILES, null, values);
@@ -94,13 +97,13 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_PROFILES, new String[] { KEY_ID,
-                KEY_EMAIL, KEY_PHONE, KEY_NAME, KEY_LAST_NAME, KEY_RIGHTS, KEY_PHOTO, KEY_FID, KEY_DESCRIPTION, KEY_TOKEN }, KEY_ID + "=?",
+                KEY_EMAIL, KEY_PHONE, KEY_NAME, KEY_LAST_NAME, KEY_RIGHTS, KEY_PHOTO, KEY_FID, KEY_DESCRIPTION, KEY_TOKEN, KEY_MAP }, KEY_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 
 		Profile profile = new Profile(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
+                cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10));
 		// return profile
 		return profile;
 	}
