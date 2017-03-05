@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
@@ -25,8 +24,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.processors.AsyncProcessor;
 import io.reactivex.subscribers.DisposableSubscriber;
 import retrofit2.Response;
-
-import static java.security.AccessController.getContext;
 
 
 public class RegViewModel extends BaseViewModel<RegView> {
@@ -212,8 +209,8 @@ public class RegViewModel extends BaseViewModel<RegView> {
                     getView().showErrorDialog("error");
                 }
             } else {
-                getView().startNotRegistredActivity();
-                getView().showErrorDialog("email already registred, please do login");
+                //getView().startNotRegistredActivity();
+                //getView().showErrorDialog("email already registred, please do login");
 
             }
         }

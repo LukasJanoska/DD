@@ -18,8 +18,6 @@ import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 import com.damidev.dd.shared.utils.Utils;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -195,11 +193,8 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                     getView().showErrorDialog("error");
                 }
             } else {
-                try {
-                    getView().showErrorDialog(response.errorBody().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //getView().showErrorDialog(response.errorBody().string());
+                getView().showErrorDialog("Please do registration");
             }
         }
 

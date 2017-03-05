@@ -80,7 +80,12 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_reg);
 
         regButton = (LoginButton) view.findViewById(R.id.reg_button_fb);
-        facebookInit();
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                facebookInit();
+            }
+        });
 
         return view;
     }
