@@ -22,6 +22,7 @@ import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
 import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
+import com.damidev.dd.notregistred.map.ui.MapFragment;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
 
@@ -101,6 +102,14 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
         saveStringPreferences("token", token);
     }
 
+    private void replaceWithMapFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        MapFragment mapFragment = MapFragment.newInstance(MapFragment.MapFragmnetTag);
+        ft.replace(R.id.fragment_main_container, mapFragment);
+        toolbar.setTitle("MAP");
+        ft.commit();
+    }
+
     public void saveStringPreferences(String key, String value) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         prefs.edit()
@@ -122,6 +131,8 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
             replaceWithAccountFragment();
         } else if (id == R.id.contacts) {
             replaceWithContactsFragment();
+        } else if (id == R.id.map) {
+            replaceWithMapFragment();
         } else if (id == R.id.logout) {
             Intent myIntent = new Intent(getApplicationContext(), NotRegistredActivity.class);
             startActivity(myIntent);
