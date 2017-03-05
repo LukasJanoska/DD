@@ -36,6 +36,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="20dp"
             android:text="SAVE"
+            android:onClick="@{(view) -> vm.onClickSave(view)}"
             />
     </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.damidev.dd.main.account.map.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, LoggedMapViewModel> implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, LoggedMapFragView {
@@ -173,19 +176,21 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        responseDto = readObjectFromFile(getContext());
-        /*if(responseDto!=null) {
-            ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
-            points = responseDto.getChildResponse();
+        if(!loadFilterChecked()) {
+            responseDto = readObjectFromFile(getContext());
+            if(responseDto!=null) {
+                ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
+                points = responseDto.getChildResponse();
 
-            for (ServerMapChildResponseDto point : points) {
-                Double lat = point.getLat();
-                Double lng = point.getLng();
-                String imgurl = point.getPhotos().get(2);
+                for (ServerMapChildResponseDto point : points) {
+                    Double lat = point.getLat();
+                    Double lng = point.getLng();
+                    String imgurl = point.getPhotos().get(2);
 
-                addMarker(new LatLng(lat, lng), imgurl, "start");
+                    addMarker(new LatLng(lat, lng), imgurl, "start");
+                }
             }
-        }*/
+        }
 
         if(favoritesList!=null) {
             ArrayList<ServerRegChildResponseDto.Favorites> fav = new ArrayList<>();
@@ -202,6 +207,11 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
 
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 7);
         map.animateCamera(cameraUpdate);*/
+    }
+
+    public boolean loadFilterChecked() {
+        SharedPreferences prefs = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        return prefs.getBoolean("filterbox", false);
     }
 
     @Override
@@ -275,7 +285,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
     @MainThread
     public void replaceWithFilterFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        FilterFragment fragment = FilterFragment.newInstance(PictureFragment.PictureFragmnetTag);
+        FilterFragment fragment = FilterFragment.newInstance(PictureFragment.PictureFragmnetTag, userProfileId);
         ft.replace(R.id.fragment_main_container, fragment);
         ft.commit();
     }
