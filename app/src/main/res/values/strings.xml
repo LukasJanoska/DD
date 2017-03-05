@@ -5,5 +5,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="server_url">http://androidtest.dev.damidev.com/api/</string>
     <string name="back_btn">Press again to exit app</string>
-
+    <string name="facebook_app_id">185865158572485</string>
 </resources>

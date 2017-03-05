@@ -96,6 +96,18 @@ public class RegViewModel extends BaseViewModel<RegView> {
         flowable.subscribe(registrationProcessor);
     }
 
+    public void onClickFBRegister(String email, String fID, String picture) {
+
+        getView().showProgressDialog();//
+
+        this.registrationProcessor = AsyncProcessor.create();
+        this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
+
+        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email , fID);
+
+        flowable.subscribe(registrationProcessor);
+    }
+
     public boolean validateInputs() {
         boolean valid = true;
         emailError.set(null);
