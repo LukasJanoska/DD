@@ -42,7 +42,6 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     protected RecyclerView mRecyclerView;
     protected ContactAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected String[] mDataset;
 
     private static int DATASET_COUNT = 15;
 
@@ -163,6 +162,12 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void setContactsAdapterAfterSearch(ArrayList<Contact> contacts) {
+        mAdapter = new ContactAdapter(contacts);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

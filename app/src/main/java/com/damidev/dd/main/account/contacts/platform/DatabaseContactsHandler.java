@@ -111,6 +111,34 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
 		return contactList;
 	}
 
+    // Getting All Contacts
+    public List<Contact> getSearchContacts(String val) {
+        List<Contact> contactList = new ArrayList<Contact>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + KEY_NAME + " LIKE " + "'" + val +"%'" ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Contact contact = new Contact();
+                contact.setId(Integer.parseInt(cursor.getString(0)));
+                contact.setEmail(cursor.getString(1));
+                contact.setPhone(cursor.getString(2));
+                contact.setName(cursor.getString(3));
+                contact.setLastname(cursor.getString(4));
+                contact.setFid(cursor.getString(5));
+                contact.setDescription(cursor.getString(6));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return contactList;
+    }
+
     // Deleting single contact
     public void deleteContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();

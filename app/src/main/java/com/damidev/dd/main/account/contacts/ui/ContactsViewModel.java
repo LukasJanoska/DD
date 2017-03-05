@@ -3,6 +3,8 @@ package com.damidev.dd.main.account.contacts.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.databinding.ObservableField;
+import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
@@ -25,12 +27,17 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
     private ContactsCommunicator communicator;
     private DatabaseContactsHandler handler;
     private String token;
+    private final ObservableField<CharSequence> search = new ObservableField<CharSequence>();
 
     @Inject
     public ContactsViewModel(Context context, ContactsCommunicator communicator, DatabaseContactsHandler handler) {
         this.context = context;
         this.communicator = communicator;
         this.handler = handler;
+    }
+
+    public ObservableField<CharSequence> getSearch() {
+        return search;
     }
 
     public void getAllContacts(String token) {
@@ -73,5 +80,16 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
         SharedPreferences prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         return prefs.getString("token", "");
     }
+
+    public void onSearchClick(View view) {
+        List<Contact> contacts = handler.getSearchContacts(search.get().toString());
+
+        ArrayList<Contact> contactsArr = new ArrayList<>();
+        contactsArr.addAll(contacts);
+
+        getView().setContactsAdapterAfterSearch(contactsArr);
+    }
+
+
 
 }
