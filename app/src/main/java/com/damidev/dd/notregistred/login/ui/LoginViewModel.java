@@ -66,17 +66,23 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
             return;
         }
 
-//        if(!networkController.isNetworkConnectionAvailable()) {
-//            getView().showErrorToast(context.getString(R.string.error_no_internet_connection));
-//            return;
-//        }
+        getView().showProgressDialog();
 
+        this.registrationProcessor = AsyncProcessor.create();
+        this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
+
+        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email.get().toString(), password.get().toString());
+
+        flowable.subscribe(registrationProcessor);
+    }
+
+    public void onClickFBLogin(String email, String fID) {
         getView().showProgressDialog();//
 
         this.registrationProcessor = AsyncProcessor.create();
         this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
 
-        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email.get().toString(), password.get().toString()); //email.get().toString(), password.get().toString());
+        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateFBObservable(null,  email, fID);
 
         flowable.subscribe(registrationProcessor);
     }
@@ -234,6 +240,26 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     }
 
     @NonNull
+    private Flowable<Response<ServerRegResultDto>> getOrCreateFBObservable(Bundle savedInstanceState,
+                                                                         final String username, final String fID) {
+        Flowable<Response<ServerRegResultDto>> flowable;
+
+        if (savedInstanceState == null) {
+            // first run, create and set observable
+            flowable = createAndSetFBFlowable(username, fID);
+        } else {
+            // following runs, get observable from retained fragment
+            flowable = RetainFragmentHelper.getObjectOrNull(TAG_RETAIN_FRAGMENT, fragmentManager);
+            // fragment may be removed during memory clean up, if so, create and set observable again
+            if (flowable == null) {
+                flowable = createAndSetFBFlowable(username, fID);
+            }
+        }
+
+        return flowable;
+    }
+
+    @NonNull
     private Flowable<Response<ServerRegResultDto>> createAndSetFlowable(final String username,
                                                                         final String password) {
 
@@ -242,6 +268,22 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
 
         final Flowable<Response<ServerRegResultDto>> flowable = this.registrationController
                 .login(username, password)
+                .cache();
+
+        RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);
+
+        return flowable;
+    }
+
+    @NonNull
+    private Flowable<Response<ServerRegResultDto>> createAndSetFBFlowable(final String username,
+                                                                        final String fID) {
+
+        this.registrationProcessor = AsyncProcessor.create();
+        this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
+
+        final Flowable<Response<ServerRegResultDto>> flowable = this.registrationController
+                .fbLogin(username, fID)
                 .cache();
 
         RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);

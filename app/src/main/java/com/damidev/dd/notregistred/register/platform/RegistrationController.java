@@ -33,4 +33,10 @@ public class RegistrationController {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Flowable<Response<ServerRegResultDto>> fbLogin(final String username, final String fID) {
+        return restService
+                .fbLogin(username, fID)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

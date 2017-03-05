@@ -27,6 +27,11 @@ public interface DamiRestApi {
                                                  @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("login")
+    Flowable<Response<ServerRegResultDto>> fbLogin(@Field("email") String email,
+                                                 @Field("fID") String fID);
+
+    @FormUrlEncoded
     @POST("updateAccount")
     Call<ServerRegResultDto> updateUserProfile(@Field("token") String token,
                                                @FieldMap Map<String, String> fields );

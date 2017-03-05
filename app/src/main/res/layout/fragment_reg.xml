@@ -75,13 +75,13 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/loginButton"
+                    android:id="@+id/regButton"
                     android:text="Register"
                     android:onClick="@{(view) -> vm.onClickRegister(view)}"
                     />
 
                 <com.facebook.login.widget.LoginButton
-                    android:id="@+id/login_button_fb"
+                    android:id="@+id/reg_button_fb"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginTop="15dp"

@@ -42,7 +42,7 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
     private ProgressDialog progressDialog;
     CallbackManager callbackManager;
 
-    private LoginButton loginButton;
+    private LoginButton regButton;
 
     public static String user_profile_id_tag = "user_profile_id";
     public static String user_token = "user_token";
@@ -78,10 +78,10 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_reg);
 
-        loginButton = (LoginButton) view.findViewById(R.id.login_button_fb);
-        loginButton.setReadPermissions(Collections.singletonList("public_profile, email, user_birthday, user_friends"));
+        regButton = (LoginButton) view.findViewById(R.id.reg_button_fb);
+        regButton.setReadPermissions(Collections.singletonList("public_profile, email, user_birthday, user_friends"));
 
-        loginButton.setFragment(this);
+        regButton.setFragment(this);
         // Other app specific specialization
 
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
