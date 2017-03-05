@@ -26,6 +26,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         private final TextView nameTextView;
         private final TextView lastNameTextView;
+        private final TextView emailTextView;
 
         public ViewHolder(View v) {
             super(v);
@@ -38,6 +39,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             });
             nameTextView = (TextView) v.findViewById(R.id.nameTV);
             lastNameTextView = (TextView) v.findViewById(R.id.lastNameTV);
+            emailTextView = (TextView) v.findViewById(R.id.emailTV);
         }
 
         public TextView getNameTextView() {
@@ -46,6 +48,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         public TextView getLastNameTextView() {
             return lastNameTextView;
+        }
+
+        public TextView getEmailTextView() {
+            return emailTextView;
         }
 
         public void replaceWithEditContactFragment(Context context, int contact_id) {
@@ -72,6 +78,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.getNameTextView().setText(mDataSet.get(position).getName());
         viewHolder.getLastNameTextView().setText(mDataSet.get(position).getLastname());
+        viewHolder.getEmailTextView().setText(mDataSet.get(position).getEmail());
     }
 
     @Override

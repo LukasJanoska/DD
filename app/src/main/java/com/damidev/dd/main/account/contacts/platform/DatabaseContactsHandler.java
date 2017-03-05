@@ -115,7 +115,7 @@ public class DatabaseContactsHandler extends SQLiteOpenHelper {
     public List<Contact> getSearchContacts(String val) {
         List<Contact> contactList = new ArrayList<Contact>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + KEY_NAME + " LIKE " + "'" + val +"%'" ;
+        String selectQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + KEY_NAME + " LIKE " + "'" + val +"%'" + " OR " + KEY_EMAIL + " LIKE " + "'" + val +"%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
