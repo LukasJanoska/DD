@@ -8,12 +8,16 @@ import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentMapBinding;
+import com.damidev.dd.main.account.filter.ui.FilterFragment;
 import com.damidev.dd.main.account.map.inject.LoggedMapComponent;
 import com.damidev.dd.main.account.map.inject.LoggedMapModule;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
@@ -77,6 +81,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -103,6 +108,24 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_map);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_map, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.filter:
+                replaceWithFilterFragment();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -246,6 +269,14 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         PictureFragment pictureFragment = PictureFragment.newInstance(PictureFragment.PictureFragmnetTag, finRes);
         ft.replace(R.id.fragment_main_container, pictureFragment);
+        ft.commit();
+    }
+
+    @MainThread
+    public void replaceWithFilterFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FilterFragment fragment = FilterFragment.newInstance(PictureFragment.PictureFragmnetTag);
+        ft.replace(R.id.fragment_main_container, fragment);
         ft.commit();
     }
 
