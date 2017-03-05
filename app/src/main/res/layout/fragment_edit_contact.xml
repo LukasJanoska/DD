@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/phoneInput"
             android:hint="Phone"
+            android:inputType="number"
             style="@style/edit_text_new_contact"
             android:text="@={vm.phone}"
             />

@@ -57,6 +57,7 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
 
         FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logOut();
     }
 
     @Override

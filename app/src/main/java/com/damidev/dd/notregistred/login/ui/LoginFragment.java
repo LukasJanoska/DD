@@ -56,11 +56,13 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         getViewModel().getEmail().set("mmmm@mm.mm");
         getViewModel().getPassword().set("mmm");
 
         FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logOut();
     }
 
     @Override
@@ -160,6 +162,8 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     @Override
     public void showErrorDialog(final String errMsg) {
         ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
+        replaceWithRegFragment();
+        Toast.makeText(getContext(), "email not registred, please do registration", Toast.LENGTH_LONG).show();
     }
 
     @MainThread
