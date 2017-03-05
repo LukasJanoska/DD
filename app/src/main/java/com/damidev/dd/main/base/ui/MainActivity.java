@@ -17,12 +17,12 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.ActivityMainBinding;
 import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
+import com.damidev.dd.main.account.map.ui.LoggedMapFragment;
 import com.damidev.dd.main.account.profile.ui.ProfileFragment;
 import com.damidev.dd.main.base.inject.MainComponent;
 import com.damidev.dd.main.base.inject.MainModule;
 import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
 import com.damidev.dd.notregistred.login.ui.LoginFragment;
-import com.damidev.dd.notregistred.map.ui.MapFragment;
 import com.damidev.dd.shared.inject.ActivityModule;
 import com.damidev.dd.shared.inject.D2MvvmActivity;
 
@@ -104,7 +104,7 @@ public class MainActivity extends D2MvvmActivity<ActivityMainBinding, MainViewMo
 
     private void replaceWithMapFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        MapFragment mapFragment = MapFragment.newInstance(MapFragment.MapFragmnetTag);
+        LoggedMapFragment mapFragment = LoggedMapFragment.newInstance(LoggedMapFragment.LoggedMapFragmnetTag);
         ft.replace(R.id.fragment_main_container, mapFragment);
         toolbar.setTitle("MAP");
         ft.commit();

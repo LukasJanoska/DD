@@ -6,6 +6,8 @@ import com.damidev.dd.main.account.contacts.inject.ContactsComponent;
 import com.damidev.dd.main.account.contacts.ui.ContactsFragment;
 import com.damidev.dd.main.account.editcontact.inject.EditContactComponent;
 import com.damidev.dd.main.account.editcontact.ui.EditContactFragment;
+import com.damidev.dd.main.account.map.inject.LoggedMapComponent;
+import com.damidev.dd.main.account.map.ui.LoggedMapFragment;
 import com.damidev.dd.main.account.newcontact.inject.NewContactComponent;
 import com.damidev.dd.main.account.newcontact.ui.NewContactFragment;
 import com.damidev.dd.main.account.profile.inject.ProfileComponent;
@@ -36,7 +38,8 @@ import dagger.multibindings.IntoMap;
                 ProfileEditComponent.class,
                 ContactsComponent.class,
                 NewContactComponent.class,
-                EditContactComponent.class
+                EditContactComponent.class,
+                LoggedMapComponent.class
         }
 )
 public abstract class FragmentBindingModule {
@@ -85,5 +88,10 @@ public abstract class FragmentBindingModule {
     @IntoMap
     @InjectKey(EditContactFragment.class)
     public abstract ComponentBuilder editContactFragmentComponentBuilder(EditContactComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @InjectKey(LoggedMapFragment.class)
+    public abstract ComponentBuilder loggedMapFragmentComponentBuilder(LoggedMapComponent.Builder builder);
 
 }
