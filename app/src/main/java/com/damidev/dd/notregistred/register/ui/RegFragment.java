@@ -12,6 +12,7 @@ import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
 import com.damidev.dd.databinding.FragmentRegBinding;
 import com.damidev.dd.main.base.ui.MainActivity;
+import com.damidev.dd.notregistred.base.ui.NotRegistredActivity;
 import com.damidev.dd.notregistred.register.inject.RegComponent;
 import com.damidev.dd.notregistred.register.inject.RegModule;
 import com.damidev.dd.shared.dialog.progressdialog.ui.ErrorDialog;
@@ -103,7 +104,6 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
                                     String userEmail = object.getString("email");
                                     String userId = object.getString("id");
 
-                                    Toast.makeText(getContext(), userEmail, Toast.LENGTH_SHORT).show();
                                     getViewModel().onClickFBRegister(userEmail, object.getString("id"), object.getString("picture"));
 
                                 } catch (Exception e) {
@@ -156,6 +156,7 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
     @Override
     public void showErrorDialog(final String errMsg) {
         ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
+        Toast.makeText(getContext(), "email already registred, please do login", Toast.LENGTH_LONG).show();
     }
 
     @MainThread
@@ -170,6 +171,12 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
         Intent myIntent = new Intent(getActivity(), MainActivity.class);
         myIntent.putExtra(user_profile_id_tag, userProfileId);
         myIntent.putExtra(user_token, token);
+        startActivity(myIntent);
+    }
+
+    @Override
+    public void startNotRegistredActivity() {
+        Intent myIntent = new Intent(getActivity(), NotRegistredActivity.class);
         startActivity(myIntent);
     }
 }

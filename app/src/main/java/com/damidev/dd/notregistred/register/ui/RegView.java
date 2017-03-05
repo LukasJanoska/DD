@@ -9,4 +9,5 @@ public interface RegView extends MvvmView {
     void showErrorDialog(final String errMsg);
     void showErrorToast(final String errMsg);
     void startMainActivity(int userProfileId, String token);
+    void startNotRegistredActivity();
 }

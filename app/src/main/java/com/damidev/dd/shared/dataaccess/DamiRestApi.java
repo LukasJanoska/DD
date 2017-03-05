@@ -16,6 +16,11 @@ public interface DamiRestApi {
     @POST("register")
     Flowable<Response<ServerRegResultDto>> registration(@Field("email") String email,
                                                         @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("register")
+    Flowable<Response<ServerRegResultDto>> fbRegistration(@Field("email") String email,
+                                                        @Field("fID") String fID);
     @FormUrlEncoded
     @POST("login")
     Flowable<Response<ServerRegResultDto>> login(@Field("email") String email,

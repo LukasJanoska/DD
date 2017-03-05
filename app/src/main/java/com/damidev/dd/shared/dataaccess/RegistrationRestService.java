@@ -28,6 +28,13 @@ public class RegistrationRestService {
     }
 
     @WorkerThread
+    public Flowable<Response<ServerRegResultDto>> fbRegistration(final String username, final String fID) {
+
+        return restApi.fbRegistration(username, fID)
+                .subscribeOn(Schedulers.io());
+    }
+
+    @WorkerThread
     public Flowable<Response<ServerRegResultDto>> login(final String username, final String password) {
 
         return restApi.login(username, password)

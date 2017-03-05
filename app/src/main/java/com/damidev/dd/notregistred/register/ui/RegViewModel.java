@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
@@ -24,6 +25,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.processors.AsyncProcessor;
 import io.reactivex.subscribers.DisposableSubscriber;
 import retrofit2.Response;
+
+import static java.security.AccessController.getContext;
 
 
 public class RegViewModel extends BaseViewModel<RegView> {
@@ -103,7 +106,7 @@ public class RegViewModel extends BaseViewModel<RegView> {
         this.registrationProcessor = AsyncProcessor.create();
         this.registrationDisposable = registrationProcessor.subscribeWith(new RegistrationSubscriber());
 
-        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateObservable(null,  email , fID);
+        final Flowable<Response<ServerRegResultDto>> flowable = getOrCreateFBObservable(null,  email , fID);
 
         flowable.subscribe(registrationProcessor);
     }
@@ -209,7 +212,9 @@ public class RegViewModel extends BaseViewModel<RegView> {
                     getView().showErrorDialog("error");
                 }
             } else {
-                getView().showErrorDialog("email already registred");
+                getView().startNotRegistredActivity();
+                getView().showErrorDialog("email already registred, please do login");
+
             }
         }
 
@@ -250,6 +255,26 @@ public class RegViewModel extends BaseViewModel<RegView> {
     }
 
     @NonNull
+    private Flowable<Response<ServerRegResultDto>> getOrCreateFBObservable(Bundle savedInstanceState,
+                                                                         final String username, final String fID) {
+        Flowable<Response<ServerRegResultDto>> flowable;
+
+        if (savedInstanceState == null) {
+            // first run, create and set observable
+            flowable = createAndSetFBFlowable(username, fID);
+        } else {
+            // following runs, get observable from retained fragment
+            flowable = RetainFragmentHelper.getObjectOrNull(TAG_RETAIN_FRAGMENT, fragmentManager);
+            // fragment may be removed during memory clean up, if so, create and set observable again
+            if (flowable == null) {
+                flowable = createAndSetFBFlowable(username, fID);
+            }
+        }
+
+        return flowable;
+    }
+
+    @NonNull
     private Flowable<Response<ServerRegResultDto>> createAndSetFlowable(final String username,
                                                                         final String password) {
 
@@ -258,6 +283,22 @@ public class RegViewModel extends BaseViewModel<RegView> {
 
         final Flowable<Response<ServerRegResultDto>> flowable = this.registrationController
                 .registration(username, password)
+                .cache();
+
+        RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);
+
+        return flowable;
+    }
+
+    @NonNull
+    private Flowable<Response<ServerRegResultDto>> createAndSetFBFlowable(final String username,
+                                                                        final String fID) {
+
+        this.registrationProcessor = AsyncProcessor.create();
+        this.registrationDisposable = registrationProcessor.subscribeWith(new RegViewModel.RegistrationSubscriber());
+
+        final Flowable<Response<ServerRegResultDto>> flowable = this.registrationController
+                .fbRegistration(username, fID)
                 .cache();
 
         RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);
