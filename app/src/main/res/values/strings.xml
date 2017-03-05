@@ -4,5 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="server_url">http://androidtest.dev.damidev.com/api/</string>
+    <string name="back_btn">Press againt to exit app</string>
 
 </resources>
