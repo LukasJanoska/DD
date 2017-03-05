@@ -62,6 +62,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
     private int userProfileId;
     private GroundOverlay mGroundOverlay;
     private Profile profile;
+    private List<ServerRegChildResponseDto.Favorites> favoritesList;
 
     public LoggedMapFragment() {
         // Required empty public constructor
@@ -85,7 +86,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
             Gson gson = new Gson();
 
             Type type = new TypeToken<List<ServerRegChildResponseDto.Favorites>>() {}.getType();
-            List<ServerRegChildResponseDto.Favorites> favoritesList = gson.fromJson(profile.get_map(), type);
+            favoritesList = gson.fromJson(profile.get_map(), type);
         }
     }
 
@@ -150,7 +151,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
         map = googleMap;
 
         responseDto = readObjectFromFile(getContext());
-        if(responseDto!=null) {
+        /*if(responseDto!=null) {
             ArrayList<ServerMapChildResponseDto> points = new ArrayList<>();
             points = responseDto.getChildResponse();
 
@@ -158,6 +159,19 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
                 Double lat = point.getLat();
                 Double lng = point.getLng();
                 String imgurl = point.getPhotos().get(2);
+
+                addMarker(new LatLng(lat, lng), imgurl, "start");
+            }
+        }*/
+
+        if(favoritesList!=null) {
+            ArrayList<ServerRegChildResponseDto.Favorites> fav = new ArrayList<>();
+            fav.addAll(favoritesList);
+
+            for (ServerRegChildResponseDto.Favorites point : fav) {
+                Double lat = point.getLat();
+                Double lng = point.getLng();
+                String imgurl = point.getPhoto().get(3);
 
                 addMarker(new LatLng(lat, lng), imgurl, "start");
             }
@@ -201,7 +215,7 @@ public class LoggedMapFragment extends D2MvvmFragment<FragmentMapBinding, Logged
         poiTargets.add(pt);
         Picasso.with(getContext())
                 .load(imgurl)
-                .resize(90, 90)
+                .resize(110, 110)
                 .into(pt);
     }
 
