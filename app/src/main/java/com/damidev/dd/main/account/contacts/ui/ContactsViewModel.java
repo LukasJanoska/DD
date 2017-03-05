@@ -74,6 +74,7 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
 
         token = loadToken();
         communicator.deleteContact(token, contacts.get(id).getId());
+        search.set("");
     }
 
     public String loadToken() {
