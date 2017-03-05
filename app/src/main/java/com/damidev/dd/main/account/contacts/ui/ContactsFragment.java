@@ -107,7 +107,6 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
         mRecyclerView.scrollToPosition(scrollPosition);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

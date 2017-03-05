@@ -91,6 +91,4 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
         getView().setContactsAdapterAfterSearch(contactsArr);
     }
 
-
-
 }

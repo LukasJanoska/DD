@@ -48,7 +48,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         public TextView getLastNameTextView() {
             return lastNameTextView;
-        }
+        }//
 
         public TextView getEmailTextView() {
             return emailTextView;
@@ -85,6 +85,5 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public int getItemCount() {
         return mDataSet.size();
     }
-
 
 }
