@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textSize="20sp"
-                android:text="Edit your profile "
+                android:text="@string/edit_my_profile"
                 android:textStyle="bold"/>
 
             <RelativeLayout
@@ -40,7 +40,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Name: "/>
+                    android:text="@string/name_"/>
                 <EditText
                     android:id="@+id/profileNameTv"
                     style="@style/profile_attrs"
@@ -58,7 +58,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Surname: "/>
+                    android:text="@string/last_name_"/>
                 <EditText
                     android:id="@+id/profileSurNameTv"
                     style="@style/profile_attrs"
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Email: "/>
+                    android:text="@string/email_"/>
                 <EditText
                     android:id="@+id/profileEmail"
                     style="@style/profile_attrs"
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Phone: "/>
+                    android:text="@string/phone_"/>
                 <EditText
                     android:id="@+id/profilePhone"
                     style="@style/profile_attrs"
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Description: "/>
+                    android:text="@string/description_"/>
                 <EditText
                     android:id="@+id/profileDescription"
                     style="@style/profile_attrs"
@@ -139,7 +139,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
-                android:text="SAVE CHANGES"
+                android:text="@string/save_changes"
                 android:onClick="@{(view) -> vm.onSaveChanges(view)}"
                 />
 

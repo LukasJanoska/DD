@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/usernameInput"
-                android:hint="Search by name or email"
+                android:hint="@string/search_by"
                 android:text="@={vm.search}"
                 />
 
@@ -37,7 +37,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="SEARCH"
+                android:text="@string/search"
                 android:onClick="@{(view) -> vm.onSearchClick(view)}"
                 />
 

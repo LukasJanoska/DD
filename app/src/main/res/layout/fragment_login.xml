@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/usernameInput"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:text="@={vm.email}"
                     app:error="@{vm.usernameError}"/>
 
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/passwordInput"
                     android:inputType="textPassword"
-                    android:hint="Heslo"
+                    android:hint="@string/password"
                     android:text="@={vm.password}"
                     app:error="@{vm.passwordError}" />
 
@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/loginButton"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:onClick="@{(view) -> vm.onClickLogin(view)}"
                     />
 
@@ -84,7 +84,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register"
+                    android:text="@string/register"
                     android:onClick="@{(view) -> vm.onClickReg(view)}"
                     />
 

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="35dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="35dp"
         android:orientation="vertical"
         >
 
@@ -26,7 +26,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="60dp"
             style="@style/profile_layout">
             <TextView
                 android:layout_marginTop="20dp"
@@ -36,7 +36,7 @@
                 android:layout_marginLeft="15dp"
                 android:textSize="17sp"
                 android:layout_marginRight="15dp"
-                android:text="Name: "/>
+                android:text="@string/name_"/>
             <TextView
                 android:id="@+id/profileNameTv"
                 style="@style/profile_attrss"
@@ -55,7 +55,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Surname: "/>
+                android:text="@string/last_name_"/>
             <TextView
                 android:id="@+id/profileSurNameTv"
                 style="@style/profile_attrss"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Email: "/>
+                android:text="@string/email_"/>
             <TextView
                 android:id="@+id/profileEmail"
                 style="@style/profile_attrss"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Phone: "/>
+                android:text="@string/phone_"/>
             <TextView
                 android:id="@+id/profilePhone"
                 style="@style/profile_attrss"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Description: "/>
+                android:text="@string/description_"/>
             <TextView
                 android:id="@+id/profileDescription"
                 style="@style/profile_attrss"

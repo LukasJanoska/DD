@@ -27,7 +27,6 @@
             android:textSize="17sp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Name"
             android:layout_marginLeft="20dp"
             />
 
@@ -38,7 +37,6 @@
             android:layout_toRightOf="@id/nameTV"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Last name"
             android:layout_marginLeft="20dp"
             />
 
@@ -49,7 +47,6 @@
             android:layout_toRightOf="@id/lastNameTV"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Email"
             android:layout_marginLeft="20dp"
             />
 

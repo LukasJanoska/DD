@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:text="Účet"
+                android:text="@string/account"
                 />
 
             <Button
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:text="Mapa"
+                android:text="@string/map"
                 />
 
         </LinearLayout>

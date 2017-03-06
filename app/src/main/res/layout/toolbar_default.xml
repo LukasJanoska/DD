@@ -23,7 +23,6 @@
                 android:id="@+id/toolbarTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asdasa"
                 android:textSize="22sp" />
 
         </LinearLayout>
