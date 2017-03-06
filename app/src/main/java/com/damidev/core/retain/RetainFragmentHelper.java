@@ -47,6 +47,17 @@ public class RetainFragmentHelper {
         instance.setObject(object);
     }
 
+    public static <T> void clear(@NonNull Object tag, @NonNull FragmentManager fragmentManager) {
+        RetainFragment<T> instance = getInstance(fragmentManager, getTag(tag));
+        if (instance != null) {
+            instance.setObject(null);
+            fragmentManager
+                    .beginTransaction()
+                    .remove(fragmentManager.findFragmentByTag(getTag(tag)))
+                    .commitAllowingStateLoss();
+        }
+    }
+
     @NonNull
     private static String getTag(@NonNull Object object) {
         return RETAIN_FRAGMENT_TAG + object.getClass().getCanonicalName();

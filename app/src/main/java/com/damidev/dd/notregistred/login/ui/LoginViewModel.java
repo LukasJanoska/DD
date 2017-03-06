@@ -204,6 +204,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
                 getView().hideProgressDialog();
                 getView().showErrorDialog(t.getMessage());
             }
+            clearRetainFragment();
         }
 
         @Override
@@ -211,6 +212,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
             if(getView() != null) {
                 getView().hideProgressDialog();
             }
+            clearRetainFragment();
         }
     }
 
@@ -284,5 +286,11 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
         RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);
 
         return flowable;
+    }
+
+    public void clearRetainFragment() {
+        RetainFragmentHelper.clear(TAG_RETAIN_FRAGMENT, fragmentManager);
+        registrationDisposable = null;
+        registrationProcessor = null;
     }
 }

@@ -209,9 +209,7 @@ public class RegViewModel extends BaseViewModel<RegView> {
                     getView().showErrorDialog("error");
                 }
             } else {
-                //getView().startNotRegistredActivity();
-                //getView().showErrorDialog("email already registred, please do login");
-
+                getView().showErrorDialog("email already registred, please do login");
             }
         }
 
@@ -221,6 +219,7 @@ public class RegViewModel extends BaseViewModel<RegView> {
                 getView().hideProgressDialog();
                 getView().showErrorDialog(t.getMessage());
             }
+            clearRetainFragment();
         }
 
         @Override
@@ -228,6 +227,7 @@ public class RegViewModel extends BaseViewModel<RegView> {
             if(getView() != null) {
                 getView().hideProgressDialog();
             }
+            clearRetainFragment();
         }
     }
 
@@ -301,5 +301,11 @@ public class RegViewModel extends BaseViewModel<RegView> {
         RetainFragmentHelper.setObject(TAG_RETAIN_FRAGMENT, fragmentManager, flowable);
 
         return flowable;
+    }
+
+    public void clearRetainFragment() {
+        RetainFragmentHelper.clear(TAG_RETAIN_FRAGMENT, fragmentManager);
+        registrationDisposable = null;
+        registrationProcessor = null;
     }
 }
