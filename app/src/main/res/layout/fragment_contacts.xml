@@ -20,7 +20,7 @@
             android:gravity="center_horizontal">
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="140dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp">
 
@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/usernameInput"
-                android:hint="Search"
+                android:hint="Search by name or email"
                 android:text="@={vm.search}"
                 />
 

@@ -1,5 +1,6 @@
 package com.damidev.dd.main.account.profileedit.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
@@ -25,6 +27,7 @@ import com.damidev.dd.shared.rest.platform.BusProvider;
 import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBinding, ProfileEditViewModel>
@@ -43,6 +46,8 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
     EditText proflePhone;
     @BindView(R.id.profileDescription)
     EditText profleDescription;
+    @BindView(R.id.opengalery)
+    ImageButton openGalery;
 
     private Profile profile;
     private ServerRegResultDto serverRegResultDto;
@@ -150,4 +155,14 @@ public class ProfileEditFragment extends D2MvvmFragment<FragmentProfileEditBindi
         ft.replace(R.id.fragment_main_container, accountFragment);
         ft.commit();
     }
+
+    @OnClick(R.id.opengalery)
+    public void onGaleryClicked(final View view) {
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setType("image/*");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 }
