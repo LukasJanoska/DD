@@ -32,6 +32,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="35dp"
                 style="@style/profile_edit_layout">
                 <TextView
                     android:layout_marginTop="20dp"
