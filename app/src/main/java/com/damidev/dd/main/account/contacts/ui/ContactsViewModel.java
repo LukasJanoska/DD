@@ -77,6 +77,15 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
         search.set("");
     }
 
+    public ArrayList<Contact> removeContactFromDB(int position) {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.addAll(handler.getAllContacts());
+
+        handler.deleteContact(contacts.get(position));
+        contacts.remove(position);
+        return contacts;
+    }
+
     public String loadToken() {
         SharedPreferences prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         return prefs.getString("token", "");

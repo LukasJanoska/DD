@@ -42,6 +42,7 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     protected RecyclerView mRecyclerView;
     protected ContactAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private int removedAtPosition;
 
     private static int DATASET_COUNT = 15;
 
@@ -98,8 +99,8 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, final int swipeDir) {
+                removedAtPosition = viewHolder.getAdapterPosition();
                 getViewModel().deleteContact(viewHolder.getAdapterPosition());
-
             }
         });
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
@@ -135,8 +136,15 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
     @Subscribe
     public void onServerEvent(String result){
         if(result.equals("success")) {
-            getViewModel().getAllContacts(token);
-            //mAdapter.notifyDataSetChanged();
+            ArrayList<Contact> contacts = getViewModel().removeContactFromDB(removedAtPosition);
+
+            mAdapter = new ContactAdapter(contacts);
+            mRecyclerView.setAdapter(mAdapter);
+
+            /*mRecyclerView.removeViewAt(removedAtPosition);
+            mAdapter.notifyItemRemoved(removedAtPosition);
+            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemRangeChanged(removedAtPosition, mAdapter.getItemCount());*/
         }
     }
 
