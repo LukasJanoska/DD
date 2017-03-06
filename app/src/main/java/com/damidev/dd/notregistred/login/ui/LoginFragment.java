@@ -164,7 +164,7 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     @Override
     public void showErrorDialog(final String errMsg) {
         ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
-    }
+    } //
 
     @MainThread
     @Override
