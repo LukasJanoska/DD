@@ -7,7 +7,7 @@ import android.databinding.ObservableField;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
-import com.damidev.dd.main.account.contacts.platform.DatabaseContactsHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.shared.dataaccess.Contact;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class EditContactViewModel extends BaseViewModel<EditContactView> {
 
     private Context context;
     private ContactsCommunicator communicator;
-    private DatabaseContactsHandler handler;
+    private DatabaseHandler handler;
     private String token;
 
     private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
@@ -43,7 +43,7 @@ public class EditContactViewModel extends BaseViewModel<EditContactView> {
     }
 
     @Inject
-    public EditContactViewModel(Context context, ContactsCommunicator comunicator, DatabaseContactsHandler handler) {
+    public EditContactViewModel(Context context, ContactsCommunicator comunicator, DatabaseHandler handler) {
         this.context = context;
         this.communicator = comunicator;
         this.handler = handler;

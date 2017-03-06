@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.dd.main.account.contacts.platform.ContactsCommunicator;
-import com.damidev.dd.main.account.contacts.platform.DatabaseContactsHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.shared.dataaccess.Contact;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto;
 import com.damidev.dd.shared.dataaccess.ServerContactsResultDto.ContactsResponse;
@@ -25,12 +25,12 @@ public class ContactsViewModel extends BaseViewModel<ContactsView> {
 
     private Context context;
     private ContactsCommunicator communicator;
-    private DatabaseContactsHandler handler;
+    private DatabaseHandler handler;
     private String token;
     private final ObservableField<CharSequence> search = new ObservableField<CharSequence>();
 
     @Inject
-    public ContactsViewModel(Context context, ContactsCommunicator communicator, DatabaseContactsHandler handler) {
+    public ContactsViewModel(Context context, ContactsCommunicator communicator, DatabaseHandler handler) {
         this.context = context;
         this.communicator = communicator;
         this.handler = handler;

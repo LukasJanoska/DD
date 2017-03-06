@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.damidev.core.inject.D2Module;
 import com.damidev.core.inject.scope.FragmentScope;
-import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.notregistred.register.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.DamiRestApi;
 import com.damidev.dd.shared.dataaccess.RegistrationRestService;
@@ -24,8 +24,8 @@ public class RegModule implements D2Module {
 
     @Provides
     @FragmentScope
-    public DatabaseProfileHandler provideProfileHandler(Context context) {
-        return new DatabaseProfileHandler(context);
+    public DatabaseHandler provideHandler(Context context) {
+        return new DatabaseHandler(context);
     }
 
     @Provides

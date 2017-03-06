@@ -56,8 +56,8 @@ public class LoginFragment extends D2MvvmFragment<FragmentLoginBinding, LoginVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getViewModel().getEmail().set("mmmm@mm.mm");
-        getViewModel().getPassword().set("mmm");
+        getViewModel().getEmail().set("ggg@gg.gg");
+        getViewModel().getPassword().set("g");
 
         FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();

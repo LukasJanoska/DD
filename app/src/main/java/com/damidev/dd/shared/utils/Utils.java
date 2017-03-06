@@ -1,11 +1,11 @@
 package com.damidev.dd.shared.utils;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by eago on 3/4/17.
- */
 
 public class Utils {
 
@@ -21,5 +21,20 @@ public class Utils {
             isValid = true;
         }
         return isValid;
+    }
+
+    public static boolean isInternetAvailable(NetworkInfo networkInfo) {
+
+        if (networkInfo != null) { // connected to the internet
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                return true;
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // mobile connection
+                return true;
+            }
+        }
+        // not connected to the internet
+        return false;
     }
 }

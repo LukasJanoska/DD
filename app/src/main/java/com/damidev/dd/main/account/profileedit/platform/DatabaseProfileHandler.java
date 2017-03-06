@@ -1,3 +1,4 @@
+/*
 package com.damidev.dd.main.account.profileedit.platform;
 
 import android.content.ContentValues;
@@ -22,17 +23,17 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 	private static final String TABLE_PROFILES = "profiles";
 
 	// profiles Table Columns names
-	private static final String KEY_ID = "id";
-	private static final String KEY_EMAIL = "email";
-	private static final String KEY_PHONE = "phone";
-	private static final String KEY_NAME = "name";
-	private static final String KEY_LAST_NAME = "last_name";
-	private static final String KEY_RIGHTS = "rights";
-	private static final String KEY_PHOTO = "photo";
-	private static final String KEY_FID = "fID";
-	private static final String KEY_DESCRIPTION = "description";
-	private static final String KEY_TOKEN = "token";
-	private static final String KEY_MAP = "map";
+	private static final String KEY_PROFILE_ID = "id";
+	private static final String KEY_PROFILE_EMAIL = "email";
+	private static final String KEY_PROFILE_PHONE = "phone";
+	private static final String KEY_PROFILE_NAME = "name";
+	private static final String KEY_PROFILE_LAST_NAME = "last_name";
+	private static final String KEY_PROFILE_RIGHTS = "rights";
+	private static final String KEY_PROFILE_PHOTO = "photo";
+	private static final String KEY_PROFILE_FID = "fID";
+	private static final String KEY_PROFILE_DESCRIPTION = "description";
+	private static final String KEY_PROFILE_TOKEN = "token";
+	private static final String KEY_PROFILE_MAP = "map";
 
 	public DatabaseProfileHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,17 +43,17 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_PROFILES_TABLE = "CREATE TABLE " + TABLE_PROFILES + "("
-				+ KEY_ID + " INTEGER PRIMARY KEY,"
-				+ KEY_EMAIL + " TEXT,"
-				+ KEY_PHONE + " TEXT,"
-				+ KEY_NAME + " TEXT,"
-				+ KEY_LAST_NAME + " TEXT,"
-				+ KEY_RIGHTS + " TEXT,"
-				+ KEY_PHOTO + " TEXT,"
-				+ KEY_FID + " TEXT,"
-				+ KEY_DESCRIPTION + " TEXT,"
-				+ KEY_TOKEN + " TEXT,"
-				+ KEY_MAP + " TEXT" + ")";
+				+ KEY_PROFILE_ID + " INTEGER PRIMARY KEY,"
+				+ KEY_PROFILE_EMAIL + " TEXT,"
+				+ KEY_PROFILE_PHONE + " TEXT,"
+				+ KEY_PROFILE_NAME + " TEXT,"
+				+ KEY_PROFILE_LAST_NAME + " TEXT,"
+				+ KEY_PROFILE_RIGHTS + " TEXT,"
+				+ KEY_PROFILE_PHOTO + " TEXT,"
+				+ KEY_PROFILE_FID + " TEXT,"
+				+ KEY_PROFILE_DESCRIPTION + " TEXT,"
+				+ KEY_PROFILE_TOKEN + " TEXT,"
+				+ KEY_PROFILE_MAP + " TEXT" + ")";
 		db.execSQL(CREATE_PROFILES_TABLE);
 	}
 
@@ -66,26 +67,28 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	/**
+	*/
+/**
 	 * All CRUD(Create, Read, Update, Delete) Operations
-	 */
+	 *//*
+
 
 	// Adding new profile
 	public void addProfile(Profile profile) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, profile.get_id());
-		values.put(KEY_EMAIL, profile.get_email());
-		values.put(KEY_PHONE, profile.get_phone());
-		values.put(KEY_NAME, profile.get_name());
-		values.put(KEY_LAST_NAME, profile.get_last_name());
-		values.put(KEY_RIGHTS, profile.get_rights());
-		values.put(KEY_PHOTO, profile.get_photo());
-		values.put(KEY_FID, profile.get_fID());
-		values.put(KEY_DESCRIPTION, profile.get_description());
-		values.put(KEY_TOKEN, profile.get_token());
-		values.put(KEY_MAP, profile.get_map());
+		values.put(KEY_PROFILE_ID, profile.get_id());
+		values.put(KEY_PROFILE_EMAIL, profile.get_email());
+		values.put(KEY_PROFILE_PHONE, profile.get_phone());
+		values.put(KEY_PROFILE_NAME, profile.get_name());
+		values.put(KEY_PROFILE_LAST_NAME, profile.get_last_name());
+		values.put(KEY_PROFILE_RIGHTS, profile.get_rights());
+		values.put(KEY_PROFILE_PHOTO, profile.get_photo());
+		values.put(KEY_PROFILE_FID, profile.get_fID());
+		values.put(KEY_PROFILE_DESCRIPTION, profile.get_description());
+		values.put(KEY_PROFILE_TOKEN, profile.get_token());
+		values.put(KEY_PROFILE_MAP, profile.get_map());
 
 		// Inserting Row
 		db.insert(TABLE_PROFILES, null, values);
@@ -96,8 +99,8 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 	public Profile getProfile(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.query(TABLE_PROFILES, new String[] { KEY_ID,
-                KEY_EMAIL, KEY_PHONE, KEY_NAME, KEY_LAST_NAME, KEY_RIGHTS, KEY_PHOTO, KEY_FID, KEY_DESCRIPTION, KEY_TOKEN, KEY_MAP }, KEY_ID + "=?",
+		Cursor cursor = db.query(TABLE_PROFILES, new String[] { KEY_PROFILE_ID,
+                KEY_PROFILE_EMAIL, KEY_PROFILE_PHONE, KEY_PROFILE_NAME, KEY_PROFILE_LAST_NAME, KEY_PROFILE_RIGHTS, KEY_PROFILE_PHOTO, KEY_PROFILE_FID, KEY_PROFILE_DESCRIPTION, KEY_PROFILE_TOKEN, KEY_PROFILE_MAP }, KEY_PROFILE_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
@@ -113,25 +116,28 @@ public class DatabaseProfileHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_EMAIL, profile.get_email());
-		values.put(KEY_PHONE, profile.get_phone());
-		values.put(KEY_NAME, profile.get_name());
-		values.put(KEY_LAST_NAME, profile.get_last_name());
-		values.put(KEY_DESCRIPTION, profile.get_description());
+		values.put(KEY_PROFILE_EMAIL, profile.get_email());
+		values.put(KEY_PROFILE_PHONE, profile.get_phone());
+		values.put(KEY_PROFILE_NAME, profile.get_name());
+		values.put(KEY_PROFILE_LAST_NAME, profile.get_last_name());
+		values.put(KEY_PROFILE_DESCRIPTION, profile.get_description());
 
 		// updating row
-		return db.update(TABLE_PROFILES, values, KEY_ID + " = ?",
+		return db.update(TABLE_PROFILES, values, KEY_PROFILE_ID + " = ?",
 				new String[] { String.valueOf(profile.get_id()) });
 	}
 
+*/
 /*
 	// Deleting single profile
 	public void deleteProfile(Profile profile) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_PROFILES, KEY_ID + " = ?",
+		db.delete(TABLE_PROFILES, KEY_PROFILE_ID + " = ?",
 				new String[] { String.valueOf(profile.getID()) });
 		db.close();
 	}
-*/
+*//*
+
 
 }
+*/

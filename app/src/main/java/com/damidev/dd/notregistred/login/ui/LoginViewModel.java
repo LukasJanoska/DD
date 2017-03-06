@@ -3,6 +3,8 @@ package com.damidev.dd.notregistred.login.ui;
 
 import android.content.Context;
 import android.databinding.ObservableField;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +13,7 @@ import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
 import com.damidev.core.retain.RetainFragmentHelper;
-import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.notregistred.register.platform.RegistrationController;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
@@ -26,6 +28,8 @@ import io.reactivex.processors.AsyncProcessor;
 import io.reactivex.subscribers.DisposableSubscriber;
 import retrofit2.Response;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class LoginViewModel extends BaseViewModel<LoginView> {
 
     private static final String TAG_RETAIN_FRAGMENT = "retainFragment";
@@ -38,7 +42,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     private RegistrationController registrationController;
     private Context context;
     private FragmentManager fragmentManager;
-    private DatabaseProfileHandler db;
+    private DatabaseHandler db;
 
     private AsyncProcessor<Response<ServerRegResultDto>> registrationProcessor;
     private Disposable registrationDisposable;
@@ -46,7 +50,7 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
     private boolean restored;
 
     @Inject
-    public LoginViewModel(Context context, final FragmentManager fragmentManager, final RegistrationController registrationController, DatabaseProfileHandler db ) {
+    public LoginViewModel(Context context, final FragmentManager fragmentManager, final RegistrationController registrationController, DatabaseHandler db ) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.registrationController = registrationController;
@@ -61,6 +65,14 @@ public class LoginViewModel extends BaseViewModel<LoginView> {
         // validation missing
 
         if(!validateInputs()) {
+            return;
+        }
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(!Utils.isInternetAvailable(wifiNetInfo)) {
+            getView().showErrorDialog("No internet");
             return;
         }
 

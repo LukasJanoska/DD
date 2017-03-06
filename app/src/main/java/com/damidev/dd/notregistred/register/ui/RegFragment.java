@@ -109,7 +109,6 @@ public class RegFragment extends D2MvvmFragment<FragmentRegBinding, RegViewModel
     @Override
     public void showErrorDialog(final String errMsg) {
         ErrorDialog.newInstance(errMsg).show(getActivity().getSupportFragmentManager(), "error");
-        Toast.makeText(getContext(), "email already registred, please do login", Toast.LENGTH_LONG).show();
     }
 
     @MainThread

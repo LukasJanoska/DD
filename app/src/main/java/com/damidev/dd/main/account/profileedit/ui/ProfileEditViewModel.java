@@ -7,8 +7,8 @@ import android.databinding.ObservableField;
 import android.view.View;
 
 import com.damidev.core.mvvm.BaseViewModel;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.main.account.profileedit.platform.ProfileCommunicator;
-import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
 import com.damidev.dd.shared.dataaccess.Profile;
 import com.damidev.dd.shared.dataaccess.ServerRegResultDto;
 
@@ -22,7 +22,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
 
     private Context context;
-    private DatabaseProfileHandler profiledb;
+    private DatabaseHandler profiledb;
     private ProfileCommunicator communicator;
 
     private String token;
@@ -50,7 +50,7 @@ public class ProfileEditViewModel extends BaseViewModel<ProfileEditView> {
     }
 
     @Inject
-    public ProfileEditViewModel(Context context, DatabaseProfileHandler profiledb, ProfileCommunicator communicator) {
+    public ProfileEditViewModel(Context context, DatabaseHandler profiledb, ProfileCommunicator communicator) {
         this.context = context;
         this.profiledb = profiledb;
         this.communicator = communicator;

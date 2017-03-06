@@ -3,6 +3,8 @@ package com.damidev.dd.notregistred.map.ui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.damidev.core.inject.ComponentBuilderContainer;
 import com.damidev.dd.R;
@@ -18,6 +21,7 @@ import com.damidev.dd.notregistred.map.inject.MapComponent;
 import com.damidev.dd.notregistred.map.inject.MapModule;
 import com.damidev.dd.notregistred.picture.ui.PictureFragment;
 import com.damidev.dd.shared.inject.D2MvvmFragment;
+import com.damidev.dd.shared.utils.Utils;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapChildResponseDto;
 import com.damidev.dd.splashscreen.dataaccess.ServerMapResponseDto;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +42,8 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel> implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapFragView {
@@ -80,6 +86,13 @@ public class MapFragment extends D2MvvmFragment<FragmentMapBinding, MapViewModel
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = setAndBindContentView(inflater, container, R.layout.fragment_map);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(!Utils.isInternetAvailable(wifiNetInfo)) {
+            Toast.makeText(getContext(), "Please connect to the internet", Toast.LENGTH_LONG).show();
+        }
 
         return view;
     }

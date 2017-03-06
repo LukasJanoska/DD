@@ -56,6 +56,8 @@ public class ContactsFragment extends D2MvvmFragment<FragmentContactsBinding, Co
 
         setHasOptionsMenu(true);
 
+        getViewModel().getSearch().set("");
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             token = bundle.getString(LoginFragment.user_token);

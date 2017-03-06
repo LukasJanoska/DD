@@ -4,7 +4,7 @@ package com.damidev.dd.main.account.map.ui;
 import android.content.Context;
 
 import com.damidev.core.mvvm.BaseViewModel;
-import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.shared.dataaccess.Profile;
 
 import javax.inject.Inject;
@@ -13,10 +13,10 @@ import javax.inject.Inject;
 public class LoggedMapViewModel extends BaseViewModel<LoggedMapFragView> {
 
     private Context context;
-    private DatabaseProfileHandler profiledb;
+    private DatabaseHandler profiledb;
 
     @Inject
-    public LoggedMapViewModel(Context context, DatabaseProfileHandler profiledb) {
+    public LoggedMapViewModel(Context context, DatabaseHandler profiledb) {
         this.context = context;
         this.profiledb = profiledb;
     }

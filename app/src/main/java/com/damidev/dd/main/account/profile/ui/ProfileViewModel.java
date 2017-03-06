@@ -5,8 +5,8 @@ import android.content.Context;
 import android.databinding.ObservableField;
 
 import com.damidev.core.mvvm.BaseViewModel;
+import com.damidev.dd.main.account.contacts.platform.DatabaseHandler;
 import com.damidev.dd.shared.dataaccess.Profile;
-import com.damidev.dd.main.account.profileedit.platform.DatabaseProfileHandler;
 
 import javax.inject.Inject;
 
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 public class ProfileViewModel extends BaseViewModel<ProfileView> {
 
     private Context context;
-    private DatabaseProfileHandler profiledb;
+    private DatabaseHandler profiledb;
 
     private final ObservableField<CharSequence> name = new ObservableField<CharSequence>();
     private final ObservableField<CharSequence> surName = new ObservableField<CharSequence>();
@@ -43,7 +43,7 @@ public class ProfileViewModel extends BaseViewModel<ProfileView> {
     }
 
     @Inject
-    public ProfileViewModel(Context context, DatabaseProfileHandler profiledb) {
+    public ProfileViewModel(Context context, DatabaseHandler profiledb) {
         this.context = context;
         this.profiledb = profiledb;
     }
